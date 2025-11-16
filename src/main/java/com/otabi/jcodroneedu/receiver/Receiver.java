@@ -328,14 +328,23 @@ public class Receiver {
             //
             // Handle Ack separately as it doesn't create a new object to store.
             if (header.getDataType() == DataType.Ack) {
-                // Extract the command echo from byte 8 (position 8 in payload)
+                // Two Ack formats exist:
+                // 1. Standard 1-byte Ack: just the DataType being acked
+                // 2. Controller 11-byte echo: timestamp + marker + padding + echo at byte 8 + CRC
+                
                 if (payloadBuffer.remaining() >= 9) {
-                    payloadBuffer.position(8); // Move to position 8
+                    // 11-byte echo format from controller
+                    payloadBuffer.position(8); // Move to position 8 where echo is
                     byte commandEcho = payloadBuffer.get();
                     DataType echoedCommand = DataType.fromByte(commandEcho);
                     onAckReceived(echoedCommand);
+                } else if (payloadBuffer.remaining() >= 1) {
+                    // Standard 1-byte Ack format
+                    byte ackedType = payloadBuffer.get();
+                    DataType ackedCommand = DataType.fromByte(ackedType);
+                    onAckReceived(ackedCommand);
                 } else {
-                    log.debug("Ack payload too short to extract command echo");
+                    log.debug("Ack payload too short (less than 1 byte)");
                 }
                 return;
             }
