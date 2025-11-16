@@ -11,6 +11,7 @@ import java.awt.Color;
 public class DisplayStagedTest {
     public static void main(String[] args) throws Exception {
         try (Drone drone = new Drone()) {
+            drone.pair();
             System.out.println("Connected to drone\n");
             
             // Stage 1: White

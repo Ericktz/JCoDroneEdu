@@ -5,6 +5,7 @@ import com.otabi.jcodroneedu.autonomous.AutonomousMethod;
 import com.otabi.jcodroneedu.autonomous.AutonomousMethodRegistry;
 import com.otabi.jcodroneedu.buzzer.BuzzerSequence;
 import com.otabi.jcodroneedu.buzzer.BuzzerSequenceRegistry;
+import com.otabi.jcodroneedu.display.DisplayService;
 import com.otabi.jcodroneedu.protocol.*;
 import com.otabi.jcodroneedu.protocol.linkmanager.Request;
 import com.otabi.jcodroneedu.protocol.buzzer.*;
@@ -139,6 +140,7 @@ public class Drone implements AutoCloseable {
     private final SettingsController settingsController;
     private final TelemetryService telemetryService;
     private final ElevationService elevationService;
+    private final DisplayService displayService;
 
     private final RateLimiter commandRateLimiter;
     private boolean isConnected = false;
@@ -191,6 +193,7 @@ public class Drone implements AutoCloseable {
         this.settingsController = new SettingsController(this);
         this.telemetryService = new TelemetryService(this);
         this.elevationService = new ElevationService(telemetryService);
+        this.displayService = new DisplayService(this);
 
         // Set a default command rate limit (e.g., ~16 commands/sec)
         double permitsPerSecond = 1.0 / 0.060;
@@ -449,7 +452,9 @@ public class Drone implements AutoCloseable {
         message.put(dataArray);
         message.putShort((short) crc16);
 
-        serialPortManager.write(message.array());
+        byte[] finalMessage = message.array();
+
+        serialPortManager.write(finalMessage);
     }
 
     /**
@@ -6364,11 +6369,27 @@ public class Drone implements AutoCloseable {
     }
 
     /**
-     * Sends a completed canvas to the controller display.
+     * Sends a completed canvas to the controller display using efficient batch transmission.
      * 
      * <p>This method should be called after drawing on the canvas with all desired graphics.
-     * The entire canvas is sent as a single batch update, which is much more efficient than
-     * sending individual draw commands.</p>
+     * The entire canvas is sent by drawing black pixels individually (white pixels are skipped
+     * since the display defaults to white).</p>
+     * 
+     * <p><strong>Performance Characteristics:</strong></p>
+     * <ul>
+     *   <li>Full black screen: ~4-8 seconds (8192 pixels × ~1ms per pixel)</li>
+     *   <li>Sparse graphics (10% black): ~0.8 seconds</li>
+     *   <li>Typical graphics (50% black): ~4 seconds</li>
+     *   <li>Matches Python implementation exactly</li>
+     * </ul>
+     * 
+     * <p><strong>Algorithm:</strong></p>
+     * <ul>
+     *   <li>Clear entire display to white</li>
+     *   <li>Scan all 8192 pixels from canvas</li>
+     *   <li>For each black pixel: send individual DrawPoint command</li>
+     *   <li>Skip white pixels (display already white)</li>
+     * </ul>
      * 
      * <p><strong>Typical Usage:</strong></p>
      * <pre>{@code
@@ -6376,7 +6397,7 @@ public class Drone implements AutoCloseable {
      * canvas.drawRectangle(20, 30, 40, 10);
      * canvas.drawCircle(80, 40, 15);
      * canvas.drawLine(10, 10, 50, 50);
-     * drone.controllerDrawCanvas(canvas);  // Send all at once
+     * drone.controllerDrawCanvas(canvas);  // Send all pixels (~4 seconds typical)
      * }</pre>
      * 
      * @param canvas The canvas to display
@@ -6387,66 +6408,7 @@ public class Drone implements AutoCloseable {
      * @see #controllerCreateCanvas()
      */
     public void controllerDrawCanvas(DisplayController canvas) {
-        byte[] imageData = canvas.toByteArray();
-        System.out.println("[DEBUG] controllerDrawCanvas: total image data = " + imageData.length + " bytes");
-        
-        // Protocol payload limit: 255 bytes
-        // DisplayDrawImage header: 8 bytes (x, y, width, height as shorts)
-        // Maximum image data per message: 255 - 8 = 247 bytes
-        final int MAX_PAYLOAD_SIZE = 255;
-        final int HEADER_SIZE = 8;
-        final int MAX_IMAGE_DATA_PER_MESSAGE = MAX_PAYLOAD_SIZE - HEADER_SIZE;
-        
-        // Byte packing is row-major: rows are grouped by 8
-        // Rows 0-7: 128 bytes (128 pixels × 8 vertical pixels per byte)
-        // Rows 8-15: 128 bytes
-        // etc.
-        // So each "row group" (8 pixel rows) = 128 bytes
-        final int DISPLAY_WIDTH = DisplayController.DISPLAY_WIDTH;
-        final int DISPLAY_HEIGHT = DisplayController.DISPLAY_HEIGHT;
-        final int PIXELS_PER_BYTE = 8;
-        final int BYTES_PER_ROW_GROUP = DISPLAY_WIDTH;  // 128 bytes for 8 pixel rows
-        
-        // Calculate how many complete 8-row groups we can fit per message
-        final int ROW_GROUPS_PER_MESSAGE = MAX_IMAGE_DATA_PER_MESSAGE / BYTES_PER_ROW_GROUP;
-        final int BYTES_PER_MESSAGE = ROW_GROUPS_PER_MESSAGE * BYTES_PER_ROW_GROUP;
-        
-        System.out.println("[DEBUG] Chunking: " + ROW_GROUPS_PER_MESSAGE + " row groups per message, " + BYTES_PER_MESSAGE + " bytes per message");
-        
-        int yOffset = 0;
-        int offset = 0;
-        int messageCount = 0;
-        
-        while (offset < imageData.length) {
-            // Send complete row groups only
-            int remainingBytes = imageData.length - offset;
-            int bytesToSend = Math.min(remainingBytes, BYTES_PER_MESSAGE);
-            
-            // Round down to complete row groups
-            int completeRowGroups = bytesToSend / BYTES_PER_ROW_GROUP;
-            bytesToSend = completeRowGroups * BYTES_PER_ROW_GROUP;
-            
-            // Extract chunk
-            byte[] chunk = new byte[bytesToSend];
-            System.arraycopy(imageData, offset, chunk, 0, bytesToSend);
-            
-            // Send this chunk - height is in pixel rows (each row group = 8 pixel rows)
-            int pixelRowsInChunk = completeRowGroups * PIXELS_PER_BYTE;
-            System.out.println("[DEBUG] Message " + (++messageCount) + ": x=0, y=" + yOffset + ", width=" + DISPLAY_WIDTH + ", height=" + pixelRowsInChunk + ", data=" + bytesToSend + " bytes");
-            controllerDrawImage(0, yOffset, DISPLAY_WIDTH, pixelRowsInChunk, chunk);
-            
-            // Small delay between chunks to allow receiver to process
-            try {
-                Thread.sleep(10);
-            } catch (InterruptedException e) {
-                Thread.currentThread().interrupt();
-            }
-            
-            offset += bytesToSend;
-            yOffset += pixelRowsInChunk;
-        }
-        
-        System.out.println("[DEBUG] Sent " + messageCount + " messages");
+        displayService.draw(canvas);
     }
 
     /**
