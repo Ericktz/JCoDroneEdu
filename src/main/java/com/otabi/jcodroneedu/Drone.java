@@ -3011,6 +3011,113 @@ public class Drone implements AutoCloseable {
         return flightController.getAngleZ();
     }
 
+    /**
+     * Gets the angular speed (gyroscope) data for the X axis.
+     * 
+     * <p>Returns the rotational velocity around the X axis in degrees per second.
+     * This method provides Python API compatibility for accessing individual axis
+     * gyro data. Equivalent to {@code getGyro()[0]}.</p>
+     * 
+     * @return X-axis angular velocity in degrees per second
+     * @since 1.4.0
+     * @pythonEquivalent get_angular_speed_x
+     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#get_angular_speed_x
+     */
+    public int getAngularSpeedX() {
+        int[] gyro = getGyro();
+        return gyro[0];
+    }
+
+    /**
+     * Gets the angular speed (gyroscope) data for the Y axis.
+     * 
+     * <p>Returns the rotational velocity around the Y axis in degrees per second.
+     * Equivalent to {@code getGyro()[1]}.</p>
+     * 
+     * @return Y-axis angular velocity in degrees per second
+     * @since 1.4.0
+     * @pythonEquivalent get_angular_speed_y
+     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#get_angular_speed_y
+     */
+    public int getAngularSpeedY() {
+        int[] gyro = getGyro();
+        return gyro[1];
+    }
+
+    /**
+     * Gets the angular speed (gyroscope) data for the Z axis.
+     * 
+     * <p>Returns the rotational velocity around the Z axis in degrees per second.
+     * Equivalent to {@code getGyro()[2]}.</p>
+     * 
+     * @return Z-axis angular velocity in degrees per second
+     * @since 1.4.0
+     * @pythonEquivalent get_angular_speed_z
+     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#get_angular_speed_z
+     */
+    public int getAngularSpeedZ() {
+        int[] gyro = getGyro();
+        return gyro[2];
+    }
+
+    /**
+     * Gets the gyroscope data for the X axis.
+     * 
+     * <p>Returns the rotational velocity around the X axis in degrees per second.
+     * This method provides compatibility with older Python API. Equivalent to
+     * {@code getGyro()[0]}.</p>
+     * 
+     * <p><strong>Note:</strong> This method is deprecated in Python in favor of
+     * {@link #getAngularSpeedX()}.</p>
+     * 
+     * @return X-axis angular velocity in degrees per second
+     * @since 1.4.0
+     * @pythonEquivalent get_x_gyro
+     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#get_x_gyro
+     */
+    public int getGyroX() {
+        int[] gyro = getGyro();
+        return gyro[0];
+    }
+
+    /**
+     * Gets the gyroscope data for the Y axis.
+     * 
+     * <p>Returns the rotational velocity around the Y axis in degrees per second.
+     * Equivalent to {@code getGyro()[1]}.</p>
+     * 
+     * <p><strong>Note:</strong> This method is deprecated in Python in favor of
+     * {@link #getAngularSpeedY()}.</p>
+     * 
+     * @return Y-axis angular velocity in degrees per second
+     * @since 1.4.0
+     * @pythonEquivalent get_y_gyro
+     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#get_y_gyro
+     */
+    public int getGyroY() {
+        int[] gyro = getGyro();
+        return gyro[1];
+    }
+
+    /**
+     * Gets the gyroscope data for the Z axis.
+     * 
+     * <p>Returns the rotational velocity around the Z axis in degrees per second.
+     * Equivalent to {@code getGyro()[2]}.</p>
+     * 
+     * <p><strong>Note:</strong> This method is deprecated in Python in favor of
+     * {@link #getAngularSpeedZ()}.</p>
+     * 
+     * @return Z-axis angular velocity in degrees per second
+     * @since 1.4.0
+     * @pythonEquivalent get_z_gyro
+     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#get_z_gyro
+     */
+    public int getGyroZ() {
+        int[] gyro = getGyro();
+        return gyro[2];
+    }
+
     // Array-based sensor methods for Python compatibility
     
     /**
