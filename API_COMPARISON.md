@@ -1,17 +1,17 @@
 # API Comparison Report
 
-**Generated:** 2025-11-16T14:34:15.948621
+**Generated:** 2025-11-16T15:25:42.776032
 **Java Version:** 1.4.0-SNAPSHOT
 **Python API Version:** 2.6.0
 
 ## Summary
 
 - **Python Methods:** 127
-- **Java Methods:** 188
-- **Matched Methods:** 111
-  - Documented (@pythonEquivalent): 69
+- **Java Methods:** 189
+- **Matched Methods:** 112
+  - Documented (@pythonEquivalent): 70
   - Inferred (by name): 42
-- **In Python, Not Java:** 25
+- **In Python, Not Java:** 24
 - **In Java, Not Python:** 77
 
 **Note:** Java methods use @pythonEquivalent annotations to document their Python API mapping.
@@ -43,7 +43,6 @@
 - `load_color_data()`
 - `new_color_data()`
 - `predict_colors()`
-- `reset_move()`
 - `reset_sensor()`
 
 ## Methods in Java but NOT in Python

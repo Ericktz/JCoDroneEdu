@@ -626,12 +626,48 @@ public class Drone implements AutoCloseable {
 
     /**
      * Resets the drone's movement values to zero to ensure it stops any prior movement.
+     * 
+     * @deprecated Use {@link #resetMoveValues(int)} instead. Deprecated in Python API.
+     * @pythonEquivalent reset_move
+     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#reset_move
+      * @since 1.4.0
+     */
+    @Deprecated(since = "1.0", forRemoval = true)
+    public void resetMove(int attempts) {
+        resetMoveValues(attempts);
+    }
+
+     /**
+     * Resets the drone's movement values to zero to ensure it stops any prior movement.
+     * 
+     * @deprecated Use {@link #resetMoveValues()} instead. Deprecated in Python API.
+     * @pythonEquivalent reset_move
+     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#reset_move
+      * @since 1.0.0
+     */
+    @Deprecated(since = "1.0", forRemoval = true)
+    public void resetMove() {
+        resetMoveValues(DroneSystem.FlightControlConstants.RESET_MOVE_VALUES_DEFAULT_ATTEMPTS);
+    }
+
+    /**
+     * Resets the drone's movement values to zero to ensure it stops any prior movement.
+     * @pythonEquivalent reset_move_values
+     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#reset_move_values
+      * @since 1.4.0
+     */
+    public void resetMoveValues(int attempts) {
+        flightController.resetMoveValues(attempts);
+    }
+
+     /**
+     * Resets the drone's movement values to zero to ensure it stops any prior movement.
      * @pythonEquivalent reset_move_values
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#reset_move_values
       * @since 1.0.0
      */
     public void resetMoveValues() {
-        flightController.resetMoveValues();
+        resetMoveValues(DroneSystem.FlightControlConstants.RESET_MOVE_VALUES_DEFAULT_ATTEMPTS);
     }
 
     // ============================================================================
