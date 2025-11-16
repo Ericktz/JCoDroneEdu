@@ -252,21 +252,23 @@ public class FlightController {
     /**
      * Resets the values of roll, pitch, yaw, and throttle to 0 by sending
      * a hover command multiple times to ensure the drone is stable.
+     * Uses the default number of attempts for stabilization.
+     * @since 1.0.0
+     */
+    public void resetMoveValues() {
+        resetMoveValues(DroneSystem.FlightControlConstants.RESET_MOVE_VALUES_DEFAULT_ATTEMPTS);
+    }
+
+    /**
+     * Resets the values of roll, pitch, yaw, and throttle to 0 by sending
+     * a hover command multiple times to ensure the drone is stable.
      * @param attempts The number of times the hover command is sent.
-      * @since 1.0.0
+     * @since 1.0.0
      */
     public void resetMoveValues(int attempts) {
         for (int i = 0; i < attempts; i++) {
             hover(DroneSystem.FlightControlConstants.DEFAULT_HOVER_DURATION_SECONDS); // Send a brief 10ms hover command
         }
-    }
-
-    /**
-     * Resets the drone's movement values to zero.
-      * @since 1.0.0
-     */
-    public void resetMoveValues() {
-        resetMoveValues(DroneSystem.FlightControlConstants.RESET_MOVE_VALUES_DEFAULT_ATTEMPTS);
     }
 
     /**
