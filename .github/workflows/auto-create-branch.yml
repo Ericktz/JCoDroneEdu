@@ -105,7 +105,7 @@ jobs:
             const typeEmoji = branchType === 'bugfix' ? '🐛' : '✨';
             const typeLabel = branchType === 'bugfix' ? 'Bug Fix' : 'Feature';
             
-            const instructions = `${typeEmoji} **${typeLabel} Branch Created**\n\n🌿 **Branch**: [${branchName}](${branchUrl})\n\n📦 **Version**: \`${nextVersion}\`\n\n**Instructions**:\n1. Checkout the branch:\n   \`\`\`bash\n   git fetch origin ${branchName}\n   git checkout ${branchName}\n   \`\`\`\n\n2. See [Agent Instructions](.github/AGENT_INSTRUCTIONS.md) for development workflow\n\n3. Push commits to this branch and open a PR when ready\n\n**Note**: Version has been automatically bumped in this branch. Do not manually update it.`;
+            const instructions = `${typeEmoji} **${typeLabel} Branch Created**\n\n🌿 **Branch**: [${branchName}](${branchUrl})\n\n📦 **Version**: \`${nextVersion}\`\n\n**Quick Start**:\n1. Fetch and checkout the branch:\n   \`\`\`bash\n   git fetch origin ${branchName}\n   git checkout ${branchName}\n   \`\`\`\n\n2. Or use one command:\n   \`\`\`bash\n   git checkout --track origin/${branchName}\n   \`\`\`\n\n3. See [Agent Instructions](.github/AGENT_INSTRUCTIONS.md) for full development workflow\n\n4. When ready, push commits and open a PR\n\n**Important Notes**:\n- Version already bumped to \`${nextVersion}\` - do not change it\n- Check out the branch before making any commits\n- This branch is ready for work - all automation complete`;
 
             github.rest.issues.createComment({
               issue_number: context.issue.number,

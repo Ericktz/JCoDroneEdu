@@ -21,17 +21,27 @@ When assigned to an issue, look for a comment posted by `github-actions[bot]` co
 - The branch name (e.g., `feature/issue-38-release-automations`)
 - The new version (e.g., `1.4.0-SNAPSHOT`)
 
-Checkout the branch:
+**Two ways to checkout the branch:**
+
+**Option A: Fetch then checkout**
 ```bash
 git fetch origin <branch-name>
 git checkout <branch-name>
 ```
 
-Example:
+**Option B: Track the remote branch (recommended)**
 ```bash
-git fetch origin feature/issue-38-release-automations
-git checkout feature/issue-38-release-automations
+git checkout --track origin/<branch-name>
 ```
+
+This automatically sets up tracking so `git pull` and `git push` work without specifying the remote.
+
+**Example**:
+```bash
+git checkout --track origin/feature/issue-38-add-missing-release-process-automations
+```
+
+The branch is ready to use - all automation is complete!
 
 ### 2. Understand the Version Bump
 
