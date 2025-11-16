@@ -1,6 +1,7 @@
 package com.otabi.jcodroneedu.examples;
 
 import java.util.Scanner;
+import com.otabi.jcodroneedu.tools.SensorDisplayGui;
 
 /**
  * Interactive menu system for running CoDrone EDU examples.
@@ -253,31 +254,35 @@ public class ExampleMenu {
                 case 40:
                     System.out.println("🧪 Running Smoke Test");
                     System.out.println("═".repeat(64) + "\n");
-                    com.otabi.jcodroneedu.examples.tests.SmokeTest.main(new String[]{});
+                    System.out.println("Note: SmokeTest is now a JUnit test in integration-tests.");
+                    System.out.println("Run it with: ./gradlew test --tests SmokeTest");
                     break;
                     
                 case 41:
                     System.out.println("🧪 Running Accel Test");
                     System.out.println("═".repeat(64) + "\n");
-                    com.otabi.jcodroneedu.examples.tests.AccelTest.main(new String[]{});
+                    System.out.println("Note: AccelTest is now a JUnit test in integration-tests.");
+                    System.out.println("Run it with: ./gradlew test --tests AccelTest");
                     break;
                     
                 case 42:
                     System.out.println("🧪 Running Multi Sensor Test");
                     System.out.println("═".repeat(64) + "\n");
-                    com.otabi.jcodroneedu.examples.tests.MultiSensorTest.main(new String[]{});
+                    MultiSensorTest.main(new String[]{});
                     break;
                     
                 case 43:
                     System.out.println("💡 Running Quick LED Test");
                     System.out.println("═".repeat(64) + "\n");
-                    com.otabi.jcodroneedu.examples.tests.QuickLEDTest.main(new String[]{});
+                    System.out.println("Note: QuickLEDTest is now a JUnit test in integration-tests.");
+                    System.out.println("Run it with: ./gradlew test --tests QuickLEDTest");
                     break;
                     
                 case 45:
                     System.out.println("🔧 Running Test Harness");
                     System.out.println("═".repeat(64) + "\n");
-                    com.otabi.jcodroneedu.examples.tests.TestHarness.main(new String[]{});
+                    System.out.println("Note: TestHarness is now a JUnit test in integration-tests.");
+                    System.out.println("Run it with: ./gradlew test --tests TestHarness");
                     break;
                 
                 default:
