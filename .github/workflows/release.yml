@@ -191,6 +191,7 @@ jobs:
           git add docs/
           git commit -m "Publish JavaDoc for v${{ steps.get_version.outputs.VERSION }}" \
             --allow-empty || echo "No changes to commit"
+          git pull --rebase origin gh-pages || true
           git push origin gh-pages
           echo "✅ JavaDoc pushed to gh-pages"
 
