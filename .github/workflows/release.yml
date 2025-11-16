@@ -23,6 +23,8 @@ jobs:
       contents: write
       packages: write
       actions: read
+      pages: write
+      id-token: write
 
     steps:
       - name: Checkout code
@@ -57,7 +59,7 @@ jobs:
       - name: Build and test
         run: ./gradlew build test
 
-      - name: Build student release
+      - name: Build release artifacts
         run: |
           if [[ "$GITHUB_REF" == refs/tags/* ]]; then
             VERSION=${GITHUB_REF#refs/tags/}
@@ -66,35 +68,21 @@ jobs:
             VERSION=$(./gradlew properties -q | grep "version:" | awk '{print $2}')
           fi
           echo "Building artifacts for version: $VERSION"
-          ./gradlew -Pversion=$VERSION studentJar javadocJar sourcesJar
-
-      - name: Build teacher release
-        run: |
-          if [[ "$GITHUB_REF" == refs/tags/* ]]; then
-            VERSION=${GITHUB_REF#refs/tags/}
-            VERSION=${VERSION#v}
-          else
-            VERSION=$(./gradlew properties -q | grep "version:" | awk '{print $2}')
-          fi
-          echo "Building teacher artifact for version: $VERSION"
-          ./gradlew -Pversion=$VERSION teacherJar
+          ./gradlew -Pversion=$VERSION jar javadoc javadocJar sourcesJar
 
       - name: Find built artifacts
         id: find_artifacts
         run: |
-          echo "Searching repository for built artifacts (robust to nested project layout)"
-          STUDENT=$(find . -type f -name "*student.jar" | head -n 1 || true)
-          TEACHER=$(find . -type f -name "*teacher.jar" | head -n 1 || true)
+          echo "Searching repository for built artifacts"
+          MAIN=$(find . -type f -name "*.jar" ! -name "*javadoc.jar" ! -name "*sources.jar" ! -name "*teacher.jar" ! -name "*student.jar" | grep build/libs | head -n 1 || true)
           JAVADOC=$(find . -type f -name "*javadoc.jar" | head -n 1 || true)
           SOURCES=$(find . -type f -name "*sources.jar" | head -n 1 || true)
 
-          echo "found student=${STUDENT}"
-          echo "found teacher=${TEACHER}"
+          echo "found main=${MAIN}"
           echo "found javadoc=${JAVADOC}"
           echo "found sources=${SOURCES}"
 
-          echo "student=${STUDENT}" >> $GITHUB_OUTPUT
-          echo "teacher=${TEACHER}" >> $GITHUB_OUTPUT
+          echo "main=${MAIN}" >> $GITHUB_OUTPUT
           echo "javadoc=${JAVADOC}" >> $GITHUB_OUTPUT
           echo "sources=${SOURCES}" >> $GITHUB_OUTPUT
 
@@ -108,6 +96,107 @@ jobs:
           fi
           echo "VERSION=${VERSION}" >> $GITHUB_OUTPUT
 
+      - name: Extract JavaDoc
+        run: |
+          mkdir -p ./javadoc-staging
+          if [ -f "${{ steps.find_artifacts.outputs.javadoc }}" ]; then
+            unzip -q "${{ steps.find_artifacts.outputs.javadoc }}" -d ./javadoc-staging
+            echo "✅ JavaDoc extracted successfully"
+          else
+            echo "⚠️  JavaDoc JAR not found at ${{ steps.find_artifacts.outputs.javadoc }}"
+            ./gradlew javadoc
+            unzip -q "$(find . -type f -name '*javadoc.jar' | head -n 1)" -d ./javadoc-staging || {
+              echo "❌ Failed to extract javadoc"
+              exit 1
+            }
+          fi
+          ls -la ./javadoc-staging
+
+      - name: Configure Git for gh-pages
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+      - name: Checkout gh-pages branch
+        run: |
+          git fetch origin gh-pages --depth=1 2>/dev/null || {
+            echo "gh-pages branch doesn't exist, will create it"
+          }
+          git checkout -B gh-pages origin/gh-pages 2>/dev/null || git checkout --orphan gh-pages
+
+      - name: Update JavaDoc on gh-pages
+        run: |
+          VERSION="${{ steps.get_version.outputs.VERSION }}"
+          
+          # Create versioned docs directory
+          mkdir -p docs/v${VERSION}
+          rm -rf docs/v${VERSION}/*
+          cp -r javadoc-staging/* docs/v${VERSION}/
+          
+          # Update latest symlink
+          mkdir -p docs
+          rm -f docs/latest
+          ln -s v${VERSION} docs/latest
+          
+          # Create index if it doesn't exist
+          if [ ! -f docs/index.html ]; then
+            cat > docs/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html>
+          <head>
+              <title>CoDrone EDU Java - API Documentation</title>
+              <style>
+                  body { font-family: Arial, sans-serif; margin: 40px; }
+                  h1 { color: #333; }
+                  a { color: #0066cc; text-decoration: none; }
+                  a:hover { text-decoration: underline; }
+                  ul { line-height: 1.8; }
+              </style>
+          </head>
+          <body>
+              <h1>CoDrone EDU Java - API Documentation</h1>
+              <p>Choose a version:</p>
+              <ul>
+                  <li><a href="./latest/">Latest Release</a> (recommended)</li>
+              </ul>
+              <p>All versions:</p>
+              <ul id="versions"></ul>
+              <script>
+                  fetch('https://api.github.com/repos/scerruti/JCoDroneEdu/tags')
+                      .then(r => r.json())
+                      .then(tags => {
+                          const list = document.getElementById('versions');
+                          tags
+                              .filter(t => t.name.match(/^v\d+\.\d+\.\d+/))
+                              .forEach(t => {
+                                  const version = t.name.substring(1);
+                                  const li = document.createElement('li');
+                                  const a = document.createElement('a');
+                                  a.href = `./v${version}/`;
+                                  a.textContent = `v${version}`;
+                                  li.appendChild(a);
+                                  list.appendChild(li);
+                              });
+                      });
+              </script>
+          </body>
+          </html>
+          EOF
+          fi
+          
+          echo "✅ JavaDoc updated for v${VERSION}"
+
+      - name: Commit and push JavaDoc to gh-pages
+        run: |
+          git add docs/
+          git commit -m "Publish JavaDoc for v${{ steps.get_version.outputs.VERSION }}" \
+            --allow-empty || echo "No changes to commit"
+          git push origin gh-pages
+          echo "✅ JavaDoc pushed to gh-pages"
+
+      - name: Checkout main branch
+        run: git checkout main
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
         with:
@@ -116,18 +205,12 @@ jobs:
           body: |
             ## 📚 CoDrone EDU Java Library v${{ steps.get_version.outputs.VERSION }}
             
-            ### 🎓 For Students
-            - **Maven Central**: `edu.codrone:codrone-edu-java:${{ steps.get_version.outputs.VERSION }}`
-            - **Direct Download**: `codrone-edu-java-${{ steps.get_version.outputs.VERSION }}-student.jar`
-            - **Documentation**: `codrone-edu-java-${{ steps.get_version.outputs.VERSION }}-javadoc.jar`
+            ### 📖 API Documentation
+            **[View API Docs](https://scerruti.github.io/JCoDroneEdu/docs/v${{ steps.get_version.outputs.VERSION }}/)**
             
-            ### 👨‍🏫 For Teachers
-            - **Teacher Edition**: `codrone-edu-java-${{ steps.get_version.outputs.VERSION }}-teacher.jar`
-            - **Includes**: MockDrone, DroneTest base classes, testing guides
+            ### 📦 Installation
             
-            ### 📖 Usage
-            
-            #### Students (Maven/Gradle)
+            #### Maven/Gradle (Recommended)
             ```xml
             <dependency>
                 <groupId>edu.codrone</groupId>
@@ -136,15 +219,30 @@ jobs:
             </dependency>
             ```
             
-            #### Teachers (Download JAR)
-            Download the teacher edition JAR and add to your project classpath for access to testing framework.
+            ```kotlin
+            implementation("edu.codrone:codrone-edu-java:${{ steps.get_version.outputs.VERSION }}")
+            ```
+            
+            #### Direct Download
+            Download the JAR from the assets below and add to your project classpath.
+            
+            ### 📚 What's Included
+            - ✅ Core CoDrone EDU Library
+            - ✅ Full API with comprehensive JavaDoc
+            - ✅ MockDrone testing framework
+            - ✅ DroneTest base classes
+            - ✅ Source code for reference
+            
+            ### 🔗 Resources
+            - **[Latest Documentation](https://scerruti.github.io/JCoDroneEdu/docs/latest/)**
+            - **[All Versions](https://scerruti.github.io/JCoDroneEdu/docs/)**
+            - **[GitHub Repository](https://github.com/scerruti/JCoDroneEdu)**
           draft: false
           prerelease: ${{ contains(steps.get_version.outputs.VERSION, 'SNAPSHOT') || contains(steps.get_version.outputs.VERSION, 'alpha') || contains(steps.get_version.outputs.VERSION, 'beta') }}
           files: |
-            ${{ steps.find_artifacts.outputs.student || format('./build/libs/JCoDroneEdu-{0}-student.jar', steps.get_version.outputs.VERSION) }}
-            ${{ steps.find_artifacts.outputs.teacher || format('./build/libs/JCoDroneEdu-{0}-teacher.jar', steps.get_version.outputs.VERSION) }}
-            ${{ steps.find_artifacts.outputs.javadoc || format('./build/libs/JCoDroneEdu-{0}-javadoc.jar', steps.get_version.outputs.VERSION) }}
-            ${{ steps.find_artifacts.outputs.sources || format('./build/libs/JCoDroneEdu-{0}-sources.jar', steps.get_version.outputs.VERSION) }}
+            ${{ steps.find_artifacts.outputs.main }}
+            ${{ steps.find_artifacts.outputs.javadoc }}
+            ${{ steps.find_artifacts.outputs.sources }}
           token: ${{ secrets.RELEASE_PAT || secrets.GITHUB_TOKEN }}
 
       - name: Publish to Maven Central
@@ -155,11 +253,12 @@ jobs:
           SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
           SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
         run: |
-          UP_USER="${OSSRH_USERNAME}"
-          UP_PASS="${OSSRH_PASSWORD}"
+          if [ -z "$OSSRH_USERNAME" ]; then
+            echo "⚠️  Maven Central credentials not configured, skipping publication"
+            exit 0
+          fi
           
-
           ./gradlew publishStudentPublicationToOSSRHRepository \
             -Pversion=${{ steps.get_version.outputs.VERSION }} \
-            -PossrhUsername="$UP_USER" \
-            -PossrhPassword="$UP_PASS"
+            -PossrhUsername="$OSSRH_USERNAME" \
+            -PossrhPassword="$OSSRH_PASSWORD"

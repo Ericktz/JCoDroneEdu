@@ -1,30 +1,25 @@
 # 📦 Release Strategy
 
-## 🎯 Dual Release Approach
+## 🎯 Single Release Approach
 
-This project provides **two distinct releases** to serve different audiences in the educational ecosystem:
+This project provides **one unified release** with comprehensive library functionality for the educational ecosystem:
 
-### 📚 **Student Release** - Clean & Simple
-- **Target Audience**: Students learning drone programming
-- **Content**: Core CoDrone EDU library only
+### 📚 **JCoDroneEdu Release**
+- **Target Audience**: Students and instructors learning/teaching drone programming
+- **Content**: Core CoDrone EDU library with testing framework and documentation
 - **Distribution**: Maven Central + GitHub releases
-- **Maven Coordinates**: `edu.codrone:codrone-edu-java:VERSION`
+- **Maven Coordinates**: `com.otabi:codrone-edu-java:VERSION`
+- **Documentation**: Published to [gh-pages](https://scerruti.github.io/JCoDroneEdu/)
 
-### 👨‍🏫 **Teacher Release** - Testing Framework Included
-- **Target Audience**: Instructors creating assignments and tests
-- **Content**: Core library + MockDrone + DroneTest + teacher documentation
-- **Distribution**: GitHub releases only
-- **Usage**: Download JAR, add to classpath for testing framework access
+## 🚀 Using the Release
 
-## 🚀 Using the Releases
-
-### For Students
+### Installation
 
 #### Option 1: Maven/Gradle (Recommended)
 ```xml
 <!-- Maven -->
 <dependency>
-    <groupId>edu.codrone</groupId>
+    <groupId>com.otabi</groupId>
     <artifactId>codrone-edu-java</artifactId>
     <version>1.0.0</version>
 </dependency>
@@ -32,107 +27,117 @@ This project provides **two distinct releases** to serve different audiences in 
 
 ```kotlin
 // Gradle
-implementation("edu.codrone:codrone-edu-java:1.0.0")
+implementation("com.otabi:codrone-edu-java:1.0.0")
 ```
 
 #### Option 2: Direct JAR Download
 1. Go to [Releases](https://github.com/scerruti/JCoDroneEdu/releases)
-2. Download `codrone-edu-java-VERSION-student.jar`
+2. Download `codrone-edu-java-VERSION.jar`
 3. Add to your project classpath
 
-### For Teachers
+### Testing Framework Included
 
-#### Setting Up Testing Environment
-1. **Download Teacher Edition**:
-   - Go to [Releases](https://github.com/scerruti/JCoDroneEdu/releases)
-   - Download `codrone-edu-java-VERSION-teacher.jar`
+The library includes MockDrone and DroneTest for comprehensive testing:
 
-2. **Add to Student Project**:
-   ```kotlin
-   // In student project build.gradle.kts
-   dependencies {
-       implementation("edu.codrone:codrone-edu-java:1.0.0")  // Student library
-       testImplementation(files("path/to/codrone-edu-java-1.0.0-teacher.jar"))  // Testing framework
-   }
-   ```
+```java
+// In src/test/java/
+import com.otabi.jcodroneedu.DroneTest;
 
-3. **Create Tests**:
-   ```java
-   // In student project src/test/java/
-   import com.otabi.jcodroneedu.DroneTest;
-   
-   public class SquareFlightTest extends DroneTest {
-       @Test
-       public void testSquarePattern() {
-           executeStudentDroneOperations();
-           assertTrue(mockDrone.wasSquarePatternUsed());
-       }
-   }
-   ```
+public class SquareFlightTest extends DroneTest {
+    @Test
+    public void testSquarePattern() {
+        executeStudentDroneOperations();
+        assertTrue(mockDrone.wasSquarePatternUsed());
+    }
+}
+```
 
-## 📖 Teacher Resources Included
+## 📖 Resources Included
 
-The teacher edition includes:
+Each release includes:
+- **Core Library**: Full CoDrone EDU API
 - **MockDrone**: Full drone simulation for testing
-- **DroneTest**: Base class for creating assignment tests
-- **TEACHER_COPILOT_GUIDE.md**: Using GitHub Copilot for test creation
-- **TESTING_GUIDE.md**: Comprehensive testing documentation
-- **CODRONE_EDU_METHOD_TRACKING.md**: API change tracking
+- **DroneTest**: Base class for creating tests
+- **API Documentation**: Complete JavaDoc published to gh-pages
+- **Examples**: Runnable demo applications
+- **Testing Guide**: Comprehensive testing documentation
 
 ## 🔄 Release Process
 
 ### Automated Releases
+
 Releases are automated via GitHub Actions when you:
 1. **Push a version tag**: `git tag v1.0.0 && git push origin v1.0.0`
 2. **Trigger manual release**: Via GitHub Actions UI
 
-### What Gets Published Where
+The GitHub Actions workflow will automatically:
+- Build the JAR and source distributions
+- Generate and publish JavaDoc to gh-pages
+- Create a GitHub release with artifacts
+- Publish to Maven Central (if configured)
 
-| Artifact | Maven Central | GitHub Releases | Purpose |
-|----------|---------------|-----------------|---------|
-| Student JAR | ✅ | ✅ | Student coursework |
-| Teacher JAR | ❌ | ✅ | Instructor testing |
-| Javadoc | ✅ | ✅ | Documentation |
-| Sources | ✅ | ✅ | Reference |
+### What Gets Published
+
+| Artifact | Maven Central | GitHub Releases | gh-pages |
+|----------|---------------|-----------------|----------|
+| JAR | ✅ | ✅ | - |
+| Sources JAR | ✅ | ✅ | - |
+| Javadoc | ✅ | ✅ | ✅ |
+| Release Notes | - | ✅ | - |
 
 ### Version Strategy
-- **Student Release**: Clean semantic versioning (1.0.0, 1.1.0, 2.0.0)
-- **Teacher Release**: Same version as student + teacher-specific resources
-- **SNAPSHOT**: Development versions for testing
+- **Semantic Versioning**: MAJOR.MINOR.PATCH (e.g., 1.0.0, 1.1.0, 2.0.0)
+- **SNAPSHOT**: Development versions for pre-release testing
+- **Latest**: Always points to the most recent release on gh-pages
 
 ## 🎓 Educational Benefits
 
-### For Students
-- **Simple Dependency**: One clean library, no test pollution
-- **Professional Practice**: Learn proper dependency management
-- **Documentation**: Full Javadoc for learning API usage
-
-### For Teachers
+- **Complete Library**: All functionality in one unified release
 - **Testing Framework**: MockDrone for comprehensive assignment validation
-- **GitHub Copilot Integration**: AI-assisted test creation
-- **Student Project Separation**: Tests live in student projects, not library
-- **Automated Validation**: Consistent grading through automated tests
+- **Professional Practice**: Learn proper dependency management and semantic versioning
+- **Full Documentation**: Complete Javadoc for learning API usage
+- **GitHub Pages**: Hosted API documentation always available online
 
 ## 🛠️ Development Workflow
 
 ### Making a Release
+
 1. **Update version** in `build.gradle.kts`
-2. **Commit changes**: `git commit -am "Release v1.0.0"`
-3. **Create tag**: `git tag v1.0.0`
-4. **Push**: `git push origin main --tags`
-5. **GitHub Actions** handles the rest automatically
+2. **Run final tests**: `./gradlew test`
+3. **Update CHANGELOG.md** with new features and fixes
+4. **Commit changes**: `git commit -am "Release v1.0.0"`
+5. **Create tag**: `git tag v1.0.0`
+6. **Push to GitHub**: `git push origin main && git push origin v1.0.0`
+7. **GitHub Actions automatically**:
+   - Builds the JAR and source distributions
+   - Generates JavaDoc
+   - Publishes JavaDoc to gh-pages under `/docs/v1.0.0/`
+   - Updates `/docs/latest/` symlink
+   - Creates GitHub release with artifacts
+   - (Optional) Publishes to Maven Central
 
-### Local Testing
+### Local Testing Before Release
+
 ```bash
-# Build both releases locally
-./gradlew build studentJar teacherJar
+# Build and test locally
+./gradlew clean build
 
-# Test student JAR
-./gradlew publishToMavenLocal
-# Then test in a separate student project
+# Test examples
+./gradlew runSmokeTest
+./gradlew runMultiSensorTest
+./gradlew runAltitudePressureTest
 
-# Test teacher JAR
-# Add build/libs/*-teacher.jar to a test project classpath
+# Generate JavaDoc locally
+./gradlew javadoc
+
+# View generated docs
+open build/docs/javadoc/index.html
 ```
 
-This dual-release strategy ensures that students get a clean, professional library experience while teachers have access to the full testing framework needed for comprehensive assignment validation.
+### JavaDoc Publication
+
+JavaDoc is automatically published to gh-pages with:
+- **Versioned docs**: `https://scerruti.github.io/JCoDroneEdu/docs/v1.0.0/`
+- **Latest docs**: `https://scerruti.github.io/JCoDroneEdu/docs/latest/` (always points to most recent)
+- **Full method index**: Searchable across all releases
+- **Educational examples**: JavaDoc includes code samples and best practices
