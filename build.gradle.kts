@@ -81,7 +81,7 @@ tasks.register<JavaExec>("runSensorDisplayGui") {
     group = "verification"
     description = "Runs the Swing-based SensorDisplay GUI (non-flying telemetry monitor)."
     classpath = sourceSets.getByName("main").runtimeClasspath
-    mainClass.set("com.otabi.jcodroneedu.examples.SensorDisplayGui")
+    mainClass.set("com.otabi.jcodroneedu.tools.SensorDisplayGui")
 }
 
 // -----------------------------------------------------------------
@@ -132,7 +132,7 @@ tasks.register<JavaExec>("runControllerInputGui") {
     group = "verification"
     description = "Interactive GUI for testing controller joysticks and buttons."
     classpath = sourceSets.getByName("main").runtimeClasspath
-    mainClass.set("com.otabi.jcodroneedu.examples.ControllerInputGui")
+    mainClass.set("com.otabi.jcodroneedu.tools.ControllerInputGui")
 }
 
 // -----------------------------------------------------------------
@@ -142,7 +142,7 @@ tasks.register<JavaExec>("runBothMonitors") {
     group = "verification"
     description = "Runs both sensor and controller monitors with L1 hold takeoff test."
     classpath = sourceSets.getByName("main").runtimeClasspath
-    mainClass.set("com.otabi.jcodroneedu.examples.BothMonitors")
+    mainClass.set("com.otabi.jcodroneedu.tools.BothMonitors")
     // Forward stdin so keyboard input (Q to quit) works
     standardInput = System.`in`
 }

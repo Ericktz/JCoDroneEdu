@@ -1,4 +1,4 @@
-package com.otabi.jcodroneedu.gui;
+package com.otabi.jcodroneedu.tools;
 
 import com.otabi.jcodroneedu.Drone;
 
@@ -7,7 +7,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
 /**
- * A simple-to-use controller monitor that opens a window showing all controller input.
+ * A simple-to-use sensor monitor that opens a window showing all drone sensors.
  * This class handles all the GUI complexity so students don't need to know Swing.
  * 
  * <p><strong>Ultra-Simple Usage:</strong></p>
@@ -16,7 +16,7 @@ import java.awt.event.WindowEvent;
  * drone.pair();
  * 
  * // That's it! One line creates and shows the monitor:
- * ControllerMonitor monitor = new ControllerMonitor(drone);
+ * SensorMonitor monitor = new SensorMonitor(drone);
  * 
  * // Your code continues here...
  * // The monitor window stays open and updates automatically
@@ -27,35 +27,34 @@ import java.awt.event.WindowEvent;
  * 
  * <p>The monitor automatically:</p>
  * <ul>
- *   <li>Creates and displays a window with all controller inputs</li>
- *   <li>Starts updating joysticks and buttons at 20 Hz</li>
- *   <li>Shows visual feedback for all button presses</li>
- *   <li>Displays joystick positions with graphical indicators</li>
+ *   <li>Creates and displays a window with all sensor information</li>
+ *   <li>Starts updating sensors at 5 Hz</li>
+ *   <li>Adds Land and Emergency Stop buttons for safety</li>
  *   <li>Handles cleanup when the window is closed</li>
  *   <li>Runs as a daemon so it won't prevent your program from ending</li>
  * </ul>
  * 
- * @educational This is the easiest way to see your controller input. Just create
+ * @educational This is the easiest way to see your drone's sensors. Just create
  *              one object and pass your drone - no GUI knowledge required!
  * 
  * @author CoDrone EDU Development Team
  * @since 1.0
  */
-public class ControllerMonitor {
+public class SensorMonitor {
     private final JFrame frame;
-    private final ControllerInputPanel panel;
+    private final SensorMonitorPanel panel;
     private volatile boolean isOpen = true;
     
     /**
-     * Creates and displays a controller monitor window for the given drone.
-     * The window appears immediately and starts updating controller input.
+     * Creates and displays a sensor monitor window for the given drone.
+     * The window appears immediately and starts updating sensor data.
      * 
      * @param drone the connected Drone to monitor
      * @educational Just pass your connected drone and the monitor window appears!
      */
-    public ControllerMonitor(Drone drone) {
-        this.panel = new ControllerInputPanel(drone);
-        this.frame = new JFrame("CoDrone EDU - Controller Monitor");
+    public SensorMonitor(Drone drone) {
+        this.panel = new SensorMonitorPanel(drone);
+        this.frame = new JFrame("CoDrone EDU - Sensor Monitor");
         
         // Setup frame
         frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);

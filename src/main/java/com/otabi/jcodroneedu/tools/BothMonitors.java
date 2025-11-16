@@ -1,8 +1,8 @@
-package com.otabi.jcodroneedu.examples;
+package com.otabi.jcodroneedu.tools;
 
 import com.otabi.jcodroneedu.Drone;
-import com.otabi.jcodroneedu.gui.SensorMonitor;
-import com.otabi.jcodroneedu.gui.ControllerMonitor;
+import com.otabi.jcodroneedu.tools.SensorMonitor;
+import com.otabi.jcodroneedu.tools.ControllerMonitor;
 import com.otabi.jcodroneedu.protocol.DataType;
 
 /**

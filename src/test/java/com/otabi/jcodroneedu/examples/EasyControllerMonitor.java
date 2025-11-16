@@ -1,7 +1,7 @@
 package com.otabi.jcodroneedu.examples;
 
 import com.otabi.jcodroneedu.Drone;
-import com.otabi.jcodroneedu.gui.ControllerMonitor;
+import com.otabi.jcodroneedu.tools.ControllerMonitor;
 
 /**
  * Ultra-simple example showing how students can monitor controller input with ONE line of code.

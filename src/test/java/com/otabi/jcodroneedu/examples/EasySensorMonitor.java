@@ -1,7 +1,7 @@
 package com.otabi.jcodroneedu.examples;
 
 import com.otabi.jcodroneedu.Drone;
-import com.otabi.jcodroneedu.gui.SensorMonitor;
+import com.otabi.jcodroneedu.tools.SensorMonitor;
 
 /**
  * Ultra-simple example showing how students can monitor sensors with ONE line of code.

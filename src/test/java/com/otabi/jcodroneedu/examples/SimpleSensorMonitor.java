@@ -1,7 +1,7 @@
 package com.otabi.jcodroneedu.examples;
 
 import com.otabi.jcodroneedu.Drone;
-import com.otabi.jcodroneedu.gui.SensorMonitorPanel;
+import com.otabi.jcodroneedu.tools.SensorMonitorPanel;
 
 import javax.swing.*;
 
