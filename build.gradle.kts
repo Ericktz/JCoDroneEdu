@@ -1369,35 +1369,56 @@ print(codrone_edu.__version__)
         }
         report.appendLine()
         
-        // Parse Python API by importing the module
-        val pythonMethods = mutableSetOf<String>()
-        val pythonScript = """
-import codrone_edu.drone as drone_module
-import inspect
-
-# Get all public methods from Drone class
-drone_class = drone_module.Drone
-for name, method in inspect.getmembers(drone_class, predicate=inspect.isfunction):
-    if not name.startswith('_'):
-        print(name)
-        """.trimIndent()
+        // Parse Python API - only DOCUMENTED public methods (from official docs)
+        // These are the methods actually documented on https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation
+        val pythonMethods = mutableSetOf(
+            // Connection
+            "pair", "close",
+            // Flight Commands
+            "takeoff", "land", "emergency_stop", "hover", "avoid_wall", "keep_distance",
+            "get_trim", "reset_trim", "set_trim", "move_forward", "move_backward", "move_left", "move_right",
+            "move_distance", "send_absolute_position", "turn", "turn_degree", "turn_left", "turn_right",
+            // Flight Sequences
+            "circle", "flip", "spiral", "sway", "triangle",
+            // Flight Variables
+            "get_move_values", "move", "print_move_values", "reset_move", "reset_move_values",
+            "set_pitch", "set_roll", "set_throttle", "set_yaw",
+            // LED
+            "controller_LED_off", "drone_LED_off", "set_controller_LED", "set_drone_LED",
+            // Sounds
+            "controller_buzzer", "drone_buzzer", "start_drone_buzzer", "stop_drone_buzzer",
+            "start_controller_buzzer", "stop_controller_buzzer",
+            // Sensors (Position)
+            "get_pos_x", "get_pos_y", "get_pos_z", "get_position_data",
+            // Sensors (Range)
+            "detect_wall", "get_bottom_range", "get_front_range", "get_height",
+            // Sensors (Optical Flow)
+            "get_flow_velocity_x", "get_flow_velocity_y", "get_flow_x", "get_flow_y",
+            // Sensors (Gyroscope/IMU)
+            "get_accel_x", "get_accel_y", "get_accel_z", "get_angle_x", "get_angle_y", "get_angle_z",
+            "get_angular_speed_x", "get_angular_speed_y", "get_angular_speed_z",
+            "get_x_accel", "get_x_angle", "get_y_accel", "get_y_angle", "get_z_accel", "get_z_angle",
+            "reset_gyro", "reset_sensor",
+            // Sensors (Pressure/Temperature)
+            "get_drone_temperature", "get_temperature", "height_from_pressure", "get_pressure", "set_initial_pressure",
+            // Sensors (Color)
+            "append_color_data", "get_back_color", "get_color_data", "get_colors", "get_front_color",
+            "load_classifier", "load_color_data", "new_color_data", "predict_colors",
+            // Sensors (State Data)
+            "get_battery", "get_error_data", "get_flight_state", "get_movement_state", "get_sensor_data",
+            // Controller
+            "down_arrow_pressed", "get_button_data", "l1_pressed", "l2_pressed", "left_arrow_pressed",
+            "p_pressed", "power_pressed", "r1_pressed", "r2_pressed", "right_arrow_pressed", "s_pressed",
+            "h_pressed", "up_arrow_pressed", "get_joystick_data",
+            "get_left_joystick_x", "get_left_joystick_y", "get_right_joystick_x", "get_right_joystick_y",
+            // Screen/Display
+            "controller_clear_screen", "controller_create_canvas", "controller_draw_arc", "controller_draw_canvas",
+            "controller_draw_chord", "controller_draw_ellipse", "controller_draw_image", "controller_draw_line",
+            "controller_draw_point", "controller_draw_polygon", "controller_draw_rectangle", "controller_draw_square",
+            "controller_draw_string", "controller_draw_string_align", "controller_preview_canvas", "get_image_data"
+        )
         
-        try {
-            val pythonOutput = ByteArrayOutputStream()
-            exec {
-                commandLine(pythonExecutable, "-c", pythonScript)
-                standardOutput = pythonOutput
-                isIgnoreExitValue = true
-            }
-            
-            pythonOutput.toString().lines().forEach { line ->
-                if (line.trim().isNotEmpty()) {
-                    pythonMethods.add(line.trim())
-                }
-            }
-        } catch (e: Exception) {
-            println("⚠️  Could not parse Python API: ${e.message}")
-        }
+        println("📊 Documented Python methods loaded: ${pythonMethods.size} public API methods")
         
         // Parse Java API and extract @pythonEquivalent annotations
         val javaFile = file("src/main/java/com/otabi/jcodroneedu/Drone.java")

@@ -1,18 +1,18 @@
 # API Comparison Report
 
-**Generated:** 2025-11-16T12:44:12.524068
+**Generated:** 2025-11-16T13:21:53.214911
 **Java Version:** 1.3.0
 **Python API Version:** 2.6.0
 
 ## Summary
 
-- **Python Methods:** 259
+- **Python Methods:** 127
 - **Java Methods:** 188
-- **Matched Methods:** 123
-  - Documented (@pythonEquivalent): 68
-  - Inferred (by name): 55
-- **In Python, Not Java:** 145
-- **In Java, Not Python:** 65
+- **Matched Methods:** 105
+  - Documented (@pythonEquivalent): 60
+  - Inferred (by name): 45
+- **In Python, Not Java:** 31
+- **In Java, Not Python:** 83
 
 **Note:** Java methods use @pythonEquivalent annotations to document their Python API mapping.
 
@@ -20,14 +20,9 @@
 
 ⚠️ Consider implementing these methods:
 
-- `add_callback()`
 - `append_color_data()`
 - `avoid_wall()`
-- `check()`
-- `checkDetail()`
-- `connect()`
 - `controller_LED_off()`
-- `controller_buzzer_sequence()`
 - `controller_draw_arc()`
 - `controller_draw_chord()`
 - `controller_draw_ellipse()`
@@ -38,133 +33,24 @@
 - `controller_draw_square()`
 - `controller_draw_string_align()`
 - `controller_preview_canvas()`
-- `convert_meter()`
-- `convert_millimeter()`
-- `detect_colors()`
-- `disconnect()`
-- `drone_buzzer_sequence()`
-- `dummy_function()`
-- `getCount()`
-- `getData()`
-- `getHeader()`
-- `get_ack_data()`
 - `get_angular_speed_x()`
 - `get_angular_speed_y()`
 - `get_angular_speed_z()`
-- `get_control_speed()`
 - `get_image_data()`
-- `get_lostconnection_data()`
-- `get_motion_data()`
-- `get_range_data()`
-- `get_raw_motion_data()`
-- `get_state_data()`
-- `get_system_state()`
-- `get_trim_data()`
 - `get_x_accel()`
 - `get_x_angle()`
-- `get_x_gyro()`
 - `get_y_accel()`
 - `get_y_angle()`
-- `get_y_gyro()`
 - `get_z_accel()`
 - `get_z_angle()`
-- `get_z_gyro()`
-- `goto_waypoint()`
-- `initialize_data()`
-- `isConnected()`
-- `isOpen()`
 - `keep_distance()`
 - `load_classifier()`
 - `load_color_data()`
-- `load_color_data_without_print()`
-- `makeTransferDataArray()`
 - `move_forward()`
 - `new_color_data()`
-- `open()`
-- `percent_error()`
-- `ping()`
 - `predict_colors()`
-- `print_num_data()`
-- `receive_address_data()`
-- `receive_cpu_id_data()`
-- `reset_classifier()`
 - `reset_move()`
-- `reset_previous_land()`
 - `reset_sensor()`
-- `sendBacklight()`
-- `sendBuzzer()`
-- `sendBuzzerHz()`
-- `sendBuzzerHzReserve()`
-- `sendBuzzerMute()`
-- `sendBuzzerMuteReserve()`
-- `sendBuzzerScale()`
-- `sendBuzzerScaleReserve()`
-- `sendClearBias()`
-- `sendClearTrim()`
-- `sendCommand()`
-- `sendCommandLightEvent()`
-- `sendCommandLightEventColor()`
-- `sendCommandLightEventColors()`
-- `sendControl()`
-- `sendControlPosition()`
-- `sendControlWhile()`
-- `sendControlleLinkMode()`
-- `sendDisplayClear()`
-- `sendDisplayClearAll()`
-- `sendDisplayDrawCircle()`
-- `sendDisplayDrawLine()`
-- `sendDisplayDrawPoint()`
-- `sendDisplayDrawRect()`
-- `sendDisplayDrawString()`
-- `sendDisplayDrawStringAlign()`
-- `sendDisplayInvert()`
-- `sendFlightEvent()`
-- `sendFlip()`
-- `sendHeadless()`
-- `sendLanding()`
-- `sendLightDefaultColor()`
-- `sendLightEventColor()`
-- `sendLightEventColors()`
-- `sendLightManual()`
-- `sendLightModeColor()`
-- `sendLightModeColors()`
-- `sendLostConnection()`
-- `sendModeControlFlight()`
-- `sendMotor()`
-- `sendMotorSingle()`
-- `sendPairing()`
-- `sendPing()`
-- `sendRequest()`
-- `sendSetDefault()`
-- `sendStop()`
-- `sendTakeOff()`
-- `sendTrim()`
-- `sendVibrator()`
-- `sendVibratorReserve()`
-- `sendWeight()`
-- `setEventHandler()`
-- `set_motor_speed()`
-- `set_waypoint()`
-- `speed_change()`
-- `stop_motors()`
-- `transfer()`
-- `turn_direction()`
-- `update_ack_data()`
-- `update_address()`
-- `update_altitude_data()`
-- `update_color_data()`
-- `update_count_data()`
-- `update_cpu_id_data()`
-- `update_error_data()`
-- `update_flow_data()`
-- `update_information()`
-- `update_lostconnection_data()`
-- `update_motion_data()`
-- `update_position_data()`
-- `update_range_data()`
-- `update_raw_motion_data()`
-- `update_state_data()`
-- `update_trim_data()`
 
 ## Methods in Java but NOT in Python
 
@@ -174,6 +60,7 @@
 - `autoConnect, String portName) throws DroneNotFoundException()`
 - `avoidWall()`
 - `changeSpeed()`
+- `circleTurn()`
 - `clearBias()`
 - `clearCounter()`
 - `connect()`
@@ -187,21 +74,31 @@
 - `controllerLEDOff()`
 - `droneBuzzerSequence()`
 - `getAccel()`
+- `getAccidentCount()`
+- `getAddressData()`
 - `getAddressDataObject()`
 - `getAltitude()`
+- `getAltitudeData()`
 - `getAngle()`
 - `getButtonDataObject()`
 - `getCalculatedAltitude()`
 - `getCalibratedTemperature()`
 - `getCorrectedElevation()`
+- `getCountData()`
 - `getCountDataObject()`
+- `getCpuIdData()`
 - `getCpuIdDataObject()`
 - `getDroneStatus()`
+- `getElevation()`
 - `getErrors()`
 - `getFlightController()`
+- `getFlightTime()`
+- `getFlowData()`
 - `getGyro()`
+- `getInformationData()`
 - `getInformationDataObject()`
 - `getJoystickDataObject()`
+- `getLandingCount()`
 - `getLinkController()`
 - `getLinkManager()`
 - `getPositionX()`
@@ -209,9 +106,11 @@
 - `getPositionZ()`
 - `getReceiver()`
 - `getSettingsController()`
+- `getTakeoffCount()`
 - `getTelemetryService()`
 - `getUncalibratedTemperature()`
 - `getUncorrectedElevation()`
+- `go()`
 - `isConnected()`
 - `isOpen()`
 - `keepDistance()`
@@ -225,13 +124,18 @@
 - `sendRequest()`
 - `sendRequestWait()`
 - `setBacklight()`
+- `setControllerLEDMode()`
 - `setControllerMode()`
 - `setDefault()`
+- `setDroneLEDMode()`
 - `setHeadlessMode()`
 - `setLinkMode()`
+- `square()`
+- `triangleTurn()`
 - `triggerFlightEvent()`
 - `unloadColorClassifier()`
 - `updateButtonData()`
+- `updateJoystickData()`
 - `useCalibratedTemperature()`
 - `useCorrectedElevation()`
 - `{()`
