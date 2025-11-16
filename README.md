@@ -1,10 +1,10 @@
 # CoDrone EDU Java API
 
-A concise, classroom-focused Java library for programming the CoDrone EDU hardware. This repository contains the Java API (package `com.otabi.jcodroneedu`), example programs, documentation, and build tooling used to produce student and teacher JARs.
+A concise, classroom-focused Java library for programming the CoDrone EDU hardware. This repository contains the Java API (package `com.otabi.jcodroneedu`), example programs, documentation, and build tooling.
 
 ## Summary
 
-CoDrone EDU Java is intended for educators and students. It exposes a simple, well-documented API to control the drone (flight, sensors, LEDs, buzzer), includes classroom-ready examples, and provides teacher utilities in a separate teacher JAR. The project aims for behavioral parity with the reference Python API while adapting to Java idioms and safety.
+CoDrone EDU Java is intended for educators and students. It exposes a simple, well-documented API to control the drone (flight, sensors, LEDs, buzzer), includes classroom-ready examples, and comprehensive integration examples. The project aims for behavioral parity with the reference Python API while adapting to Java idioms and safety.
 
 ---
 
@@ -48,16 +48,16 @@ Artifacts produced by the build:
 ## Development status (classroom-ready)
 The CoDrone EDU Java API is classroom-ready for student and educator use. Core flight controls, sensor access, LED control, and the student examples are implemented and tested. We continue to refine advanced features and documentation; check the release notes for details.
 
-## Latest Release: v1.3.1
+## Latest Release: v1.3.2
 
-Latest release now available on Maven Central! This release includes simplified Maven publication for easier integration with Gradle and Maven-based student projects.
+Latest release now available on Maven Central with full IDE integration support (Javadoc and Sources JARs).
 
 Highlights:
 - Core flight controls: user-friendly movement commands for classroom exercises.
 - Sensors: accelerometer, gyroscope, distance sensors, and camera/vision APIs.
 - LED control: full support for drone and controller LEDs, example patterns, and guided activities.
 - Student examples: curated example projects suitable for K–12 and AP Computer Science lessons.
-- Published on Maven Central: easy dependency integration for Gradle and Maven projects.
+- Published on Maven Central: with sources and Javadoc for full IDE support in VS Code, IntelliJ, Eclipse, and other IDEs.
 
 For past releases and detailed changelog, see [CHANGELOG.md](CHANGELOG.md).
 
@@ -78,7 +78,7 @@ This Java API maintains behavioral parity with the official CoDrone EDU Python A
 
 ### Version Alignment
 
-- Java API v1.3.0 → Python API v2.6.0 (target compatibility)
+- Java API v1.3.2 → Python API v2.6.0 (target compatibility)
 - Naming conventions adapted for Java idioms (camelCase methods, Java-style class structure)
 - Method naming follows Java conventions while maintaining semantic equivalence with Python
 - See [API_COMPARISON_vs_2.6.md](API_COMPARISON_vs_2.6.md) for detailed method mapping with latest version
@@ -107,12 +107,12 @@ If you encounter compatibility issues:
 
 ### Adding to your project
 
-The library is published to Maven Central. Add it to your project:
+The library is published to Maven Central with full source and Javadoc support. Add it to your project:
 
 **Gradle:**
 ```gradle
 dependencies {
-    implementation 'com.otabi:codrone-edu-java:1.3.1'
+    implementation 'com.otabi:codrone-edu-java:1.3.2'
 }
 ```
 
@@ -121,18 +121,22 @@ dependencies {
 <dependency>
   <groupId>com.otabi</groupId>
   <artifactId>codrone-edu-java</artifactId>
-  <version>1.3.1</version>
+  <version>1.3.2</version>
 </dependency>
 ```
+
+### IDE Integration
+
+Most IDEs automatically download and attach:
+- **Javadoc JAR** (`-javadoc.jar`) - Provides inline documentation and hover tooltips
+- **Sources JAR** (`-sources.jar`) - Enables source code browsing
+
+If your IDE doesn't automatically attach these, you can manually configure it to use the Maven Central artifacts with classifiers `javadoc` and `sources`.
 
 ### Running examples
 
 1. See the `src/main/java/com/otabi/jcodroneedu/examples` directory for hands-on sample programs and lesson starters.
-2. API documentation (Javadoc) is included with each Maven Central release.
-3. For detailed implementation patterns, see [docs/LOGGING_GUIDE.md](docs/LOGGING_GUIDE.md)
-
-## Teacher edition
-The teacher edition JAR includes extra utilities for instructors such as testing helpers and test harnesses used in classroom assessments. The teacher JAR is distributed via the Release assets for instructors and course maintainers.
+2. For detailed implementation patterns, see [docs/LOGGING_GUIDE.md](docs/LOGGING_GUIDE.md)
 
 ## Documentation & examples
 - **API documentation (Javadoc)**: Included in Maven Central releases and available via the `-javadoc.jar` artifact
