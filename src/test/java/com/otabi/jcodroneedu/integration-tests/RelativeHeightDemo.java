@@ -1,4 +1,4 @@
-package com.otabi.jcodroneedu.examples.tests;
+package com.otabi.jcodroneedu.integrationtests;
 
 import com.otabi.jcodroneedu.Drone;
 import com.otabi.jcodroneedu.protocol.DataType;

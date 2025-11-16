@@ -17,14 +17,25 @@ java {
     }
 }
 
+// -----------------------------------------------------------------
+// Run Integration Test Menu - main entry point for all hardware tests
+// -----------------------------------------------------------------
+tasks.register<JavaExec>("runIntegrationTestMenu") {
+    group = "verification"
+    description = "Runs the Integration Test Menu - interactive interface for all hardware integration tests."
+    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.integrationtests.IntegrationTestMenu")
+    standardInput = System.`in`
+}
+
 // ------------------------------------------------------------
 // Run Smoke Test - convenience task for the example SmokeTest
 // ------------------------------------------------------------
 tasks.register<JavaExec>("runSmokeTest") {
     group = "verification"
     description = "Runs the SmokeTest example to verify controller connection (no flight commands)."
-    classpath = sourceSets.getByName("main").runtimeClasspath
-    mainClass.set("com.otabi.jcodroneedu.examples.tests.SmokeTest")
+    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.integrationtests.SmokeTest")
     // Pass args using: ./gradlew runSmokeTest --args='/dev/cu.usbserial-XXXX'
 }
 
@@ -34,8 +45,8 @@ tasks.register<JavaExec>("runSmokeTest") {
 tasks.register<JavaExec>("runFlightSmokeTest") {
     group = "verification"
     description = "Runs the guarded FlightSmokeTest (requires --allow-flight and --confirm=YES to actually fly)."
-    classpath = sourceSets.getByName("main").runtimeClasspath
-    mainClass.set("com.otabi.jcodroneedu.examples.tests.FlightSmokeTest")
+    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.integrationtests.FlightSmokeTest")
     // Pass args using: ./gradlew runFlightSmokeTest --args='--allow-flight --confirm=YES'
     standardInput = System.`in`
 }
@@ -46,8 +57,8 @@ tasks.register<JavaExec>("runFlightSmokeTest") {
 tasks.register<JavaExec>("runConservativeFlight") {
     group = "verification"
     description = "Runs the ConservativeFlight example (requires --allow-flight to actually fly)."
-    classpath = sourceSets.getByName("main").runtimeClasspath
-    mainClass.set("com.otabi.jcodroneedu.examples.tests.ConservativeFlight")
+    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.integrationtests.ConservativeFlight")
     // Usage: ./gradlew runConservativeFlight --args='--allow-flight'
 }
 
@@ -57,8 +68,8 @@ tasks.register<JavaExec>("runConservativeFlight") {
 tasks.register<JavaExec>("runQuickLEDTest") {
     group = "verification"
     description = "Runs the QuickLEDTest example to verify drone and controller LED functionality."
-    classpath = sourceSets.getByName("main").runtimeClasspath
-    mainClass.set("com.otabi.jcodroneedu.examples.tests.QuickLEDTest")
+    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.integrationtests.QuickLEDTest")
 }
 
 
@@ -68,8 +79,8 @@ tasks.register<JavaExec>("runQuickLEDTest") {
 tasks.register<JavaExec>("runTestHarness") {
     group = "verification"
     description = "Runs the interactive TestHarness example for manual testing."
-    classpath = sourceSets.getByName("main").runtimeClasspath
-    mainClass.set("com.otabi.jcodroneedu.examples.tests.TestHarness")
+    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.integrationtests.TestHarness")
     // Forward stdin so Scanner(System.in) in the harness can read user input when run via Gradle
     standardInput = System.`in`
 }
@@ -165,8 +176,8 @@ tasks.register<JavaExec>("runControllerInputDebug") {
 tasks.register<JavaExec>("runAccelTest") {
     group = "verification"
     description = "Runs the command-line AccelTest (prints accelerometer and angle data)."
-    classpath = sourceSets.getByName("main").runtimeClasspath
-    mainClass.set("com.otabi.jcodroneedu.examples.tests.AccelTest")
+    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.integrationtests.AccelTest")
     // Forward stdin so interactive prompts (press Enter) work when run via Gradle
     standardInput = System.`in`
 }
@@ -184,8 +195,8 @@ tasks.register<JavaExec>("runMotionDump") {
 tasks.register<JavaExec>("runAltitudePressureTest") {
     group = "verification"
     description = "Displays altitude, pressure, and height sensor data with calculations."
-    classpath = sourceSets.getByName("main").runtimeClasspath
-    mainClass.set("com.otabi.jcodroneedu.examples.tests.AltitudePressureTest")
+    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.integrationtests.AltitudePressureTest")
 }
 
 // Run Elevation API Demo - demonstrates new elevation methods
@@ -193,8 +204,8 @@ tasks.register<JavaExec>("runAltitudePressureTest") {
 tasks.register<JavaExec>("runElevationApiDemo") {
     group = "verification"
     description = "Demonstrates the elevation API (getUncorrectedElevation, getCorrectedElevation, getElevation)."
-    classpath = sourceSets.getByName("main").runtimeClasspath
-    mainClass.set("com.otabi.jcodroneedu.examples.tests.ElevationApiDemo")
+    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.integrationtests.ElevationApiDemo")
 }
 
 // Run Calibrated Elevation Demo - shows weather-calibrated altitude
@@ -202,8 +213,8 @@ tasks.register<JavaExec>("runElevationApiDemo") {
 tasks.register<JavaExec>("runCalibratedElevationDemo") {
     group = "verification"
     description = "Demonstrates weather-calibrated elevation using real-time pressure data."
-    classpath = sourceSets.getByName("main").runtimeClasspath
-    mainClass.set("com.otabi.jcodroneedu.examples.tests.CalibratedElevationDemo")
+    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.integrationtests.CalibratedElevationDemo")
 }
 
 // Run Weather Service Test - tests API connectivity without drone
@@ -211,8 +222,8 @@ tasks.register<JavaExec>("runCalibratedElevationDemo") {
 tasks.register<JavaExec>("runWeatherServiceTest") {
     group = "verification"
     description = "Tests weather API connectivity and data retrieval (no drone required)."
-    classpath = sourceSets.getByName("main").runtimeClasspath
-    mainClass.set("com.otabi.jcodroneedu.examples.tests.WeatherServiceTest")
+    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.integrationtests.WeatherServiceTest")
 }
 
 // Run Relative Height Demo - demonstrates pressure-based relative height
@@ -220,8 +231,8 @@ tasks.register<JavaExec>("runWeatherServiceTest") {
 tasks.register<JavaExec>("runRelativeHeightDemo") {
     group = "verification"
     description = "Demonstrates relative height measurement using pressure reference (Python compatibility)."
-    classpath = sourceSets.getByName("main").runtimeClasspath
-    mainClass.set("com.otabi.jcodroneedu.examples.tests.RelativeHeightDemo")
+    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.integrationtests.RelativeHeightDemo")
 }
 
 // Run Automatic Elevation Demo - demonstrates automatic location detection
@@ -229,8 +240,8 @@ tasks.register<JavaExec>("runRelativeHeightDemo") {
 tasks.register<JavaExec>("runAutomaticElevationDemo") {
     group = "verification"
     description = "Demonstrates automatic location detection and pressure calibration with fallback strategy."
-    classpath = sourceSets.getByName("main").runtimeClasspath
-    mainClass.set("com.otabi.jcodroneedu.examples.tests.AutomaticElevationDemo")
+    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.integrationtests.AutomaticElevationDemo")
 }
 
 // -----------------------------------------------------------------
@@ -239,8 +250,8 @@ tasks.register<JavaExec>("runAutomaticElevationDemo") {
 tasks.register<JavaExec>("runMultiSensorTest") {
     group = "verification"
     description = "Runs the MultiSensorTest example to snapshot range, optical flow, temperature, and color sensors."
-    classpath = sourceSets.getByName("main").runtimeClasspath
-    mainClass.set("com.otabi.jcodroneedu.examples.tests.MultiSensorTest")
+    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.integrationtests.MultiSensorTest")
     // Forward stdin so interactive prompts (press Enter) work when run via Gradle
     standardInput = System.`in`
 }
@@ -272,8 +283,8 @@ tasks.register<JavaExec>("runTemperatureCalibrationExperiment") {
 tasks.register<JavaExec>("runColorSensorDebug") {
     group = "verification"
     description = "Runs the ColorSensorDebug tool to show detailed color sensor data including HSVL values."
-    classpath = sourceSets.getByName("main").runtimeClasspath
-    mainClass.set("com.otabi.jcodroneedu.examples.tests.ColorSensorDebug")
+    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.integrationtests.ColorSensorDebug")
     // Forward stdin so interactive prompts work
     standardInput = System.`in`
 }
@@ -535,13 +546,13 @@ tasks.register<JavaExec>("runEchoTimingTest") {
 }
 
 // -----------------------------------------------------------------
-// Run Example Menu - interactive menu to launch any example
+// Run Integration Test Menu - interactive menu for hardware tests
 // -----------------------------------------------------------------
 tasks.register<JavaExec>("runExampleMenu") {
-    group = "application"
-    description = "Runs the interactive Example Menu to launch any available example program."
+    group = "verification"
+    description = "Runs the Integration Test Menu - interactive interface for all hardware integration tests."
     classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
-    mainClass.set("com.otabi.jcodroneedu.examples.ExampleMenu")
+    mainClass.set("com.otabi.jcodroneedu.integrationtests.IntegrationTestMenu")
     // Forward stdin so the menu can read user input
     standardInput = System.`in`
 }

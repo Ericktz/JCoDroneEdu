@@ -1,4 +1,4 @@
-package com.otabi.jcodroneedu.test;
+package com.otabi.jcodroneedu.integrationtests;
 
 import com.otabi.jcodroneedu.Drone;
 import com.otabi.jcodroneedu.DroneSystem;
