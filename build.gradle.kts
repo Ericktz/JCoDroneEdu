@@ -1252,25 +1252,55 @@ tasks.register("compareApis") {
         println()
         
         val pythonVersion = project.findProperty("pythonApiVersion")?.toString() ?: "2.2.0"
+        val venvDir = file("reference/python-venv")
         
-        // Try to import the Python module, install if needed
+        // Ensure virtual environment exists
+        if (!venvDir.exists()) {
+            println("📦 Creating Python virtual environment in reference/python-venv...")
+            try {
+                exec {
+                    commandLine("python3", "-m", "venv", venvDir.absolutePath)
+                    isIgnoreExitValue = true
+                }
+            } catch (e: Exception) {
+                println("⚠️  Could not create virtual environment. Skipping API comparison.")
+                println("   Try manually: python3 -m venv reference/python-venv")
+                return@doLast
+            }
+        }
+        
+        // Determine pip executable path
+        val pipExecutable = if (System.getProperty("os.name").toLowerCase().contains("win")) {
+            venvDir.absolutePath + "\\Scripts\\pip"
+        } else {
+            venvDir.absolutePath + "/bin/pip"
+        }
+        
+        // Determine python executable path
+        val pythonExecutable = if (System.getProperty("os.name").toLowerCase().contains("win")) {
+            venvDir.absolutePath + "\\Scripts\\python"
+        } else {
+            venvDir.absolutePath + "/bin/python"
+        }
+        
+        // Try to import the Python module in venv, install if needed
         val pythonCheck = ByteArrayOutputStream()
         try {
             exec {
-                commandLine("python3", "-c", "import codrone_edu; print(codrone_edu.__version__)")
+                commandLine(pythonExecutable, "-c", "import codrone_edu; print(codrone_edu.__version__)")
                 standardOutput = pythonCheck
                 isIgnoreExitValue = true
             }
         } catch (e: Exception) {
-            println("⚠️  Python module not found, attempting to install codrone-edu==$pythonVersion")
+            println("📦 Installing codrone-edu==$pythonVersion to virtual environment...")
             try {
                 exec {
-                    commandLine("pip3", "install", "codrone-edu==$pythonVersion", "--quiet")
+                    commandLine(pipExecutable, "install", "codrone-edu==$pythonVersion", "--quiet")
                     isIgnoreExitValue = true
                 }
             } catch (e: Exception) {
                 println("⚠️  Could not install Python module. Skipping API comparison.")
-                println("   To enable: pip3 install codrone-edu==$pythonVersion")
+                println("   To install manually: ${venvDir.absolutePath}/bin/pip install codrone-edu==$pythonVersion")
                 return@doLast
             }
         }
@@ -1301,7 +1331,7 @@ for name, method in inspect.getmembers(drone_class, predicate=inspect.isfunction
         try {
             val pythonOutput = ByteArrayOutputStream()
             exec {
-                commandLine("python3", "-c", pythonScript)
+                commandLine(pythonExecutable, "-c", pythonScript)
                 standardOutput = pythonOutput
                 isIgnoreExitValue = true
             }
