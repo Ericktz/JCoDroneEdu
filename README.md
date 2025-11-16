@@ -74,15 +74,16 @@ This Java API maintains behavioral parity with the official CoDrone EDU Python A
 | Component | Version |
 |-----------|---------|
 | **Java Runtime** | 21+ |
-| **Python API** | 2.3.0+ |
+| **Python API** | 2.6.0+ |
 | **CoDrone EDU Firmware** | 25.2.1+ |
 
 ### Version Alignment
 
-- Java API v1.3.0 → Python API v2.3.0
+- Java API v1.3.0 → Python API v2.6.0 (target compatibility)
 - Naming conventions adapted for Java idioms (camelCase methods, Java-style class structure)
 - Method naming follows Java conventions while maintaining semantic equivalence with Python
-- See [API_COMPARISON.md](API_COMPARISON.md) for detailed method mapping
+- See [API_COMPARISON_vs_2.6.md](API_COMPARISON_vs_2.6.md) for detailed method mapping with latest version
+- Legacy comparisons available: [API_COMPARISON_2.3.md](API_COMPARISON_2.3.md), [API_COMPARISON_2.5.md](API_COMPARISON_2.5.md)
 
 ### Checking Compatibility
 
@@ -93,14 +94,14 @@ To verify your environment supports this library:
 java -version  # Requires 21 or higher
 
 # Check Python compatibility
-pip show codrone-edu  # Should be v2.3.0 or compatible version
+pip show codrone-edu  # Should be v2.6.0 or compatible version
 ```
 
 ### Reporting Incompatibilities
 
 If you encounter compatibility issues:
 1. Check the [Compatibility Matrix](#-api-compatibility) above
-2. Review [API_COMPARISON.md](API_COMPARISON.md) for method availability
+2. Review [API_COMPARISON_vs_2.6.md](API_COMPARISON_vs_2.6.md) for method availability
 3. Open an issue with your Java/Python versions and the specific problem
 
 ## Getting started (student)
