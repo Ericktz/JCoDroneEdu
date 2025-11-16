@@ -1,0 +1,124 @@
+name: Check for Python API Updates
+
+on:
+  schedule:
+    # Run every Monday at 9 AM UTC
+    - cron: '0 9 * * 1'
+  workflow_dispatch:  # Allow manual trigger
+
+jobs:
+  check-updates:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
+      
+      - name: Get current configured version
+        id: current
+        run: |
+          VERSION=$(grep "pythonApiVersion=" gradle.properties | cut -d'=' -f2)
+          echo "version=${VERSION}" >> $GITHUB_OUTPUT
+          echo "Current Python API version: ${VERSION}"
+      
+      - name: Check PyPI for latest version
+        id: latest
+        run: |
+          pip install packaging
+          python3 << 'EOF'
+          import urllib.request
+          import json
+          
+          try:
+              response = urllib.request.urlopen('https://pypi.org/pypi/codrone-edu/json')
+              data = json.loads(response.read().decode())
+              latest_version = data['info']['version']
+              print(f"Latest PyPI version: {latest_version}")
+              with open("$GITHUB_ENV", "a") as f:
+                  f.write(f"LATEST_VERSION={latest_version}\n")
+          except Exception as e:
+              print(f"Error checking PyPI: {e}")
+              exit(1)
+          EOF
+      
+      - name: Compare versions
+        id: compare
+        run: |
+          CURRENT="${{ steps.current.outputs.version }}"
+          LATEST="${{ env.LATEST_VERSION }}"
+          
+          echo "Current version: ${CURRENT}"
+          echo "Latest version: ${LATEST}"
+          
+          if [ "${CURRENT}" != "${LATEST}" ]; then
+            echo "update_available=true" >> $GITHUB_OUTPUT
+          else
+            echo "update_available=false" >> $GITHUB_OUTPUT
+          fi
+      
+      - name: Check for existing issue
+        if: steps.compare.outputs.update_available == 'true'
+        id: check_issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const issues = await github.rest.issues.listForRepo({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              state: 'open',
+              labels: ['python-api-update']
+            });
+            
+            if (issues.data.length > 0) {
+              console.log(`Found existing issue: #${issues.data[0].number}`);
+              core.setOutput('exists', 'true');
+              core.setOutput('issue_number', issues.data[0].number);
+            } else {
+              core.setOutput('exists', 'false');
+            }
+      
+      - name: Create issue for new Python version
+        if: steps.compare.outputs.update_available == 'true' && steps.check_issue.outputs.exists == 'false'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const currentVersion = '${{ steps.current.outputs.version }}';
+            const latestVersion = '${{ env.LATEST_VERSION }}';
+            
+            const body = `## Python API Update Available\n\nA new version of the CoDrone EDU Python API is available.\n\n### Update Details\n- **Current version**: ${currentVersion}\n- **Latest version**: ${latestVersion}\n- **PyPI**: https://pypi.org/project/codrone-edu/\n\n### What to do\n\n1. Review the Python API changelog for breaking changes\n2. Test compatibility with the new Python version\n3. Update gradle.properties: Change pythonApiVersion=${latestVersion}\n4. Run ./gradlew compareApis to check for API differences\n5. Update this issue with any compatibility findings\n\n### Acceptance Criteria\n- [ ] Changelog reviewed for breaking changes\n- [ ] API comparison run and results reviewed\n- [ ] gradle.properties updated\n- [ ] Tests pass with new version\n- [ ] README.md compatibility matrix updated if needed\n- [ ] Close this issue when complete`;
+
+            github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Update Python API to v${latestVersion}`,
+              body: body,
+              labels: ['python-api-update', 'release-process', 'automation'],
+              assignees: [context.repo.owner]
+            });
+      
+      - name: Update existing issue with new version
+        if: steps.compare.outputs.update_available == 'true' && steps.check_issue.outputs.exists == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const latestVersion = '${{ env.LATEST_VERSION }}';
+            const issueNumber = ${{ steps.check_issue.outputs.issue_number }};
+            
+            github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: issueNumber,
+              body: `⚠️ **Automated Update**: Checked on ${new Date().toISOString().split('T')[0]} - Latest version is still v${latestVersion}. The Python API version has not changed since this issue was created.`
+            });
+      
+      - name: No updates available
+        if: steps.compare.outputs.update_available == 'false'
+        run: |
+          echo "✅ Python API is up to date (v${{ steps.current.outputs.version }})"

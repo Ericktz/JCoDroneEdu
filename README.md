@@ -67,6 +67,42 @@ Notes:
 - AP CSA-friendly: encourages object-oriented thinking and standard Java programming patterns.
 - Portable: packaged JARs, sources, and Javadoc make it easy to integrate into existing Java curricula.
 
+## ⚙️ API Compatibility
+
+This Java API maintains behavioral parity with the official CoDrone EDU Python API. The current release is compatible with:
+
+| Component | Version |
+|-----------|---------|
+| **Java Runtime** | 21+ |
+| **Python API** | 2.3.0+ |
+| **CoDrone EDU Firmware** | 25.2.1+ |
+
+### Version Alignment
+
+- Java API v1.3.0 → Python API v2.3.0
+- Naming conventions adapted for Java idioms (camelCase methods, Java-style class structure)
+- Method naming follows Java conventions while maintaining semantic equivalence with Python
+- See [API_COMPARISON.md](API_COMPARISON.md) for detailed method mapping
+
+### Checking Compatibility
+
+To verify your environment supports this library:
+
+```bash
+# Check Java version
+java -version  # Requires 21 or higher
+
+# Check Python compatibility
+pip show codrone-edu  # Should be v2.3.0 or compatible version
+```
+
+### Reporting Incompatibilities
+
+If you encounter compatibility issues:
+1. Check the [Compatibility Matrix](#-api-compatibility) above
+2. Review [API_COMPARISON.md](API_COMPARISON.md) for method availability
+3. Open an issue with your Java/Python versions and the specific problem
+
 ## Getting started (student)
 1. Download the student JAR from the latest GitHub Release (look for `codrone-edu-java-<version>-student.jar`) or add the library to your project using the artifact published to Maven Central when available.
 2. Example dependency (Maven; adjust group/artifact/version as needed):

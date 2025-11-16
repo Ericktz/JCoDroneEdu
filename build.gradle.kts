@@ -1250,29 +1250,68 @@ tasks.register("compareApis") {
         println("=" .repeat(60))
         println()
         
+        val pythonVersion = project.findProperty("pythonApiVersion")?.toString() ?: "2.2.0"
+        
+        // Try to import the Python module, install if needed
+        val pythonCheck = ByteArrayOutputStream()
+        try {
+            exec {
+                commandLine("python3", "-c", "import codrone_edu; print(codrone_edu.__version__)")
+                standardOutput = pythonCheck
+                isIgnoreExitValue = true
+            }
+        } catch (e: Exception) {
+            println("⚠️  Python module not found, attempting to install codrone-edu==$pythonVersion")
+            try {
+                exec {
+                    commandLine("pip3", "install", "codrone-edu==$pythonVersion", "--quiet")
+                    isIgnoreExitValue = true
+                }
+            } catch (e: Exception) {
+                println("⚠️  Could not install Python module. Skipping API comparison.")
+                println("   To enable: pip3 install codrone-edu==$pythonVersion")
+                return@doLast
+            }
+        }
+        
         val reportFile = file("API_COMPARISON.md")
         val report = StringBuilder()
         
         report.appendLine("# API Comparison Report")
         report.appendLine()
         report.appendLine("**Generated:** ${LocalDateTime.now()}")
-        report.appendLine("**Python Library:** ${file("reference/version.txt").readText().lines().find { it.contains("Version:") }?.substringAfter("Version:")?.trim() ?: "Unknown"}")
+        report.appendLine("**Java Version:** ${project.version}")
+        report.appendLine("**Python API Version:** $pythonVersion")
         report.appendLine()
         
-        // Parse Python API
-        val pythonFile = file("reference/codrone_edu/drone.py")
+        // Parse Python API by importing the module
         val pythonMethods = mutableSetOf<String>()
+        val pythonScript = """
+import codrone_edu.drone as drone_module
+import inspect
+
+# Get all public methods from Drone class
+drone_class = drone_module.Drone
+for name, method in inspect.getmembers(drone_class, predicate=inspect.isfunction):
+    if not name.startswith('_'):
+        print(name)
+        """.trimIndent()
         
-        if (pythonFile.exists()) {
-            pythonFile.readLines().forEach { line ->
-                val trimmed = line.trim()
-                if (trimmed.startsWith("def ") && !trimmed.startsWith("def _")) {
-                    val methodName = trimmed.substringAfter("def ").substringBefore("(")
-                    if (!methodName.startsWith("_")) {
-                        pythonMethods.add(methodName)
-                    }
+        try {
+            val pythonOutput = ByteArrayOutputStream()
+            exec {
+                commandLine("python3", "-c", pythonScript)
+                standardOutput = pythonOutput
+                isIgnoreExitValue = true
+            }
+            
+            pythonOutput.toString().lines().forEach { line ->
+                if (line.trim().isNotEmpty()) {
+                    pythonMethods.add(line.trim())
                 }
             }
+        } catch (e: Exception) {
+            println("⚠️  Could not parse Python API: ${e.message}")
         }
         
         // Parse Java API
