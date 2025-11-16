@@ -1,18 +1,18 @@
 # API Comparison Report
 
-**Generated:** 2025-11-16T13:21:53.214911
-**Java Version:** 1.3.0
+**Generated:** 2025-11-16T14:34:15.948621
+**Java Version:** 1.4.0-SNAPSHOT
 **Python API Version:** 2.6.0
 
 ## Summary
 
 - **Python Methods:** 127
 - **Java Methods:** 188
-- **Matched Methods:** 105
-  - Documented (@pythonEquivalent): 60
-  - Inferred (by name): 45
-- **In Python, Not Java:** 31
-- **In Java, Not Python:** 83
+- **Matched Methods:** 111
+  - Documented (@pythonEquivalent): 69
+  - Inferred (by name): 42
+- **In Python, Not Java:** 25
+- **In Java, Not Python:** 77
 
 **Note:** Java methods use @pythonEquivalent annotations to document their Python API mapping.
 
@@ -21,15 +21,11 @@
 ⚠️ Consider implementing these methods:
 
 - `append_color_data()`
-- `avoid_wall()`
 - `controller_LED_off()`
 - `controller_draw_arc()`
 - `controller_draw_chord()`
 - `controller_draw_ellipse()`
-- `controller_draw_line()`
-- `controller_draw_point()`
 - `controller_draw_polygon()`
-- `controller_draw_rectangle()`
 - `controller_draw_square()`
 - `controller_draw_string_align()`
 - `controller_preview_canvas()`
@@ -43,10 +39,8 @@
 - `get_y_angle()`
 - `get_z_accel()`
 - `get_z_angle()`
-- `keep_distance()`
 - `load_classifier()`
 - `load_color_data()`
-- `move_forward()`
 - `new_color_data()`
 - `predict_colors()`
 - `reset_move()`
@@ -58,7 +52,6 @@
 
 - `autoConnect) throws DroneNotFoundException()`
 - `autoConnect, String portName) throws DroneNotFoundException()`
-- `avoidWall()`
 - `changeSpeed()`
 - `circleTurn()`
 - `clearBias()`
@@ -67,9 +60,6 @@
 - `controllerBuzzerSequence()`
 - `controllerClearArea()`
 - `controllerDrawCircle()`
-- `controllerDrawLine()`
-- `controllerDrawPoint()`
-- `controllerDrawRectangle()`
 - `controllerInvertArea()`
 - `controllerLEDOff()`
 - `droneBuzzerSequence()`
@@ -113,9 +103,7 @@
 - `go()`
 - `isConnected()`
 - `isOpen()`
-- `keepDistance()`
 - `loadColorClassifier()`
-- `moveForward()`
 - `ping()`
 - `registerBuzzerSequence()`
 - `sendControl()`

@@ -1,0 +1,29 @@
+
+> Configure project :
+Project version set to: 1.4.0-SNAPSHOT
+
+> Task :compareApis
+============================================================
+API COMPARISON REPORT
+============================================================
+
+📄 Output: API_COMPARISON.md
+
+📦 Installing codrone-edu==2.6.0 to virtual environment...
+Requirement already satisfied: codrone-edu==2.6.0 in ./reference/python-venv/lib/python3.12/site-packages (2.6)
+Requirement already satisfied: pyserial>=3.5 in ./reference/python-venv/lib/python3.12/site-packages (from codrone-edu==2.6.0) (3.5)
+Requirement already satisfied: numpy in ./reference/python-venv/lib/python3.12/site-packages (from codrone-edu==2.6.0) (2.3.1)
+Requirement already satisfied: colorama in ./reference/python-venv/lib/python3.12/site-packages (from codrone-edu==2.6.0) (0.4.6)
+Requirement already satisfied: Pillow in ./reference/python-venv/lib/python3.12/site-packages (from codrone-edu==2.6.0) (11.3.0)
+✅ Installed codrone-edu==2.6.0
+📊 Documented Python methods loaded: 127 public API methods
+📊 Python Methods: 127
+📊 Java Methods: 188
+
+⚠️  Missing in Java: 34
+
+✅ Report saved to: API_COMPARISON.md
+============================================================
+
+BUILD SUCCESSFUL in 2s
+1 actionable task: 1 executed

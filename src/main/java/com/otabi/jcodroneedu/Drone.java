@@ -681,7 +681,7 @@ public class Drone implements AutoCloseable {
      * @see #keepDistance(int, int)
      * @see #getFrontRange()
      * @educational
-     * @pythonEquivalent avoid_wall(timeout, distance)
+     * @pythonEquivalent avoid_wall
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#avoid_wall
       * @since 1.0.0
      */
@@ -749,7 +749,7 @@ public class Drone implements AutoCloseable {
      * @see #getFrontRange()
      * @since 1.0.0
      * @educational
-     * @pythonEquivalent keep_distance(timeout, distance)
+     * @pythonEquivalent keep_distance
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#keep_distance
      */
     public void keepDistance(int timeout, int distance) {
@@ -1543,7 +1543,10 @@ public class Drone implements AutoCloseable {
      * @see #moveBackward(double, String, double)
      * @see #moveLeft(double, String, double)
      * @see #moveRight(double, String, double)
-      * @since 1.0.0
+     * @educational
+     * @pythonEquivalent move_forward
+     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#move_forward
+     * @since 1.0.0
      */
     public void moveForward(double distance, String units, double speed) {
         flightController.moveForward(distance, units, speed);
@@ -1567,7 +1570,7 @@ public class Drone implements AutoCloseable {
      * @param distance The distance to move forward (in centimeters)
      * @see #moveForward(double, String, double)
      * @educational
-     * @pythonEquivalent move_forward(distance)
+     * @pythonEquivalent move_forward
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#move_forward
       * @since 1.0.0
      */
@@ -1596,7 +1599,7 @@ public class Drone implements AutoCloseable {
      *              {@link DroneSystem.UnitConversion#UNIT_METERS}
      * @see #moveForward(double, String, double)
      * @educational
-     * @pythonEquivalent move_forward(distance, units)
+     * @pythonEquivalent move_forward
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#move_forward
       * @since 1.0.0
      */
@@ -1621,7 +1624,10 @@ public class Drone implements AutoCloseable {
      *              {@link DroneSystem.UnitConversion#UNIT_FEET}, 
      *              {@link DroneSystem.UnitConversion#UNIT_METERS}
      * @param speed The speed from {@value com.otabi.jcodroneedu.DroneSystem.FlightControlConstants#DEFAULT_MOVEMENT_SPEED_MPS} to 2.0 m/s (default: {@value com.otabi.jcodroneedu.DroneSystem.FlightControlConstants#DEFAULT_MOVEMENT_SPEED_MPS})
-      * @since 1.0.0
+     * @educational
+     * @pythonEquivalent move_backward
+     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#move_backward
+     * @since 1.0.0
      */
     public void moveBackward(double distance, String units, double speed) {
         flightController.moveBackward(distance, units, speed);
@@ -1650,7 +1656,7 @@ public class Drone implements AutoCloseable {
          * @param distance The distance to move backward (in centimeters)
          * @see #moveBackward(double, String, double)
          * @educational
-         * @pythonEquivalent move_backward(distance)
+         * @pythonEquivalent move_backward
          * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#move_backward
          */
         moveBackward(distance, "cm");
@@ -1682,7 +1688,7 @@ public class Drone implements AutoCloseable {
          *              {@link DroneSystem.UnitConversion#UNIT_METERS}
          * @see #moveBackward(double, String, double)
          * @educational
-         * @pythonEquivalent move_backward(distance, units)
+         * @pythonEquivalent move_backward
          * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#move_backward
          */
         moveBackward(distance, units, DroneSystem.FlightControlConstants.DEFAULT_MOVEMENT_SPEED_MPS);
@@ -1705,7 +1711,10 @@ public class Drone implements AutoCloseable {
      *              {@link DroneSystem.UnitConversion#UNIT_FEET}, 
      *              {@link DroneSystem.UnitConversion#UNIT_METERS}
      * @param speed The speed from {@value com.otabi.jcodroneedu.DroneSystem.FlightControlConstants#DEFAULT_MOVEMENT_SPEED_MPS} to 2.0 m/s (default: {@value com.otabi.jcodroneedu.DroneSystem.FlightControlConstants#DEFAULT_MOVEMENT_SPEED_MPS})
-      * @since 1.0.0
+     * @educational
+     * @pythonEquivalent move_left
+     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#move_left
+     * @since 1.0.0
      */
     public void moveLeft(double distance, String units, double speed) {
         flightController.moveLeft(distance, units, speed);
@@ -1734,7 +1743,7 @@ public class Drone implements AutoCloseable {
          * @param distance The distance to move left (in centimeters)
          * @see #moveLeft(double, String, double)
          * @educational
-         * @pythonEquivalent move_left(distance)
+         * @pythonEquivalent move_left
          * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#move_left
          */
         moveLeft(distance, "cm");
@@ -1766,7 +1775,7 @@ public class Drone implements AutoCloseable {
          *              {@link DroneSystem.UnitConversion#UNIT_METERS}
          * @see #moveLeft(double, String, double)
          * @educational
-         * @pythonEquivalent move_left(distance, units)
+         * @pythonEquivalent move_left
          * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#move_left
          */
         moveLeft(distance, units, DroneSystem.FlightControlConstants.DEFAULT_MOVEMENT_SPEED_MPS);
@@ -1789,7 +1798,10 @@ public class Drone implements AutoCloseable {
      *              {@link DroneSystem.UnitConversion#UNIT_FEET}, 
      *              {@link DroneSystem.UnitConversion#UNIT_METERS}
      * @param speed The speed from {@value com.otabi.jcodroneedu.DroneSystem.FlightControlConstants#DEFAULT_MOVEMENT_SPEED_MPS} to 2.0 m/s (default: {@value com.otabi.jcodroneedu.DroneSystem.FlightControlConstants#DEFAULT_MOVEMENT_SPEED_MPS})
-      * @since 1.0.0
+     * @educational
+     * @pythonEquivalent move_right
+     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#move_right
+     * @since 1.0.0
      */
     public void moveRight(double distance, String units, double speed) {
         flightController.moveRight(distance, units, speed);
@@ -1818,7 +1830,7 @@ public class Drone implements AutoCloseable {
          * @param distance The distance to move right (in centimeters)
          * @see #moveRight(double, String, double)
          * @educational
-         * @pythonEquivalent move_right(distance)
+         * @pythonEquivalent move_right
          * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#move_right
          */
         moveRight(distance, "cm");
@@ -1850,7 +1862,7 @@ public class Drone implements AutoCloseable {
          *              {@link DroneSystem.UnitConversion#UNIT_METERS}
          * @see #moveRight(double, String, double)
          * @educational
-         * @pythonEquivalent move_right(distance, units)
+         * @pythonEquivalent move_right
          * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#move_right
          */
         moveRight(distance, units, DroneSystem.FlightControlConstants.DEFAULT_MOVEMENT_SPEED_MPS);
@@ -5869,7 +5881,7 @@ public class Drone implements AutoCloseable {
      * @param blue Blue component (0-255), or null for random
      * @since 1.0.0
      * @educational
-     * @pythonEquivalent ping(r, g, b)
+     * @pythonEquivalent ping
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#ping
      */
     public void ping(Integer red, Integer green, Integer blue) {
@@ -5963,7 +5975,7 @@ public class Drone implements AutoCloseable {
      * @see #registerBuzzerSequence(String, BuzzerSequence)
      * @see #controllerBuzzerSequence(String)
      * @educational
-     * @pythonEquivalent drone_buzzer_sequence(kind)
+     * @pythonEquivalent drone_buzzer_sequence
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#drone_buzzer_sequence
       * @since 1.0.0
      */
@@ -6022,7 +6034,7 @@ public class Drone implements AutoCloseable {
      * @see #registerBuzzerSequence(String, BuzzerSequence)
      * @see #droneBuzzerSequence(String)
      * @educational
-     * @pythonEquivalent controller_buzzer_sequence(kind)
+     * @pythonEquivalent controller_buzzer_sequence
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#controller_buzzer_sequence
       * @since 1.0.0
      */
@@ -6257,7 +6269,7 @@ public class Drone implements AutoCloseable {
      * @param y Y coordinate
      * @param canvas The canvas to draw on
      * @educational
-     * @pythonEquivalent controller_draw_point(x, y, canvas)
+     * @pythonEquivalent controller_draw_point
       * @since 1.0.0
      */
     public void controllerDrawPoint(int x, int y, DisplayController canvas) {
@@ -6314,7 +6326,7 @@ public class Drone implements AutoCloseable {
      * @param y2 Ending Y coordinate
      * @param canvas The canvas to draw on
      * @educational
-     * @pythonEquivalent controller_draw_line(x1, y1, x2, y2, canvas)
+     * @pythonEquivalent controller_draw_line
       * @since 1.0.0
      */
     public void controllerDrawLine(int x1, int y1, int x2, int y2, DisplayController canvas) {
@@ -6372,7 +6384,7 @@ public class Drone implements AutoCloseable {
      * @param height Height of the rectangle
      * @param canvas The canvas to draw on
      * @educational
-     * @pythonEquivalent controller_draw_rectangle(x, y, width, height, canvas)
+     * @pythonEquivalent controller_draw_rectangle
       * @since 1.0.0
      */
     public void controllerDrawRectangle(int x, int y, int width, int height, DisplayController canvas) {
@@ -6426,7 +6438,7 @@ public class Drone implements AutoCloseable {
      * @param radius Radius of the circle
      * @param canvas The canvas to draw on
      * @educational
-     * @pythonEquivalent controller_draw_circle(x, y, radius, canvas)
+     * @pythonEquivalent controller_draw_circle
       * @since 1.0.0
      */
     public void controllerDrawCircle(int x, int y, int radius, DisplayController canvas) {
