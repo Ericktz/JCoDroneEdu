@@ -245,6 +245,28 @@ jobs:
             ${{ steps.find_artifacts.outputs.sources }}
           token: ${{ secrets.RELEASE_PAT || secrets.GITHUB_TOKEN }}
 
+      - name: Bump to next development version (SNAPSHOT)
+        if: ${{ !contains(steps.get_version.outputs.VERSION, 'SNAPSHOT') }}
+        run: |
+          # Parse current version and increment minor version
+          CURRENT_VERSION="${{ steps.get_version.outputs.VERSION }}"
+          MAJOR=$(echo $CURRENT_VERSION | cut -d. -f1)
+          MINOR=$(echo $CURRENT_VERSION | cut -d. -f2)
+          NEXT_MINOR=$((MINOR + 1))
+          NEXT_VERSION="${MAJOR}.${NEXT_MINOR}.0-SNAPSHOT"
+          
+          # Update build.gradle.kts
+          sed -i "s/else -> \"${CURRENT_VERSION}\"/else -> \"${NEXT_VERSION}\"/" build.gradle.kts
+          
+          # Commit and push
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add build.gradle.kts
+          git commit -m "Bump to v${NEXT_VERSION} for development"
+          git push origin main
+          
+          echo "✅ Version bumped to ${NEXT_VERSION}"
+
       - name: Publish to Maven Central
         if: ${{ !contains(steps.get_version.outputs.VERSION, 'SNAPSHOT') }}
         env:

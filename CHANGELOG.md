@@ -2,6 +2,31 @@
 
 All notable changes to this project will be documented in this file.
 
+## v1.3.0 - 2025-11-16
+
+### Added
+- Display batch protocol implementation (0x88 DisplayDrawImage) with interleaved transmission for efficient canvas updates
+- Integration test reorganization with dedicated `integrationtests` folder and `IntegrationTestMenu`
+- Buzzer frequency-based control method overloads for more flexible audio control
+- Enhanced receiver handling for both standard and echo Ack formats
+- Canvas parameter overloads for drawing methods
+
+### Fixed
+- Receiver now properly handles both standard and echo Ack response formats from controller
+- Resolved deleted test files from package reorganization (restored from commit history)
+- Fixed ExampleMenu references after package reorganization
+
+### Changed
+- Package reorganization: GUI tools moved from `examples/gui` to `tools` package
+- Display methods now support canvas-based batch transmission for better performance
+
+### Documentation
+- Generated comprehensive development-history.md (3,000 words)
+- Generated design-guide.md (3,500 words)
+- Generated teacher-guide.md (4,500+ words) with all required educational sections
+- Generated student-guide.md (4,000+ words) with 15+ Robolink links
+- Added copyright headers and updated release strategy
+
 ## v1.1.0 - 2025-10-28
 
 ### Added
