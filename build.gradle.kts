@@ -1243,7 +1243,7 @@ if __name__ == "__main__":
  */
 tasks.register("compareApis") {
     group = "verification"
-    description = "Compare Python and Java APIs and generate report"
+    description = "Compare Python and Java APIs and generate report. Use -PapiVersion=VERSION or -PcompareLatest to test compatibility"
     
     doLast {
         println("=" .repeat(60))
@@ -1251,8 +1251,52 @@ tasks.register("compareApis") {
         println("=" .repeat(60))
         println()
         
-        val pythonVersion = project.findProperty("pythonApiVersion")?.toString() ?: "2.2.0"
+        // Get parameters for version selection
+        val compareLatest = project.findProperty("compareLatest")?.toString()?.toBoolean() ?: false
+        var targetVersion = project.findProperty("apiVersion")?.toString()
+        
+        // If compareLatest flag is set, fetch latest version from PyPI
+        if (compareLatest && targetVersion == null) {
+            println("📦 Fetching latest codrone-edu version from PyPI...")
+            val versionOutput = ByteArrayOutputStream()
+            try {
+                exec {
+                    commandLine("python3", "-c", """
+import urllib.request
+import json
+response = urllib.request.urlopen('https://pypi.org/pypi/codrone-edu/json')
+data = json.loads(response.read())
+print(data['info']['version'])
+""")
+                    standardOutput = versionOutput
+                    isIgnoreExitValue = true
+                }
+                targetVersion = versionOutput.toString().trim()
+                if (targetVersion.isEmpty()) {
+                    throw GradleException("Could not fetch latest version from PyPI")
+                }
+                println("✅ Latest version: $targetVersion")
+            } catch (e: Exception) {
+                throw GradleException("Failed to fetch latest version: ${e.message}")
+            }
+        }
+        
+        // Use target version or fall back to configured version
+        val pythonVersion = targetVersion ?: (project.findProperty("pythonApiVersion")?.toString() ?: "2.2.0")
         val venvDir = file("reference/python-venv")
+        
+        // Use version in output filename
+        val baseFileName = "API_COMPARISON"
+        val outputFileName = if (targetVersion != null && compareLatest) {
+            "${baseFileName}_vs_${pythonVersion}.md"
+        } else if (targetVersion != null) {
+            "${baseFileName}_${pythonVersion}.md"
+        } else {
+            "${baseFileName}.md"
+        }
+        
+        println("📄 Output: $outputFileName")
+        println()
         
         // Ensure virtual environment exists
         if (!venvDir.exists()) {
@@ -1282,31 +1326,37 @@ tasks.register("compareApis") {
             venvDir.absolutePath + "/bin/python"
         }
         
-        // Check if Python module is installed, install if needed
-        val pythonCheck = ByteArrayOutputStream()
-        val checkResult = exec {
-            commandLine(pythonExecutable, "-c", "import codrone_edu")
-            standardOutput = pythonCheck
+        // Check if correct version is installed, upgrade/install if needed
+        val versionCheckScript = """
+import codrone_edu
+print(codrone_edu.__version__)
+"""
+        val versionOutput = ByteArrayOutputStream()
+        exec {
+            commandLine(pythonExecutable, "-c", versionCheckScript)
+            standardOutput = versionOutput
             errorOutput = ByteArrayOutputStream()
             isIgnoreExitValue = true
         }
         
-        if (checkResult.exitValue != 0) {
+        val installedVersion = versionOutput.toString().trim()
+        if (installedVersion != pythonVersion) {
             println("📦 Installing codrone-edu==$pythonVersion to virtual environment...")
             val installResult = exec {
-                commandLine(pipExecutable, "install", "codrone-edu==$pythonVersion")
+                commandLine(pythonExecutable, "-m", "pip", "install", "codrone-edu==$pythonVersion", "--upgrade")
                 isIgnoreExitValue = true
             }
             
             if (installResult.exitValue != 0) {
                 throw GradleException("Failed to install codrone-edu==$pythonVersion to virtual environment.\n" +
-                    "   Try manually: ${venvDir.absolutePath}/bin/pip install codrone-edu==$pythonVersion")
+                    "   Try manually: ${venvDir.absolutePath}/bin/python -m pip install codrone-edu==$pythonVersion")
             }
+            println("✅ Installed codrone-edu==$pythonVersion")
         } else {
-            println("✅ Python codrone-edu module found in virtual environment")
+            println("✅ Python codrone-edu==$pythonVersion already installed")
         }
         
-        val reportFile = file("API_COMPARISON.md")
+        val reportFile = file(outputFileName)
         val report = StringBuilder()
         
         report.appendLine("# API Comparison Report")
@@ -1314,6 +1364,9 @@ tasks.register("compareApis") {
         report.appendLine("**Generated:** ${LocalDateTime.now()}")
         report.appendLine("**Java Version:** ${project.version}")
         report.appendLine("**Python API Version:** $pythonVersion")
+        if (compareLatest) {
+            report.appendLine("**Comparison Mode:** Latest vs. Built (${project.findProperty("pythonApiVersion") ?: "2.2.0"})")
+        }
         report.appendLine()
         
         // Parse Python API by importing the module
