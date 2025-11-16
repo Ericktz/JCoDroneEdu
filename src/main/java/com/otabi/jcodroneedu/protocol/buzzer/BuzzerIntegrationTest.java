@@ -11,6 +11,10 @@ package com.otabi.jcodroneedu.protocol.buzzer;
  * Integration test to verify all buzzer components work together
  */
 public class BuzzerIntegrationTest {
+    /**
+     * main method.
+     * @since 1.0.0
+     */
     public static void main(String[] args) {
         System.out.println("=== CoDrone EDU Buzzer API Integration Test ===");
         

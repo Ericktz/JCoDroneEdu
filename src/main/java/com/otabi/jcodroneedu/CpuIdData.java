@@ -87,6 +87,7 @@ public class CpuIdData {
       * @since 1.0.0
      */
     @Override
+    /** @since 1.0.0 */
     public String toString() {
         return String.format("CpuIdData{timestamp=%.2f, droneCpuId=%s, controllerCpuId=%s}",
                 timestamp, droneCpuId, controllerCpuId);

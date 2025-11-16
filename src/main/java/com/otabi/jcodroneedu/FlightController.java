@@ -68,6 +68,10 @@ public class FlightController {
             this.value = (byte) value;
         }
 
+        /**
+         * Gets the value.
+         * @since 1.0.0
+         */
         public byte getValue() {
             return value;
         }
@@ -398,9 +402,14 @@ public class FlightController {
       * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public void print_move_values() {
         printMoveValues();
     }
+    /**
+     * printMoveValues method.
+     * @since 1.0.0
+     */
     public void printMoveValues() {
         // Keep System.out for student debugging - this is educational output
         System.out.println(Arrays.toString(new byte[]{control.getRoll(), control.getPitch(), control.getYaw(), control.getThrottle()}));
@@ -416,9 +425,14 @@ public class FlightController {
       * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public byte[] get_move_values() {
         return getMoveValues();
     }
+    /**
+     * Gets the move values.
+     * @since 1.0.0
+     */
     public byte[] getMoveValues() {
         return new byte[]{control.getRoll(), control.getPitch(), control.getYaw(), control.getThrottle()};
     }
@@ -759,10 +773,18 @@ public class FlightController {
             this.toMeters = toMeters;
         }
 
+        /**
+         * convert method.
+         * @since 1.0.0
+         */
         public double convert(double value) {
             return value * toMeters;
         }
 
+        /**
+         * fromString method.
+         * @since 1.0.0
+         */
         public static DistanceUnit fromString(String s) {
             if (s == null) return null;
             String lower = s.toLowerCase();

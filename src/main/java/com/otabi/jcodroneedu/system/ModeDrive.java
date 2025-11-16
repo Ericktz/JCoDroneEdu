@@ -36,10 +36,18 @@ public enum ModeDrive {
         this.mode = mode;
     }
 
+    /**
+     * value method.
+     * @since 1.0.0
+     */
     public byte value() {
         return mode;
     }
 
+    /**
+     * fromByte method.
+     * @since 1.0.0
+     */
     public static ModeDrive fromByte(byte b) {
         return BYTE_MODE_DRIVE_MAP.get(b);
     }

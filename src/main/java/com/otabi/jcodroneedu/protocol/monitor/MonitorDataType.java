@@ -26,10 +26,18 @@ public enum MonitorDataType {
         this.value = value;
     }
 
+    /**
+     * Gets the value.
+     * @since 1.0.0
+     */
     public byte getValue() {
         return value;
     }
 
+    /**
+     * fromByte method.
+     * @since 1.0.0
+     */
     public static MonitorDataType fromByte(byte value) {
         for (MonitorDataType type : MonitorDataType.values()) {
             if (type.value == value) {

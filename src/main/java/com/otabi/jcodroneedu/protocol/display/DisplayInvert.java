@@ -48,24 +48,49 @@ public class DisplayInvert implements Serializable {
     }
 
     // Getters and setters
+    /**
+     * Gets the x.
+     * @since 1.0.0
+     */
     public int getX() { return x; }
+    /** @since 1.0.0 */
     public void setX(int x) { this.x = (short) x; }
     
+    /** @since 1.0.0 */
     public int getY() { return y; }
+    /**
+     * Sets the y.
+     * @since 1.0.0
+     */
     public void setY(int y) { this.y = (short) y; }
     
+    /** @since 1.0.0 */
     public int getWidth() { return width; }
+    /** @since 1.0.0 */
     public void setWidth(int width) { this.width = (short) width; }
     
+    /**
+     * Gets the height.
+     * @since 1.0.0
+     */
     public int getHeight() { return height; }
+    /** @since 1.0.0 */
     public void setHeight(int height) { this.height = (short) height; }
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize() {
         return 8;
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer) {
         buffer.putShort(x);
         buffer.putShort(y);
@@ -76,6 +101,10 @@ public class DisplayInvert implements Serializable {
     // Note: toArray() inherited from Serializable interface (handles LITTLE_ENDIAN)
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException {
         if (buffer.remaining() < getSize()) {
             throw new InvalidDataSizeException(getSize(), buffer.remaining());

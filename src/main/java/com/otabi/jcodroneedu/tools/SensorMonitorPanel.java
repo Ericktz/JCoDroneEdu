@@ -366,6 +366,10 @@ public class SensorMonitorPanel extends JPanel {
             setPreferredSize(new Dimension(120, 120));
         }
 
+        /**
+         * Sets the heading.
+         * @since 1.0.0
+         */
         public void setHeading(int degrees) {
             this.heading = degrees;
             repaint();
@@ -436,6 +440,10 @@ public class SensorMonitorPanel extends JPanel {
             setPreferredSize(new Dimension(100, 120));
         }
 
+        /**
+         * Sets the angle.
+         * @since 1.0.0
+         */
         public void setAngle(int angle) {
             this.angle = angle;
             repaint();
@@ -494,6 +502,10 @@ public class SensorMonitorPanel extends JPanel {
             setMinimumSize(new Dimension(80, 40));
         }
 
+        /**
+         * Sets the battery level.
+         * @since 1.0.0
+         */
         public void setBatteryLevel(int level) {
             this.batteryLevel = level;
             repaint();

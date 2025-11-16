@@ -30,12 +30,20 @@ public class SystemInformation implements Serializable
     }
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize()
     {
         return SYSTEM_INFORMATION_SIZE;
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         this.crc32bootloader = buffer.getInt();
@@ -43,6 +51,10 @@ public class SystemInformation implements Serializable
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         buffer.putInt(this.crc32bootloader);

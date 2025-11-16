@@ -250,6 +250,10 @@ public class BuzzerSequenceRegistry {
     }
     
     @Override
+    /**
+     * toString method.
+     * @since 1.0.0
+     */
     public String toString() {
         return String.format("BuzzerSequenceRegistry[sequences=%d, names=%s]", 
             count(), list());

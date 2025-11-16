@@ -24,18 +24,30 @@ public class Weight implements Serializable
     }
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize()
     {
         return WEIGHT_SIZE;
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         this.weight = buffer.getFloat();
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         buffer.putFloat(this.weight);

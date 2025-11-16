@@ -17,6 +17,10 @@ public class LightModeController extends LightMode
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer)
     {
         setMode(LightModesController.fromValue(buffer.get()));

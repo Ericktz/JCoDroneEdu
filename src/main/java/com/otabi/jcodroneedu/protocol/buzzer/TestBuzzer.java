@@ -11,6 +11,10 @@ package com.otabi.jcodroneedu.protocol.buzzer;
  * Test class to verify all buzzer classes are accessible
  */
 public class TestBuzzer {
+    /**
+     * main method.
+     * @since 1.0.0
+     */
     public static void main(String[] args) {
         System.out.println("Testing buzzer package classes...");
         

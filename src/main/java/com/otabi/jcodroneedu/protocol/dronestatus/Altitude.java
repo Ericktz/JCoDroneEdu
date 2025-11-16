@@ -70,12 +70,20 @@ public class Altitude implements Serializable
     }
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize()
     {
         return ALTITUDE_SIZE;
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         buffer.putFloat(temperature);
@@ -85,6 +93,10 @@ public class Altitude implements Serializable
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         this.temperature = buffer.getFloat();
@@ -132,6 +144,10 @@ public class Altitude implements Serializable
     public float getRangeHeight() { return rangeHeight; }
 
     @Override
+    /**
+     * toString method.
+     * @since 1.0.0
+     */
     public String toString() {
         return "Altitude [temperature=" + temperature + ", altitude=" + altitude + ", pressure=" + pressure
                 + ", rangeHeight=" + rangeHeight + "]";

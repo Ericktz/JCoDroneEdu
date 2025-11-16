@@ -125,6 +125,10 @@ public class Receiver {
         timeReceiveStart = 0;
     }
 
+    /**
+     * call method.
+     * @since 1.0.0
+     */
     public void call(byte data) {
         if (timeReceiveStart > 0 && (System.currentTimeMillis() - timeReceiveStart > RECEIVE_TIMEOUT_MS)) {
             log.error("Receiver timeout. Resetting.");
@@ -420,12 +424,21 @@ public class Receiver {
     }
 
     // --- Public ACK Management Methods ---
+    /**
+     * expectAck method.
+     * @since 1.0.0
+     */
     public void expectAck(DataType dataType) {
         pendingAcks.put(dataType, new CompletableFuture<>());
     }
+    /** @since 1.0.0 */
     public CompletableFuture<Void> getAckFuture(DataType dataType) {
         return pendingAcks.get(dataType);
     }
+    /**
+     * onAckReceived method.
+     * @since 1.0.0
+     */
     public void onAckReceived(DataType ackType) {
         // Defensive: ackType may be null if the incoming byte did not map to a known DataType
         if (ackType == null) {

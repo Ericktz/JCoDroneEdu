@@ -57,6 +57,10 @@ public class ControllerInputGui extends JFrame {
         // Add window listener for cleanup
         addWindowListener(new java.awt.event.WindowAdapter() {
             @Override
+            /**
+             * windowClosing method.
+             * @since 1.0.0
+             */
             public void windowClosing(java.awt.event.WindowEvent e) {
                 running = false;
                 drone.close();
@@ -438,6 +442,10 @@ public class ControllerInputGui extends JFrame {
         private int x = 0;
         private int y = 0;
         
+        /**
+         * Sets the position.
+         * @since 1.0.0
+         */
         public void setPosition(int x, int y) {
             this.x = x;
             this.y = -y; // Invert Y for display (positive = up)
@@ -488,6 +496,10 @@ public class ControllerInputGui extends JFrame {
         }
     }
     
+    /**
+     * main method.
+     * @since 1.0.0
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             ControllerInputGui gui = new ControllerInputGui();

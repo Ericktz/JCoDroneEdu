@@ -404,6 +404,7 @@ public class Drone implements AutoCloseable {
       * @since 1.0.0
      */
     // @Deprecated
+    /** @since 1.0.0 */
     public void close() {
         disconnect();
     }
@@ -554,6 +555,10 @@ public class Drone implements AutoCloseable {
         sendMessage(request);
     }
 
+    /**
+     * sendRequestWait method.
+     * @since 1.0.0
+     */
     public void sendRequestWait(DataType dataType) {
         Request request = new Request(dataType);
         sendMessage(request);
@@ -742,6 +747,7 @@ public class Drone implements AutoCloseable {
      * @throws IllegalArgumentException if timeout not in range 1-30 or distance not in range 10-100
      * @see #avoidWall(int, int)
      * @see #getFrontRange()
+     * @since 1.0.0
      * @educational
      * @pythonEquivalent keep_distance(timeout, distance)
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#keep_distance
@@ -1466,6 +1472,7 @@ public class Drone implements AutoCloseable {
      *                  or use {@link DroneSystem.DirectionConstants} for type safety
      * @param power Power level from 0-100 (higher = faster movement)
      * @param duration Duration in seconds (how long to fly in that direction)
+     * @since 1.0.0
      * @pythonEquivalent go
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#go
      */
@@ -2588,6 +2595,7 @@ public class Drone implements AutoCloseable {
      * </ul>
      * 
      * @return ErrorData object containing type-safe error information, or null if unavailable
+     * @since 1.0.0
      * @see ErrorData
      * @see #getErrorData()
      * @see DroneSystem.ErrorFlagsForSensor
@@ -2887,6 +2895,10 @@ public class Drone implements AutoCloseable {
         return telemetryService.getPosZ(unit);
     }
 
+    /**
+     * Gets the telemetry service.
+     * @since 1.0.0
+     */
     public TelemetryService getTelemetryService() {
         return telemetryService;
     }
@@ -3471,6 +3483,7 @@ public class Drone implements AutoCloseable {
       * @since 1.0.0
      */
     @Deprecated(since = "1.0", forRemoval = false)
+    /** @since 1.0.0 */
     public Altitude getAltitudeData() {
         return getAltitude();
     }
@@ -3756,6 +3769,7 @@ public class Drone implements AutoCloseable {
       * @since 1.0.0
      */
     @Deprecated(since = "1.0", forRemoval = true)
+    /** @since 1.0.0 */
     public double getCalculatedAltitude() {
         return getCorrectedElevation();
     }
@@ -3766,6 +3780,7 @@ public class Drone implements AutoCloseable {
       * @since 1.0.0
      */
     @Deprecated(since = "1.0", forRemoval = true)
+    /** @since 1.0.0 */
     public double getCalculatedAltitude(double seaLevelPressure) {
         return getCorrectedElevation(seaLevelPressure);
     }
@@ -3972,6 +3987,7 @@ public class Drone implements AutoCloseable {
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_temperature
      */
     @Deprecated(since = "1.0", forRemoval = true)
+    /** @since 1.0.0 */
     public double getTemperature() {
         log.warn("getTemperature() is deprecated. Use getDroneTemperature() instead.");
         return getDroneTemperature();
@@ -3993,6 +4009,7 @@ public class Drone implements AutoCloseable {
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_temperature
      */
     @Deprecated(since = "1.0", forRemoval = true)
+    /** @since 1.0.0 */
     public double getTemperature(String unit) {
         log.warn("getTemperature(unit) is deprecated. Use getDroneTemperature(unit) instead.");
         return getDroneTemperature(unit);
@@ -4673,6 +4690,7 @@ public class Drone implements AutoCloseable {
       * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public double getFlowX(String unit) {
         return getFlowVelocityX(unit);
     }
@@ -4683,6 +4701,7 @@ public class Drone implements AutoCloseable {
       * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public double getFlowX() {
         return getFlowVelocityX();
     }
@@ -4693,6 +4712,7 @@ public class Drone implements AutoCloseable {
       * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public double getFlowY(String unit) {
         return getFlowVelocityY(unit);
     }
@@ -4703,6 +4723,7 @@ public class Drone implements AutoCloseable {
       * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public double getFlowY() {
         return getFlowVelocityY();
     }
@@ -4761,6 +4782,7 @@ public class Drone implements AutoCloseable {
       * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public void square(int speed, int seconds, int direction) {
         throw new UnsupportedOperationException(
             "Pattern methods have been moved to BasicPatternDrone for educational purposes.\n" +
@@ -4778,6 +4800,7 @@ public class Drone implements AutoCloseable {
       * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public void square(int speed, int seconds) {
         square(speed, seconds, 1);
     }
@@ -4787,6 +4810,7 @@ public class Drone implements AutoCloseable {
       * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public void square(int speed) {
         square(speed, 1, 1);
     }
@@ -4796,6 +4820,7 @@ public class Drone implements AutoCloseable {
       * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public void square() {
         square(60, 1, 1);
     }
@@ -4808,6 +4833,7 @@ public class Drone implements AutoCloseable {
       * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public void triangle(int speed, int seconds, int direction) {
         throw new UnsupportedOperationException(
             "Pattern methods have been moved to BasicPatternDrone for educational purposes.\n" +
@@ -4825,6 +4851,7 @@ public class Drone implements AutoCloseable {
       * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public void circle(int speed, int direction) {
         throw new UnsupportedOperationException(
             "Pattern methods have been moved to BasicPatternDrone for educational purposes.\n" +
@@ -4842,6 +4869,7 @@ public class Drone implements AutoCloseable {
       * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public void spiral(int speed, int seconds, int direction) {
         throw new UnsupportedOperationException(
             "Pattern methods have been moved to BasicPatternDrone for educational purposes.\n" +
@@ -4859,6 +4887,7 @@ public class Drone implements AutoCloseable {
       * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public void sway(int speed, int seconds, int direction) {
         throw new UnsupportedOperationException(
             "Pattern methods have been moved to BasicPatternDrone for educational purposes.\n" +
@@ -4903,6 +4932,7 @@ public class Drone implements AutoCloseable {
       * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public void triangleTurn(int speed, int seconds, int direction) {
         throw new UnsupportedOperationException(
             "Pattern methods have been moved to BasicPatternDrone for educational purposes.\n" +
@@ -4920,6 +4950,7 @@ public class Drone implements AutoCloseable {
       * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public void triangleTurn() {
         triangleTurn(60, 2, 1);
     }
@@ -4929,6 +4960,7 @@ public class Drone implements AutoCloseable {
       * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public void circleTurn(int speed, int seconds, int direction) {
         throw new UnsupportedOperationException(
             "Pattern methods have been moved to BasicPatternDrone for educational purposes.\n" +
@@ -4946,6 +4978,7 @@ public class Drone implements AutoCloseable {
       * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public void circleTurn() {
         circleTurn(30, 1, 1);
     }
@@ -5834,6 +5867,7 @@ public class Drone implements AutoCloseable {
      * @param red Red component (0-255), or null for random
      * @param green Green component (0-255), or null for random
      * @param blue Blue component (0-255), or null for random
+     * @since 1.0.0
      * @educational
      * @pythonEquivalent ping(r, g, b)
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#ping
@@ -6052,6 +6086,7 @@ public class Drone implements AutoCloseable {
      * @param name The name to register the sequence under
      * @param sequence The buzzer sequence to register
      * @throws IllegalArgumentException if name is null/empty or sequence is null
+     * @since 1.0.0
      * @see BuzzerSequence.Builder
      * @see #droneBuzzerSequence(String)
      * @see #controllerBuzzerSequence(String)

@@ -27,6 +27,10 @@ import com.otabi.jcodroneedu.protocol.DataType;
  */
 public class BothMonitors {
     
+    /**
+     * main method.
+     * @since 1.0.0
+     */
     public static void main(String[] args) {
         // Connect to drone
         Drone drone = new Drone();

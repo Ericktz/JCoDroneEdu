@@ -13,6 +13,10 @@ package com.otabi.jcodroneedu.protocol.settings;
  */
 public class TrimProtocolTest {
     
+    /**
+     * main method.
+     * @since 1.0.0
+     */
     public static void main(String[] args) {
         System.out.println("🧪 CoDrone EDU Trim Protocol Test");
         System.out.println("==================================");

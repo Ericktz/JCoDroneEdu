@@ -110,6 +110,7 @@ public class ButtonData {
       * @since 1.0.0
      */
     @Override
+    /** @since 1.0.0 */
     public String toString() {
         return String.format("ButtonData{timestamp=%.3f, buttonFlags=%d, eventName='%s'}", 
                            timestamp, buttonFlags, eventName);

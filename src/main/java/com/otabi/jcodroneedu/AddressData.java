@@ -86,6 +86,7 @@ public class AddressData {
       * @since 1.0.0
      */
     @Override
+    /** @since 1.0.0 */
     public String toString() {
         return String.format("AddressData{timestamp=%.2f, droneAddress=%s, controllerAddress=%s}",
                 timestamp, droneAddress, controllerAddress);

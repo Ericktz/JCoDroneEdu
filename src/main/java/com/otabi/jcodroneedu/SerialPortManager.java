@@ -165,6 +165,10 @@ public class SerialPortManager {
     }
 
 
+    /**
+     * write method.
+     * @since 1.0.0
+     */
     public void write(byte[] data) {
         if (isOpen()) {
             serialPort.writeBytes(data, data.length);

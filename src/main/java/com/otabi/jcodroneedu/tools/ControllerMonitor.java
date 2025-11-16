@@ -73,6 +73,10 @@ public class ControllerMonitor {
         // Handle window closing
         frame.addWindowListener(new WindowAdapter() {
             @Override
+            /**
+             * windowClosing method.
+             * @since 1.0.0
+             */
             public void windowClosing(WindowEvent e) {
                 cleanup();
             }

@@ -45,12 +45,20 @@ public class Motion implements Serializable
     }
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize()
     {
         return MOTION_SIZE;
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         this.accelX = buffer.getShort();
@@ -65,6 +73,10 @@ public class Motion implements Serializable
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         buffer.putShort(this.accelX);
@@ -79,17 +91,35 @@ public class Motion implements Serializable
     }
 
     // Acceleration getters (in G-force units)
+    /**
+     * Gets the accel x.
+     * @since 1.0.0
+     */
     public short getAccelX() { return accelX; }
+    /** @since 1.0.0 */
     public short getAccelY() { return accelY; }
+    /** @since 1.0.0 */
     public short getAccelZ() { return accelZ; }
 
     // Gyroscope getters (angular velocity in deg/s)
+    /**
+     * Gets the gyro roll.
+     * @since 1.0.0
+     */
     public short getGyroRoll() { return gyroRoll; }
+    /** @since 1.0.0 */
     public short getGyroPitch() { return gyroPitch; }
+    /** @since 1.0.0 */
     public short getGyroYaw() { return gyroYaw; }
 
     // Angle getters (in degrees)
+    /**
+     * Gets the angle roll.
+     * @since 1.0.0
+     */
     public short getAngleRoll() { return angleRoll; }
+    /** @since 1.0.0 */
     public short getAnglePitch() { return anglePitch; }
+    /** @since 1.0.0 */
     public short getAngleYaw() { return angleYaw; }
 }

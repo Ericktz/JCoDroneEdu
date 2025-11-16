@@ -13,6 +13,10 @@ import com.otabi.jcodroneedu.DroneSystem;
  * Simple test to verify controller input protocol classes work correctly
  */
 public class ControllerInputProtocolTest {
+    /**
+     * main method.
+     * @since 1.0.0
+     */
     public static void main(String[] args) {
         System.out.println("=== Controller Input Protocol Classes Test ===");
         

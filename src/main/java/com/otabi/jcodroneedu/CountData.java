@@ -125,6 +125,7 @@ public class CountData {
       * @since 1.0.0
      */
     @Override
+    /** @since 1.0.0 */
     public String toString() {
         return String.format("CountData{timestamp=%.2f, flightTime=%d, takeoffs=%d, landings=%d, accidents=%d}",
                 timestamp, flightTime, takeoffCount, landingCount, accidentCount);

@@ -53,27 +53,54 @@ public class DisplayDrawString implements Serializable {
     }
 
     // Getters and setters
+    /**
+     * Gets the x.
+     * @since 1.0.0
+     */
     public int getX() { return x; }
+    /** @since 1.0.0 */
     public void setX(int x) { this.x = (short) x; }
     
+    /** @since 1.0.0 */
     public int getY() { return y; }
+    /**
+     * Sets the y.
+     * @since 1.0.0
+     */
     public void setY(int y) { this.y = (short) y; }
     
+    /** @since 1.0.0 */
     public DisplayFont getFont() { return font; }
+    /** @since 1.0.0 */
     public void setFont(DisplayFont font) { this.font = font; }
     
+    /**
+     * Gets the pixel.
+     * @since 1.0.0
+     */
     public DisplayPixel getPixel() { return pixel; }
+    /** @since 1.0.0 */
     public void setPixel(DisplayPixel pixel) { this.pixel = pixel; }
     
+    /** @since 1.0.0 */
     public String getMessage() { return message; }
+    /**
+     * Sets the message.
+     * @since 1.0.0
+     */
     public void setMessage(String message) { this.message = message != null ? message : ""; }
 
     @Override
+    /** @since 1.0.0 */
     public byte getSize() {
         return (byte) (6 + message.getBytes(StandardCharsets.UTF_8).length);
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer) {
         buffer.putShort(x);
         buffer.putShort(y);
@@ -85,6 +112,10 @@ public class DisplayDrawString implements Serializable {
     // Note: toArray() inherited from Serializable interface (handles LITTLE_ENDIAN)
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException {
         if (buffer.remaining() < 6) {
             throw new InvalidDataSizeException(6, buffer.remaining());

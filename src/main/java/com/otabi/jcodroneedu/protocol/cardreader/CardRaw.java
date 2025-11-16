@@ -37,12 +37,20 @@ public class CardRaw implements Serializable
     }
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize()
     {
         return CARD_RAW_SIZE;
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         for (int i = 0; i <2 ; i++)
@@ -56,6 +64,10 @@ public class CardRaw implements Serializable
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         rgbRaw = new byte[3][2];

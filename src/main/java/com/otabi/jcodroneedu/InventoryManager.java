@@ -247,24 +247,55 @@ public class InventoryManager {
     
     // --- Individual Getters ---
     
+    /**
+     * Gets the count timestamp.
+     * @since 1.0.0
+     */
     public double getCountTimestamp() { return countTimestamp; }
+    /** @since 1.0.0 */
     public int getFlightTime() { return flightTime; }
+    /** @since 1.0.0 */
     public int getTakeoffCount() { return takeoffCount; }
+    /** @since 1.0.0 */
     public int getLandingCount() { return landingCount; }
+    /**
+     * Gets the accident count.
+     * @since 1.0.0
+     */
     public int getAccidentCount() { return accidentCount; }
     
+    /** @since 1.0.0 */
     public double getInformationTimestamp() { return informationTimestamp; }
+    /** @since 1.0.0 */
     public DroneSystem.ModelNumber getDroneModel() { return droneModel; }
+    /**
+     * Gets the drone firmware.
+     * @since 1.0.0
+     */
     public String getDroneFirmware() { return droneFirmware; }
+    /** @since 1.0.0 */
     public DroneSystem.ModelNumber getControllerModel() { return controllerModel; }
+    /** @since 1.0.0 */
     public String getControllerFirmware() { return controllerFirmware; }
     
+    /**
+     * Gets the cpu id timestamp.
+     * @since 1.0.0
+     */
     public double getCpuIdTimestamp() { return cpuIdTimestamp; }
+    /** @since 1.0.0 */
     public String getDroneCpuId() { return droneCpuId; }
+    /** @since 1.0.0 */
     public String getControllerCpuId() { return controllerCpuId; }
     
+    /**
+     * Gets the address timestamp.
+     * @since 1.0.0
+     */
     public double getAddressTimestamp() { return addressTimestamp; }
+    /** @since 1.0.0 */
     public String getDroneAddress() { return droneAddress; }
+    /** @since 1.0.0 */
     public String getControllerAddress() { return controllerAddress; }
     
     /**

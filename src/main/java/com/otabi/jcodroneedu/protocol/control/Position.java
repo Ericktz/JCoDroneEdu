@@ -25,6 +25,10 @@ public class Position implements Serializable
     public short rotationalVelocity = 0;
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         buffer.putFloat(this.positionX);
@@ -36,12 +40,20 @@ public class Position implements Serializable
     }
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize()
     {
         return SIZE;
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         this.positionX = buffer.getFloat();

@@ -30,12 +30,20 @@ public class LightManual implements Serializable
 
     }
 
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize()
     {
         return MANUAL_SIZE;
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         this.flags = buffer.getShort();
@@ -43,6 +51,10 @@ public class LightManual implements Serializable
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         buffer.putShort(flags);

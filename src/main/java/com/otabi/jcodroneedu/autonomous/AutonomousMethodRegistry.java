@@ -300,6 +300,10 @@ public class AutonomousMethodRegistry {
     }
     
     @Override
+    /**
+     * toString method.
+     * @since 1.0.0
+     */
     public String toString() {
         return String.format("AutonomousMethodRegistry{methods=%d, names=%s}", 
             methods.size(), listMethods());

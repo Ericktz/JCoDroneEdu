@@ -129,6 +129,10 @@ public class BuzzerSequence {
     }
     
     @Override
+    /**
+     * toString method.
+     * @since 1.0.0
+     */
     public String toString() {
         return String.format("BuzzerSequence[name=%s, notes=%d, duration=%dms]", 
             name, getNoteCount(), getTotalDurationMs());
@@ -172,6 +176,10 @@ public class BuzzerSequence {
         }
         
         @Override
+        /**
+         * toString method.
+         * @since 1.0.0
+         */
         public String toString() {
             if (frequency == 0) {
                 return String.format("Pause[%dms]", durationMs + delayAfterMs);

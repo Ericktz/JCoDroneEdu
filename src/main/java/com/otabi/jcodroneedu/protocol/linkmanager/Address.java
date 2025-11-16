@@ -25,11 +25,19 @@ public class Address implements Serializable {
         this.address = address;
     }
 
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize() {
         return ADDRESS_SIZE;
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         address = new byte[getSize()];
@@ -37,11 +45,19 @@ public class Address implements Serializable {
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         buffer.put(this.address);
     }
 
+    /**
+     * Gets the address.
+     * @since 1.0.0
+     */
     public byte[] getAddress() {
         return address;
     }

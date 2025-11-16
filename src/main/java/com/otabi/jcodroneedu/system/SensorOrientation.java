@@ -33,10 +33,18 @@ public enum SensorOrientation {
         this.orientation = orientation;
     }
 
+    /**
+     * value method.
+     * @since 1.0.0
+     */
     public byte value() {
         return orientation;
     }
 
+    /**
+     * fromByte method.
+     * @since 1.0.0
+     */
     public static SensorOrientation fromByte(byte b) {
         return BYTE_SENSOR_ORIENTATION_MAP.get(b);
     }

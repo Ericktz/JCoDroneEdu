@@ -25,12 +25,20 @@ class Monitor8 implements Serializable
     }
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize()
     {
         return MONITOR_8_SIZE;
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         buffer.putLong(this.systemTime);
@@ -39,6 +47,10 @@ class Monitor8 implements Serializable
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         systemTime = buffer.getLong();

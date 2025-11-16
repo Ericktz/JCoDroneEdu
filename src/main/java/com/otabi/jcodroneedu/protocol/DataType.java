@@ -122,6 +122,10 @@ public enum DataType {
         this.factory = factory;
     }
 
+    /**
+     * value method.
+     * @since 1.0.0
+     */
     public byte value() {
         return type;
     }
@@ -156,10 +160,18 @@ public enum DataType {
         }
     }
 
+    /**
+     * fromByte method.
+     * @since 1.0.0
+     */
     public static DataType fromByte(byte b) {
         return BYTE_DATA_TYPE_MAP.get(b);
     }
 
+    /**
+     * fromClass method.
+     * @since 1.0.0
+     */
     public static DataType fromClass(Class<? extends Serializable> c) {
         return CLASS_DATA_TYPE_MAP.get(c);
     }

@@ -39,12 +39,20 @@ public class Range implements Serializable
     }
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize()
     {
         return RANGE_SIZE;
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         this.left = buffer.getShort();
@@ -56,6 +64,10 @@ public class Range implements Serializable
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         buffer.putShort(left);
@@ -67,10 +79,22 @@ public class Range implements Serializable
     }
 
     // Range sensor getters (in millimeters)
+    /**
+     * Gets the left.
+     * @since 1.0.0
+     */
     public short getLeft() { return left; }
+    /** @since 1.0.0 */
     public short getFront() { return front; }
+    /** @since 1.0.0 */
     public short getRight() { return right; }
+    /** @since 1.0.0 */
     public short getRear() { return rear; }
+    /**
+     * Gets the top.
+     * @since 1.0.0
+     */
     public short getTop() { return top; }
+    /** @since 1.0.0 */
     public short getBottom() { return bottom; }
 }

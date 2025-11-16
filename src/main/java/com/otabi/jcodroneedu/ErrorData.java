@@ -303,6 +303,7 @@ public class ErrorData {
       * @since 1.0.0
      */
     @Override
+    /** @since 1.0.0 */
     public String toString() {
         StringBuilder sb = new StringBuilder("ErrorData{");
         sb.append("timestamp=").append(timestamp);

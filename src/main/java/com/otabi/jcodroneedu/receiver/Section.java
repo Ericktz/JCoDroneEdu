@@ -20,10 +20,18 @@ enum Section {
         this.value = value;
     }
 
+    /**
+     * Gets the value.
+     * @since 1.0.0
+     */
     public byte getValue() {
         return value;
     }
 
+    /**
+     * fromByte method.
+     * @since 1.0.0
+     */
     public static Section fromByte(byte value) {
         for (Section type : Section.values()) {
             if (type.value == value) {

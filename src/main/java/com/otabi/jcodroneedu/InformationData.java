@@ -114,6 +114,7 @@ public class InformationData {
       * @since 1.0.0
      */
     @Override
+    /** @since 1.0.0 */
     public String toString() {
         return String.format("InformationData{timestamp=%.2f, droneModel=%s, droneFirmware=%s, controllerModel=%s, controllerFirmware=%s}",
                 timestamp, droneModel, droneFirmware, controllerModel, controllerFirmware);

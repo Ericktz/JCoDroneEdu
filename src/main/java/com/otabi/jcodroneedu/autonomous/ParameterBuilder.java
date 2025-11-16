@@ -211,6 +211,10 @@ public class ParameterBuilder {
     }
     
     @Override
+    /**
+     * toString method.
+     * @since 1.0.0
+     */
     public String toString() {
         return String.format("ParameterBuilder{parameters=%s}", parameters);
     }

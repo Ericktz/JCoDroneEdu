@@ -29,12 +29,20 @@ public class InformationAssembledForEntry implements Serializable
     private float altitude;
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize()
     {
         return INFORMATION_ASSEMBLED_FOR_ENTRY_SIZE;
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         this.angleRoll = buffer.getShort();
@@ -51,6 +59,10 @@ public class InformationAssembledForEntry implements Serializable
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         buffer.putShort(this.angleRoll);

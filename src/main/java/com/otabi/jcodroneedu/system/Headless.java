@@ -31,10 +31,18 @@ public enum Headless {
         this.headless = headless;
     }
 
+    /**
+     * value method.
+     * @since 1.0.0
+     */
     public byte value() {
         return headless;
     }
 
+    /**
+     * fromByte method.
+     * @since 1.0.0
+     */
     public static Headless fromByte(byte b) {
         return BYTE_HEADLESS_MAP.get(b);
     }

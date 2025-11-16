@@ -32,12 +32,20 @@ public class Button implements Serializable
     }
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize()
     {
         return BUTTON_SIZE;
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         this.button = buffer.getShort();
@@ -45,6 +53,10 @@ public class Button implements Serializable
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         buffer.putShort(button);
@@ -52,10 +64,18 @@ public class Button implements Serializable
     }
 
     // Getter methods
+    /**
+     * Gets the button.
+     * @since 1.0.0
+     */
     public short getButton() {
         return button;
     }
 
+    /**
+     * Gets the event.
+     * @since 1.0.0
+     */
     public DroneSystem.ButtonEvent getEvent() {
         return event;
     }

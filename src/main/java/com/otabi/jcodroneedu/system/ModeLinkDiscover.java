@@ -22,6 +22,10 @@ public enum ModeLinkDiscover {
         this.mode = mode;
     }
 
+    /**
+     * Gets the mode.
+     * @since 1.0.0
+     */
     public int getMode() {
         return mode;
     }

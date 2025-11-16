@@ -34,11 +34,19 @@ public enum ModeUpdate {
         this.mode = mode;
     }
 
+    /**
+     * value method.
+     * @since 1.0.0
+     */
     public byte value() {
         return mode;
     }
 
 
+    /**
+     * forValue method.
+     * @since 1.0.0
+     */
     public static ModeUpdate forValue(byte b) {
         return BYTE_MODE_UPDATE_MAP.get(b);
     }

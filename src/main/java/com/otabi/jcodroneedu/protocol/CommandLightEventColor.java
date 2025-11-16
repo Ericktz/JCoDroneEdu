@@ -26,12 +26,20 @@ public class CommandLightEventColor implements Serializable
     }
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize()
     {
         return (byte) (command.getSize() + lightEvent.getSize() + color.getSize());
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         this.command.unpack(buffer);
@@ -40,6 +48,10 @@ public class CommandLightEventColor implements Serializable
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         command.pack(buffer);

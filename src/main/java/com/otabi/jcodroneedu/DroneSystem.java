@@ -181,6 +181,10 @@ public class DroneSystem
             this.value = value;
         }
 
+        /**
+         * Gets the value.
+         * @since 1.0.0
+         */
         public int getValue()
         {
             return value;
@@ -444,6 +448,10 @@ public class DroneSystem
             this.value = value;
         }
 
+        /**
+         * Gets the value.
+         * @since 1.0.0
+         */
         public int getValue()
         {
             return value;
@@ -471,6 +479,10 @@ public class DroneSystem
             this.value = value;
         }
 
+        /**
+         * Gets the value.
+         * @since 1.0.0
+         */
         public int getValue()
         {
             return value;
@@ -497,6 +509,10 @@ public class DroneSystem
             this.value = value;
         }
 
+        /**
+         * Gets the value.
+         * @since 1.0.0
+         */
         public int getValue()
         {
             return value;
@@ -518,6 +534,10 @@ public class DroneSystem
             this.value = value;
         }
 
+        /**
+         * Gets the value.
+         * @since 1.0.0
+         */
         public int getValue()
         {
             return value;
@@ -653,6 +673,10 @@ public class DroneSystem
             this.value = value;
         }
 
+        /**
+         * Gets the value.
+         * @since 1.0.0
+         */
         public int getValue()
         {
             return value;
@@ -735,6 +759,10 @@ public class DroneSystem
             this.value = value;
         }
 
+        /**
+         * Gets the value.
+         * @since 1.0.0
+         */
         public int getValue()
         {
             return value;
@@ -878,6 +906,10 @@ public class DroneSystem
             this.value = value;
         }
 
+        /**
+         * Gets the value.
+         * @since 1.0.0
+         */
         public int getValue()
         {
             return value;

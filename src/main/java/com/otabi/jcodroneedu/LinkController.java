@@ -68,6 +68,10 @@ public class LinkController {
             this.value = value;
         }
 
+        /**
+         * Gets the value.
+         * @since 1.0.0
+         */
         public byte getValue() {
             return value;
         }
@@ -86,6 +90,10 @@ public class LinkController {
             this.value = value;
         }
 
+        /**
+         * Gets the value.
+         * @since 1.0.0
+         */
         public byte getValue() {
             return value;
         }

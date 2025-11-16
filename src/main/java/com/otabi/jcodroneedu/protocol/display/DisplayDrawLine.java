@@ -56,30 +56,62 @@ public class DisplayDrawLine implements Serializable {
     }
 
     // Getters and setters
+    /**
+     * Gets the x1.
+     * @since 1.0.0
+     */
     public int getX1() { return x1; }
+    /** @since 1.0.0 */
     public void setX1(int x1) { this.x1 = (short) x1; }
     
+    /** @since 1.0.0 */
     public int getY1() { return y1; }
+    /**
+     * Sets the y1.
+     * @since 1.0.0
+     */
     public void setY1(int y1) { this.y1 = (short) y1; }
     
+    /** @since 1.0.0 */
     public int getX2() { return x2; }
+    /** @since 1.0.0 */
     public void setX2(int x2) { this.x2 = (short) x2; }
     
+    /**
+     * Gets the y2.
+     * @since 1.0.0
+     */
     public int getY2() { return y2; }
+    /** @since 1.0.0 */
     public void setY2(int y2) { this.y2 = (short) y2; }
     
+    /** @since 1.0.0 */
     public DisplayPixel getPixel() { return pixel; }
+    /**
+     * Sets the pixel.
+     * @since 1.0.0
+     */
     public void setPixel(DisplayPixel pixel) { this.pixel = pixel; }
     
+    /** @since 1.0.0 */
     public DisplayLine getLine() { return line; }
+    /** @since 1.0.0 */
     public void setLine(DisplayLine line) { this.line = line; }
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize() {
         return 10;
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer) {
         buffer.putShort(x1);
         buffer.putShort(y1);
@@ -92,6 +124,10 @@ public class DisplayDrawLine implements Serializable {
     // Note: toArray() inherited from Serializable interface (handles LITTLE_ENDIAN)
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException {
         if (buffer.remaining() < getSize()) {
             throw new InvalidDataSizeException(getSize(), buffer.remaining());

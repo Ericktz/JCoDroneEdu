@@ -20,10 +20,18 @@ enum StateLoading {
         this.value = value;
     }
 
+    /**
+     * Gets the value.
+     * @since 1.0.0
+     */
     public byte getValue() {
         return value;
     }
 
+    /**
+     * fromByte method.
+     * @since 1.0.0
+     */
     public static StateLoading fromByte(byte value) {
         for (StateLoading type : StateLoading.values()) {
             if (type.value == value) {

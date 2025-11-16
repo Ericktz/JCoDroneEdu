@@ -175,6 +175,7 @@ public class JoystickData {
       * @since 1.0.0
      */
     @Override
+    /** @since 1.0.0 */
     public String toString() {
         return String.format("JoystickData{timestamp=%d, leftX=%d, leftY=%d, rightX=%d, rightY=%d}", 
                            timestamp, leftX, leftY, rightX, rightY);

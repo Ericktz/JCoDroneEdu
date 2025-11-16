@@ -38,10 +38,18 @@ public enum ModeFlight {
         this.mode = mode;
     }
 
+    /**
+     * value method.
+     * @since 1.0.0
+     */
     public byte value() {
         return mode;
     }
 
+    /**
+     * fromByte method.
+     * @since 1.0.0
+     */
     public static ModeFlight fromByte(byte b) {
         return BYTE_MODE_FLIGHT_MAP.get(b);
     }

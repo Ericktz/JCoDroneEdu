@@ -20,6 +20,10 @@ public enum DriveEvent {
         this.event = event;
     }
 
+    /**
+     * Gets the event.
+     * @since 1.0.0
+     */
     public int getEvent() {
         return event;
     }

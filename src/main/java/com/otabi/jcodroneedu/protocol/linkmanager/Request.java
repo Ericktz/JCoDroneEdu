@@ -38,16 +38,28 @@ public class Request implements Serializable {
     }
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize() {
         return REQUEST_SIZE;
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer) {
         buffer.put(requestedDataType.value());
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException {
         if (buffer.remaining() < REQUEST_SIZE) {
             // Corrected to pass both the expected size and the actual size.
@@ -56,6 +68,10 @@ public class Request implements Serializable {
         this.requestedDataType = DataType.fromByte(buffer.get());
     }
 
+    /**
+     * Gets the requested data type.
+     * @since 1.0.0
+     */
     public DataType getRequestedDataType() {
         return requestedDataType;
     }
