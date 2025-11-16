@@ -1,0 +1,115 @@
+name: Auto-Create Feature/Bug Branch on Assignment
+
+on:
+  issues:
+    types: [assigned]
+
+jobs:
+  create-branch:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      issues: write
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Determine branch type and create branch
+        id: create_branch
+        env:
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ISSUE_TITLE: ${{ github.event.issue.title }}
+          ISSUE_LABELS: ${{ join(github.event.issue.labels.*.name, ',') }}
+        run: |
+          # Determine if bug or feature based on labels
+          BRANCH_TYPE="feature"
+          if [[ "$ISSUE_LABELS" == *"bug"* ]]; then
+            BRANCH_TYPE="bugfix"
+          fi
+          
+          # Create slug from issue title (lowercase, replace spaces with hyphens, remove special chars)
+          SLUG=$(echo "$ISSUE_TITLE" | tr '[:upper:]' '[:lower:]' | sed 's/[^a-z0-9 -]//g' | sed 's/  */-/g' | cut -c1-40)
+          
+          # Create branch name
+          BRANCH_NAME="${BRANCH_TYPE}/issue-${ISSUE_NUMBER}-${SLUG}"
+          
+          echo "branch_name=${BRANCH_NAME}" >> $GITHUB_OUTPUT
+          echo "branch_type=${BRANCH_TYPE}" >> $GITHUB_OUTPUT
+          
+          # Create and push branch
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH_NAME"
+          git push origin "$BRANCH_NAME"
+          
+          echo "✅ Branch created: $BRANCH_NAME"
+
+      - name: Determine version bump
+        id: version
+        run: |
+          # Get current version from build.gradle.kts
+          CURRENT_VERSION=$(grep "else -> \"" build.gradle.kts | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
+          
+          # Parse version components
+          MAJOR=$(echo $CURRENT_VERSION | cut -d. -f1)
+          MINOR=$(echo $CURRENT_VERSION | cut -d. -f2)
+          PATCH=$(echo $CURRENT_VERSION | cut -d. -f3)
+          
+          # Determine next version based on branch type
+          if [[ "${{ steps.create_branch.outputs.branch_type }}" == "bugfix" ]]; then
+            NEXT_PATCH=$((PATCH + 1))
+            NEXT_VERSION="${MAJOR}.${MINOR}.${NEXT_PATCH}-SNAPSHOT"
+          else
+            NEXT_MINOR=$((MINOR + 1))
+            NEXT_VERSION="${MAJOR}.${NEXT_MINOR}.0-SNAPSHOT"
+          fi
+          
+          echo "current_version=${CURRENT_VERSION}" >> $GITHUB_OUTPUT
+          echo "next_version=${NEXT_VERSION}" >> $GITHUB_OUTPUT
+
+      - name: Update version in branch
+        env:
+          BRANCH_NAME: ${{ steps.create_branch.outputs.branch_name }}
+          NEXT_VERSION: ${{ steps.version.outputs.next_version }}
+        run: |
+          # Switch to the new branch
+          git fetch origin "$BRANCH_NAME"
+          git checkout "$BRANCH_NAME"
+          
+          # Update build.gradle.kts with new version
+          CURRENT_VERSION="${{ steps.version.outputs.current_version }}"
+          sed -i "s/else -> \"${CURRENT_VERSION}\"/else -> \"${NEXT_VERSION}\"/" build.gradle.kts
+          
+          # Commit version bump
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add build.gradle.kts
+          git commit -m "Bump version to ${NEXT_VERSION} for development"
+          git push origin "$BRANCH_NAME"
+          
+          echo "✅ Version bumped to ${NEXT_VERSION}"
+
+      - name: Post comment on issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const branchName = '${{ steps.create_branch.outputs.branch_name }}';
+            const branchType = '${{ steps.create_branch.outputs.branch_type }}';
+            const nextVersion = '${{ steps.version.outputs.next_version }}';
+            const repoUrl = `https://github.com/${{ github.repository }}`;
+            const branchUrl = `${repoUrl}/tree/${branchName}`;
+            
+            const typeEmoji = branchType === 'bugfix' ? '🐛' : '✨';
+            const typeLabel = branchType === 'bugfix' ? 'Bug Fix' : 'Feature';
+            
+            const instructions = `${typeEmoji} **${typeLabel} Branch Created**\n\n🌿 **Branch**: [${branchName}](${branchUrl})\n\n📦 **Version**: \`${nextVersion}\`\n\n**Instructions**:\n1. Checkout the branch:\n   \`\`\`bash\n   git fetch origin ${branchName}\n   git checkout ${branchName}\n   \`\`\`\n\n2. See [Agent Instructions](.github/AGENT_INSTRUCTIONS.md) for development workflow\n\n3. Push commits to this branch and open a PR when ready\n\n**Note**: Version has been automatically bumped in this branch. Do not manually update it.`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: instructions
+            });
