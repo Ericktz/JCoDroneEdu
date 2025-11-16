@@ -1346,34 +1346,85 @@ for name, method in inspect.getmembers(drone_class, predicate=inspect.isfunction
             println("⚠️  Could not parse Python API: ${e.message}")
         }
         
-        // Parse Java API
+        // Parse Java API and extract @pythonEquivalent annotations
         val javaFile = file("src/main/java/com/otabi/jcodroneedu/Drone.java")
         val javaMethods = mutableSetOf<String>()
+        val pythonEquivalents = mutableMapOf<String, String>() // javaMethod -> pythonMethod
         
         if (javaFile.exists()) {
-            javaFile.readLines().forEach { line ->
+            val lines = javaFile.readLines()
+            var i = 0
+            while (i < lines.size) {
+                val line = lines[i]
                 val trimmed = line.trim()
-                if (trimmed.startsWith("public ") && trimmed.contains("(")) {
+                
+                // Look for @pythonEquivalent annotations
+                if (trimmed.startsWith("* @pythonEquivalent")) {
+                    val pythonMethodName = trimmed.substringAfter("@pythonEquivalent").trim()
+                    // Look forward for the actual method declaration
+                    var j = i + 1
+                    while (j < lines.size && j < i + 10) {
+                        val methodLine = lines[j].trim()
+                        if (methodLine.startsWith("public ") && methodLine.contains("(")) {
+                            val methodPart = methodLine.substringAfter("public ").trim()
+                            if (!methodPart.startsWith("class ") && !methodPart.startsWith("interface ")) {
+                                val javaMethodName = methodPart.substringAfter(" ").substringBefore("(").trim()
+                                javaMethods.add(javaMethodName)
+                                pythonEquivalents[javaMethodName] = pythonMethodName
+                                break
+                            }
+                        }
+                        j++
+                    }
+                } else if (trimmed.startsWith("public ") && trimmed.contains("(")) {
                     val methodPart = trimmed.substringAfter("public ").trim()
                     if (!methodPart.startsWith("class ") && !methodPart.startsWith("interface ")) {
                         val methodName = methodPart.substringAfter(" ").substringBefore("(").trim()
                         javaMethods.add(methodName)
                     }
                 }
+                i++
             }
         }
         
-        // Find differences
-        val inPythonNotJava = pythonMethods.filterNot { javaMethods.contains(it) || javaMethods.contains(toCamelCase(it)) }
-        val inJavaNotPython = javaMethods.filterNot { pythonMethods.contains(it) || pythonMethods.contains(toSnakeCase(it)) }
+        // Find differences using documented equivalents and name matching
+        val matchedPythonMethods = mutableSetOf<String>()
+        val methodMappings = mutableMapOf<String, Pair<String, String>>() // javaMethod -> (pythonMethod, matchType)
+        
+        // Match using @pythonEquivalent annotations
+        for ((javaMethod, pythonMethod) in pythonEquivalents) {
+            if (pythonMethods.contains(pythonMethod)) {
+                matchedPythonMethods.add(pythonMethod)
+                methodMappings[javaMethod] = pythonMethod to "documented"
+            }
+        }
+        
+        // Match remaining methods by name conversion
+        for (javaMethod in javaMethods) {
+            if (!pythonEquivalents.containsKey(javaMethod)) {
+                val pythonName = toSnakeCase(javaMethod)
+                if (pythonMethods.contains(pythonName)) {
+                    matchedPythonMethods.add(pythonName)
+                    methodMappings[javaMethod] = pythonName to "inferred"
+                }
+            }
+        }
+        
+        val inPythonNotJava = pythonMethods - matchedPythonMethods
+        val inJavaNotPython = javaMethods.filterNot { methodMappings.containsKey(it) }
         
         // Report
         report.appendLine("## Summary")
         report.appendLine()
         report.appendLine("- **Python Methods:** ${pythonMethods.size}")
         report.appendLine("- **Java Methods:** ${javaMethods.size}")
+        report.appendLine("- **Matched Methods:** ${methodMappings.size}")
+        report.appendLine("  - Documented (@pythonEquivalent): ${methodMappings.values.count { it.second == "documented" }}")
+        report.appendLine("  - Inferred (by name): ${methodMappings.values.count { it.second == "inferred" }}")
         report.appendLine("- **In Python, Not Java:** ${inPythonNotJava.size}")
         report.appendLine("- **In Java, Not Python:** ${inJavaNotPython.size}")
+        report.appendLine()
+        report.appendLine("**Note:** Java methods use @pythonEquivalent annotations to document their Python API mapping.")
         report.appendLine()
         
         report.appendLine("## Methods in Python but NOT in Java")
