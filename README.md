@@ -41,26 +41,25 @@ This API will support:
 CoDrone EDU Java provides a simple, well-documented interface to fly and program CoDrone EDU hardware from Java. The library exposes core flight control, basic sensors, LED control, and curated student examples so classrooms and instructors can teach programming and robotics with hands-on activities.
 
 Artifacts produced by the build:
-- Student JAR (for classroom/student use)
-- Teacher JAR (includes teacher/testing utilities)
+- Main JAR (core library for classroom/student use)
 - Sources JAR and Javadoc JAR
+- Published to Maven Central for easy dependency management
 
 ## Development status (classroom-ready)
-The CoDrone EDU Java API is classroom-ready for student use. Core flight controls, sensor access, LED control, and the student examples are implemented and tested. Teacher utilities are included in the teacher edition JAR. We continue to refine advanced features and documentation; check the release notes for details.
+The CoDrone EDU Java API is classroom-ready for student and educator use. Core flight controls, sensor access, LED control, and the student examples are implemented and tested. We continue to refine advanced features and documentation; check the release notes for details.
 
-## Release: v1.0.16 — Classroom release (student edition)
-This release focuses on providing a stable Java experience for classroom use.
+## Latest Release: v1.3.1
+
+Latest release now available on Maven Central! This release includes simplified Maven publication for easier integration with Gradle and Maven-based student projects.
 
 Highlights:
 - Core flight controls: user-friendly movement commands for classroom exercises.
-- Sensors: accelerometer, gyroscope, and distance sensors exposed with simple APIs for lab work.
+- Sensors: accelerometer, gyroscope, distance sensors, and camera/vision APIs.
 - LED control: full support for drone and controller LEDs, example patterns, and guided activities.
 - Student examples: curated example projects suitable for K–12 and AP Computer Science lessons.
-- Packaging: Student and Teacher JARs plus Javadoc and sources are produced by the build; teacher utilities are provided as a separate teacher JAR.
+- Published on Maven Central: easy dependency integration for Gradle and Maven projects.
 
-Notes:
-- Teacher edition includes additional testing and classroom utilities — find it in the GitHub Release assets.
-- Advanced topics such as swarm programming and autonomous research features are planned for future releases.
+For past releases and detailed changelog, see [CHANGELOG.md](CHANGELOG.md).
 
 ## Why use the Java API
 - Designed for educators: simple, consistent APIs and examples aligned to classroom exercises.
@@ -105,38 +104,61 @@ If you encounter compatibility issues:
 3. Open an issue with your Java/Python versions and the specific problem
 
 ## Getting started (student)
-1. Download the student JAR from the latest GitHub Release (look for `codrone-edu-java-<version>-student.jar`) or add the library to your project using the artifact published to Maven Central when available.
-2. Example dependency (Maven; adjust group/artifact/version as needed):
+
+### Adding to your project
+
+The library is published to Maven Central. Add it to your project:
+
+**Gradle:**
+```gradle
+dependencies {
+    implementation 'com.otabi:codrone-edu-java:1.3.1'
+}
+```
+
+**Maven:**
 ```xml
 <dependency>
-  <groupId>edu.codrone</groupId>
+  <groupId>com.otabi</groupId>
   <artifactId>codrone-edu-java</artifactId>
-  <version>1.0.16</version>
+  <version>1.3.1</version>
 </dependency>
 ```
-3. See the `src/main/java/com/otabi/jcodroneedu/examples` directory for hands-on sample programs and lesson starters.
+
+### Running examples
+
+1. See the `src/main/java/com/otabi/jcodroneedu/examples` directory for hands-on sample programs and lesson starters.
+2. API documentation (Javadoc) is included with each Maven Central release.
+3. For detailed implementation patterns, see [docs/LOGGING_GUIDE.md](docs/LOGGING_GUIDE.md)
 
 ## Teacher edition
 The teacher edition JAR includes extra utilities for instructors such as testing helpers and test harnesses used in classroom assessments. The teacher JAR is distributed via the Release assets for instructors and course maintainers.
 
 ## Documentation & examples
-- API docs (Javadoc) are produced with each release and included in release assets.
-- Example programs are in `src/main/java/com/otabi/jcodroneedu/examples`.
-- Implementation notes and design documents are in the `docs/` and `reference/` directories.
+- **API documentation (Javadoc)**: Included in Maven Central releases and available via the `-javadoc.jar` artifact
+- **Example programs**: See `src/main/java/com/otabi/jcodroneedu/examples` for hands-on sample projects
+- **Implementation guides**: 
+  - [Logging Guide](docs/LOGGING_GUIDE.md) - Using the logging framework
+  - [Teacher's Guide: GitHub Copilot for Test Creation](TEACHER_COPILOT_GUIDE.md) - AI-assisted test development
+- **Implementation notes and design documents**: See the `docs/` and `reference/` directories
 
 ## Testing & quality
 - We run automated tests as part of the build pipeline and maintain a suite of unit tests focused on classroom behaviors.
 - Before adopting the library for production curricula, instructors should run the examples and tests in their environment to verify behavior with their hardware.
 
-## Installing and building locally (developer convenience)
+## Installing and building locally (developer)
 To build artifacts locally:
 ```bash
-# build everything, run tests, and create student/teacher/sources/javadoc jars
-./gradlew build studentJar teacherJar sourcesJar javadocJar
+# Build everything and run tests
+./gradlew build
+
+# Generate sources and javadoc JARs
+./gradlew sourcesJar javadocJar
 ```
-To produce a local Maven publish (dry run):
+
+To publish to Maven Local (for local testing):
 ```bash
-./gradlew publishStudentPublicationToMavenLocal -Pversion=1.0.16
+./gradlew publishMavenJavaPublicationToMavenLocal -Pversion=1.4.0-SNAPSHOT
 ```
 
 ## Contributing
@@ -149,7 +171,9 @@ We welcome contributions once the core API is stabilized. For now:
 This project is available under the MIT License. See the `LICENSE` file in the repository for details.
 
 ## Changelog & releases
-See `CHANGELOG.md` for past release notes. The most recent release is v1.0.16 — check the GitHub Releases page for packaged artifacts (student JAR, teacher JAR, sources, javadoc).
+See [CHANGELOG.md](CHANGELOG.md) for past release notes. Visit the [GitHub Releases page](https://github.com/scerruti/JCoDroneEdu/releases) for packaged artifacts and Javadoc.
+
+The latest release is automatically published to [Maven Central](https://central.sonatype.com/artifact/com.otabi/codrone-edu-java).
 
 ## Contact & support
 For timeline questions, classroom integration, or bug reports, open an issue on this repository. For private instructor access to teacher tooling, check the release assets or contact the maintainers through the project issues.
