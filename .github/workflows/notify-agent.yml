@@ -64,18 +64,3 @@ jobs:
               repo: context.repo.repo,
               body: agentComment
             });
-
-      - name: Invoke Copilot Coding Agent
-        if: steps.check_label.outputs.assigned_to_agent == 'true'
-        uses: github-pull-request_copilot-coding-agent@v1
-        with:
-          title: "Work on issue #${{ steps.issue_details.outputs.issue_num }}: ${{ steps.issue_details.outputs.issue_title }}"
-          body: |
-            Please work on GitHub issue #${{ steps.issue_details.outputs.issue_num }}: ${{ steps.issue_details.outputs.issue_title }}
-            
-            The issue has been prepared with:
-            - Feature branch: ${{ steps.get_branch.outputs.branch_name || 'See issue for branch details' }}
-            - Version bumped to: 1.4.0-SNAPSHOT
-            - Agent Instructions: .github/AGENT_INSTRUCTIONS.md
-            
-            See the issue comments for complete details and the automated branch creation instructions.
