@@ -1,8 +1,9 @@
 # API Comparison Report
 
-**Generated:** 2025-11-16T12:42:20.248839
+**Generated:** 2025-11-16T12:39:45.943831
 **Java Version:** 1.3.0
-**Python API Version:** 2.6.0
+**Python API Version:** 2.6
+**Comparison Mode:** Latest vs. Built (2.3.0)
 
 ## Summary
 
