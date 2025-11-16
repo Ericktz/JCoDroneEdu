@@ -1257,15 +1257,14 @@ tasks.register("compareApis") {
         // Ensure virtual environment exists
         if (!venvDir.exists()) {
             println("📦 Creating Python virtual environment in reference/python-venv...")
-            try {
-                exec {
-                    commandLine("python3", "-m", "venv", venvDir.absolutePath)
-                    isIgnoreExitValue = true
-                }
-            } catch (e: Exception) {
-                println("⚠️  Could not create virtual environment. Skipping API comparison.")
-                println("   Try manually: python3 -m venv reference/python-venv")
-                return@doLast
+            val createResult = exec {
+                commandLine("python3", "-m", "venv", venvDir.absolutePath)
+                isIgnoreExitValue = true
+            }
+            
+            if (createResult.exitValue != 0) {
+                throw GradleException("Failed to create Python virtual environment.\n" +
+                    "   Try manually: python3 -m venv ${venvDir.absolutePath}")
             }
         }
         
@@ -1283,26 +1282,28 @@ tasks.register("compareApis") {
             venvDir.absolutePath + "/bin/python"
         }
         
-        // Try to import the Python module in venv, install if needed
+        // Check if Python module is installed, install if needed
         val pythonCheck = ByteArrayOutputStream()
-        try {
-            exec {
-                commandLine(pythonExecutable, "-c", "import codrone_edu; print(codrone_edu.__version__)")
-                standardOutput = pythonCheck
+        val checkResult = exec {
+            commandLine(pythonExecutable, "-c", "import codrone_edu")
+            standardOutput = pythonCheck
+            errorOutput = ByteArrayOutputStream()
+            isIgnoreExitValue = true
+        }
+        
+        if (checkResult.exitValue != 0) {
+            println("📦 Installing codrone-edu==$pythonVersion to virtual environment...")
+            val installResult = exec {
+                commandLine(pipExecutable, "install", "codrone-edu==$pythonVersion")
                 isIgnoreExitValue = true
             }
-        } catch (e: Exception) {
-            println("📦 Installing codrone-edu==$pythonVersion to virtual environment...")
-            try {
-                exec {
-                    commandLine(pipExecutable, "install", "codrone-edu==$pythonVersion", "--quiet")
-                    isIgnoreExitValue = true
-                }
-            } catch (e: Exception) {
-                println("⚠️  Could not install Python module. Skipping API comparison.")
-                println("   To install manually: ${venvDir.absolutePath}/bin/pip install codrone-edu==$pythonVersion")
-                return@doLast
+            
+            if (installResult.exitValue != 0) {
+                throw GradleException("Failed to install codrone-edu==$pythonVersion to virtual environment.\n" +
+                    "   Try manually: ${venvDir.absolutePath}/bin/pip install codrone-edu==$pythonVersion")
             }
+        } else {
+            println("✅ Python codrone-edu module found in virtual environment")
         }
         
         val reportFile = file("API_COMPARISON.md")
