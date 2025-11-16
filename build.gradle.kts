@@ -1,6 +1,7 @@
 import java.io.ByteArrayOutputStream
 import java.time.LocalDateTime
 import java.util.Base64
+import java.util.zip.ZipFile
 
 plugins {
     id("java-library")
