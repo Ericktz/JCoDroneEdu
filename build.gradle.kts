@@ -286,6 +286,252 @@ tasks.register<JavaExec>("runControllerDisplayExample") {
     mainClass.set("com.otabi.jcodroneedu.examples.ControllerDisplayExample")
 }
 
+// Run ControllerDisplayCanvasExample - demonstrates canvas-based controller display functionality
+// -----------------------------------------------------------------
+tasks.register<JavaExec>("runControllerDisplayCanvasExample") {
+    group = "verification"
+    description = "Runs the ControllerDisplayCanvasExample to demonstrate canvas-based controller display with batching."
+    classpath = sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.examples.ControllerDisplayCanvasExample")
+}
+
+tasks.register<JavaExec>("runDisplayLineTest") {
+    group = "verification"
+    description = "Runs DisplayLineTest to diagnose display byte-packing format"
+    classpath = sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.examples.DisplayLineTest")
+}
+
+tasks.register<JavaExec>("runDisplayWhiteTest") {
+    group = "verification"
+    description = "Runs DisplayWhiteTest to test white/blank display"
+    classpath = sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.examples.DisplayWhiteTest")
+    // Forward stdin for keyboard input
+    standardInput = System.`in`
+}
+
+tasks.register<JavaExec>("runDisplayStagedTest") {
+    group = "verification"
+    description = "Runs DisplayStagedTest with clear visual progression"
+    classpath = sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.examples.DisplayStagedTest")
+}
+
+// -----------------------------------------------------------------
+// Run Checkerboard Test - individual draw commands for diagnostics
+// -----------------------------------------------------------------
+tasks.register<JavaExec>("runCheckerboardTest") {
+    group = "verification"
+    description = "Runs CheckerboardTest using individual controllerDrawPoint commands"
+    classpath = sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.examples.CheckerboardTest")
+}
+
+// -----------------------------------------------------------------
+// Run Simple Lines Test - faster diagnostic with fewer points
+// -----------------------------------------------------------------
+tasks.register<JavaExec>("runSimpleLinesTest") {
+    group = "verification"
+    description = "Runs SimpleLinesTest - draws a few horizontal lines for quick diagnostics"
+    classpath = sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.examples.SimpleLinesTest")
+}
+
+// -----------------------------------------------------------------
+// Run Single Message Test - test 0x88 protocol with minimal data
+// -----------------------------------------------------------------
+tasks.register<JavaExec>("runSingleMessageTest") {
+    group = "verification"
+    description = "Runs SingleMessageTest - sends a single 0x88 DisplayDrawImage message"
+    classpath = sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.examples.SingleMessageTest")
+    standardInput = System.`in`
+}
+
+// -----------------------------------------------------------------
+// Run Canvas To Protocol Test - test 0x88 with full canvas data
+// -----------------------------------------------------------------
+tasks.register<JavaExec>("runCanvasToProtocolTest") {
+    group = "verification"
+    description = "Runs CanvasToProtocolTest - sends canvas as chunked 0x88 messages"
+    classpath = sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.examples.CanvasToProtocolTest")
+    standardInput = System.`in`
+}
+
+// -----------------------------------------------------------------
+// Run Clean Canvas Test - test 0x88 with proper chunks (no errors)
+// -----------------------------------------------------------------
+tasks.register<JavaExec>("runCleanCanvasTest") {
+    group = "verification"
+    description = "Runs CleanCanvasTest - sends canvas as 5 properly-sized 0x88 messages"
+    classpath = sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.examples.CleanCanvasTest")
+    standardInput = System.`in`
+}
+
+// -----------------------------------------------------------------
+// Run Debug Y Coordinate Test - test if y-coordinate is the issue
+// -----------------------------------------------------------------
+tasks.register<JavaExec>("runDebugYCoordinateTest") {
+    group = "verification"
+    description = "Runs DebugYCoordinateTest - tests y-coordinate positioning with 0x88"
+    classpath = sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.examples.DebugYCoordinateTest")
+    standardInput = System.`in`
+}
+
+tasks.register<JavaExec>("runCanvasColorDebugTest") {
+    group = "verification"
+    description = "Runs CanvasColorDebugTest - debug what colors are actually drawn on canvas"
+    classpath = sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.examples.CanvasColorDebugTest")
+}
+
+tasks.register<JavaExec>("runFormatComparisonTest") {
+    group = "verification"
+    description = "Runs FormatComparisonTest - compare different byte patterns with 0x88"
+    classpath = sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.examples.FormatComparisonTest")
+    standardInput = System.`in`
+}
+
+tasks.register<JavaExec>("runBlockSizeTest") {
+    group = "verification"
+    description = "Runs BlockSizeTest - test different block sizes with 0x88"
+    classpath = sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.examples.BlockSizeTest")
+    standardInput = System.`in`
+}
+
+tasks.register<JavaExec>("runCanvasVsManualTest") {
+    group = "verification"
+    description = "Runs CanvasVsManualTest - compare canvas bytes vs manual 0xFF"
+    classpath = sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.examples.CanvasVsManualTest")
+    standardInput = System.`in`
+}
+
+tasks.register<JavaExec>("runPowerCycleTest") {
+    group = "verification"
+    description = "Runs PowerCycleTest - power cycles drone to clear display state"
+    classpath = sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.examples.PowerCycleTest")
+    standardInput = System.`in`
+}
+
+tasks.register<JavaExec>("runChunkPositioningDebugTest") {
+    group = "verification"
+    description = "Runs ChunkPositioningDebugTest - debug why chunked 0x88 doesn't work"
+    classpath = sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.examples.ChunkPositioningDebugTest")
+    standardInput = System.`in`
+}
+
+tasks.register<JavaExec>("runYZeroDebugTest") {
+    group = "verification"
+    description = "Runs YZeroDebugTest - debug y=0 positioning issue"
+    classpath = sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.examples.YZeroDebugTest")
+    standardInput = System.`in`
+}
+
+tasks.register<JavaExec>("runY0AfterOtherCommandTest") {
+    group = "verification"
+    description = "Runs Y0AfterOtherCommandTest - test y=0 after other 0x88 commands"
+    classpath = sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.examples.Y0AfterOtherCommandTest")
+    standardInput = System.`in`
+}
+
+tasks.register<JavaExec>("runFullCanvasTest") {
+    group = "verification"
+    description = "Runs FullCanvasTest - test sending full 1024-byte canvas at once"
+    classpath = sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.examples.FullCanvasTest")
+    standardInput = System.`in`
+}
+
+tasks.register<JavaExec>("runFullDataWithYOffsetTest") {
+    group = "verification"
+    description = "Runs FullDataWithYOffsetTest - test full data at different y positions"
+    classpath = sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.examples.FullDataWithYOffsetTest")
+    standardInput = System.`in`
+}
+
+tasks.register<JavaExec>("runTwoLinesPersistenceTest") {
+    group = "verification"
+    description = "Runs TwoLinesPersistenceTest - verify two 0x88 commands accumulate"
+    classpath = sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.examples.TwoLinesPersistenceTest")
+    standardInput = System.`in`
+}
+
+tasks.register<JavaExec>("runSimple0x88Test") {
+    group = "verification"
+    description = "Runs Simple0x88Test - basic 0x88 functionality test"
+    classpath = sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.examples.Simple0x88Test")
+}
+
+tasks.register<JavaExec>("runRobotImageTest") {
+    group = "verification"
+    description = "Runs RobotImageTest - displays robot face on controller"
+    classpath = sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.examples.RobotImageTest")
+}
+
+tasks.register<JavaExec>("runRobotEmojiTest") {
+    group = "verification"
+    description = "Runs RobotEmojiTest - displays robot emoji from PNG on controller"
+    classpath = sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.examples.RobotEmojiTest")
+}
+
+tasks.register<JavaExec>("runPacketRateTest") {
+    group = "verification"
+    description = "Runs PacketRateTest - monitors packet rate without sending display commands"
+    classpath = sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.examples.PacketRateTest")
+}
+
+tasks.register<JavaExec>("runDisplayCommandStructureTest") {
+    group = "verification"
+    description = "Runs DisplayCommandStructureTest - analyzes response packets for different display commands"
+    classpath = sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.examples.DisplayCommandStructureTest")
+}
+
+tasks.register<JavaExec>("runBuzzerResponseTest") {
+    group = "verification"
+    description = "Runs BuzzerResponseTest - checks if buzzer commands get echo responses"
+    classpath = sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.examples.BuzzerResponseTest")
+}
+
+tasks.register<JavaExec>("runDroneCommandResponseTest") {
+    group = "verification"
+    description = "Runs DroneCommandResponseTest - checks if drone commands get echo responses"
+    classpath = sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.examples.DroneCommandResponseTest")
+}
+
+tasks.register<JavaExec>("runCommandEchoComparisonTest") {
+    group = "verification"
+    description = "Runs CommandEchoComparisonTest - compares echo responses for controller vs drone commands"
+    classpath = sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.examples.CommandEchoComparisonTest")
+}
+
+tasks.register<JavaExec>("runEchoTimingTest") {
+    group = "verification"
+    description = "Runs EchoTimingTest - analyzes timing of echo responses to determine if from controller or drone"
+    classpath = sourceSets.getByName("main").runtimeClasspath
+    mainClass.set("com.otabi.jcodroneedu.examples.EchoTimingTest")
+}
+
 // -----------------------------------------------------------------
 // Run Example Menu - interactive menu to launch any example
 // -----------------------------------------------------------------

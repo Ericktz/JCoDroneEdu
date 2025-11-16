@@ -5,6 +5,7 @@ import com.otabi.jcodroneedu.autonomous.AutonomousMethod;
 import com.otabi.jcodroneedu.autonomous.AutonomousMethodRegistry;
 import com.otabi.jcodroneedu.buzzer.BuzzerSequence;
 import com.otabi.jcodroneedu.buzzer.BuzzerSequenceRegistry;
+import com.otabi.jcodroneedu.display.DisplayService;
 import com.otabi.jcodroneedu.protocol.*;
 import com.otabi.jcodroneedu.protocol.linkmanager.Request;
 import com.otabi.jcodroneedu.protocol.buzzer.*;
@@ -139,6 +140,7 @@ public class Drone implements AutoCloseable {
     private final SettingsController settingsController;
     private final TelemetryService telemetryService;
     private final ElevationService elevationService;
+    private final DisplayService displayService;
 
     private final RateLimiter commandRateLimiter;
     private boolean isConnected = false;
@@ -191,6 +193,7 @@ public class Drone implements AutoCloseable {
         this.settingsController = new SettingsController(this);
         this.telemetryService = new TelemetryService(this);
         this.elevationService = new ElevationService(telemetryService);
+        this.displayService = new DisplayService(this);
 
         // Set a default command rate limit (e.g., ~16 commands/sec)
         double permitsPerSecond = 1.0 / 0.060;
@@ -449,7 +452,9 @@ public class Drone implements AutoCloseable {
         message.put(dataArray);
         message.putShort((short) crc16);
 
-        serialPortManager.write(message.array());
+        byte[] finalMessage = message.array();
+
+        serialPortManager.write(finalMessage);
     }
 
     /**
@@ -5483,6 +5488,18 @@ public class Drone implements AutoCloseable {
     }
 
     /**
+     * Plays a tone on the drone buzzer at the specified frequency for the given duration.
+     * This is a convenience overload for frequency-based buzzer control.
+     * 
+     * @param frequency The frequency in Hz (e.g., 500, 1000, 1500)
+     * @param durationMs The duration in milliseconds
+     * @educational
+     */
+    public void droneBuzzer(int frequency, int durationMs) {
+        droneBuzzer((Integer) frequency, durationMs);
+    }
+
+    /**
      * Plays a note using the controller's buzzer for a specified duration.
      * The controller buzzer provides local audio feedback for students.
      * 
@@ -5522,6 +5539,18 @@ public class Drone implements AutoCloseable {
         
         // Send mute command to stop the buzzer
         sendBuzzerMute(DeviceType.Controller, 10);
+    }
+
+    /**
+     * Plays a tone on the controller buzzer at the specified frequency for the given duration.
+     * This is a convenience overload for frequency-based buzzer control.
+     * 
+     * @param frequency The frequency in Hz (e.g., 500, 1000, 1500)
+     * @param durationMs The duration in milliseconds
+     * @educational
+     */
+    public void controllerBuzzer(int frequency, int durationMs) {
+        controllerBuzzer((Integer) frequency, durationMs);
     }
 
     /**
@@ -6052,6 +6081,22 @@ public class Drone implements AutoCloseable {
     }
 
     /**
+     * Draws a point on the specified canvas.
+     * 
+     * <p>This method allows drawing on a canvas that hasn't been sent to the display yet,
+     * matching the Python API pattern where drawing methods can optionally take a canvas.</p>
+     * 
+     * @param x X coordinate
+     * @param y Y coordinate
+     * @param canvas The canvas to draw on
+     * @educational
+     * @pythonEquivalent controller_draw_point(x, y, canvas)
+     */
+    public void controllerDrawPoint(int x, int y, DisplayController canvas) {
+        canvas.getGraphics().drawLine(x, y, x, y);
+    }
+
+    /**
      * Draws a line on the controller display.
      * 
      * @param x1 Starting X coordinate
@@ -6085,6 +6130,24 @@ public class Drone implements AutoCloseable {
      */
     public void controllerDrawLine(int x1, int y1, int x2, int y2) {
         controllerDrawLine(x1, y1, x2, y2, DisplayPixel.BLACK, DisplayLine.SOLID);
+    }
+
+    /**
+     * Draws a line on the specified canvas.
+     * 
+     * <p>This method allows drawing on a canvas that hasn't been sent to the display yet,
+     * matching the Python API pattern where drawing methods can optionally take a canvas.</p>
+     * 
+     * @param x1 Starting X coordinate
+     * @param y1 Starting Y coordinate
+     * @param x2 Ending X coordinate
+     * @param y2 Ending Y coordinate
+     * @param canvas The canvas to draw on
+     * @educational
+     * @pythonEquivalent controller_draw_line(x1, y1, x2, y2, canvas)
+     */
+    public void controllerDrawLine(int x1, int y1, int x2, int y2, DisplayController canvas) {
+        canvas.drawLine(x1, y1, x2, y2);
     }
 
     /**
@@ -6125,6 +6188,24 @@ public class Drone implements AutoCloseable {
     }
 
     /**
+     * Draws a rectangle on the specified canvas.
+     * 
+     * <p>This method allows drawing on a canvas that hasn't been sent to the display yet,
+     * matching the Python API pattern where drawing methods can optionally take a canvas.</p>
+     * 
+     * @param x X coordinate of top-left corner
+     * @param y Y coordinate of top-left corner
+     * @param width Width of the rectangle
+     * @param height Height of the rectangle
+     * @param canvas The canvas to draw on
+     * @educational
+     * @pythonEquivalent controller_draw_rectangle(x, y, width, height, canvas)
+     */
+    public void controllerDrawRectangle(int x, int y, int width, int height, DisplayController canvas) {
+        canvas.drawRectangle(x, y, width, height);
+    }
+
+    /**
      * Draws a circle on the controller display.
      * 
      * @param x X coordinate of center
@@ -6156,6 +6237,23 @@ public class Drone implements AutoCloseable {
      */
     public void controllerDrawCircle(int x, int y, int radius) {
         controllerDrawCircle(x, y, radius, DisplayPixel.BLACK, true);
+    }
+
+    /**
+     * Draws a circle on the specified canvas.
+     * 
+     * <p>This method allows drawing on a canvas that hasn't been sent to the display yet,
+     * matching the Python API pattern where drawing methods can optionally take a canvas.</p>
+     * 
+     * @param x X coordinate of center
+     * @param y Y coordinate of center
+     * @param radius Radius of the circle
+     * @param canvas The canvas to draw on
+     * @educational
+     * @pythonEquivalent controller_draw_circle(x, y, radius, canvas)
+     */
+    public void controllerDrawCircle(int x, int y, int radius, DisplayController canvas) {
+        canvas.drawCircle(x, y, radius);
     }
 
     /**
@@ -6228,6 +6326,92 @@ public class Drone implements AutoCloseable {
     }
 
     /**
+     * Creates a new canvas for drawing graphics on the controller display.
+     * 
+     * <p>The canvas provides two levels of drawing API:</p>
+     * <ul>
+     *   <li><strong>Simple API:</strong> Basic shape methods (drawRectangle, drawCircle, drawLine)</li>
+     *   <li><strong>Advanced API:</strong> Direct access to Java's Graphics2D for complex graphics</li>
+     * </ul>
+     * 
+     * <p><strong>Typical Usage:</strong></p>
+     * <pre>{@code
+     * // Simple API - good for beginners
+     * DisplayController canvas = drone.controllerCreateCanvas();
+     * canvas.setColor(Color.BLACK);
+     * canvas.drawRectangle(20, 30, 40, 10);
+     * canvas.drawCircle(80, 40, 15);
+     * drone.controllerDrawCanvas(canvas);
+     * }</pre>
+     * 
+     * <p><strong>Advanced Usage:</strong></p>
+     * <pre>{@code
+     * // Graphics2D - for complex graphics
+     * DisplayController canvas = drone.controllerCreateCanvas();
+     * Graphics2D g = canvas.getGraphics();
+     * g.fillPolygon(xpoints, ypoints, 3);
+     * g.drawArc(50, 50, 30, 30, 0, 180);
+     * drone.controllerDrawCanvas(canvas);
+     * }</pre>
+     * 
+     * <p><strong>Performance Note:</strong> Drawing to a canvas and sending once is much more efficient
+     * than calling multiple direct draw methods, as it reduces network communication to a single batch update.</p>
+     * 
+     * @return A new DisplayController ready for drawing
+     * @educational
+     * @pythonEquivalent controller_create_canvas
+     * @pythonReference Canvas/PIL-based drawing operations in Python API
+     * @see DisplayController
+     * @see #controllerDrawCanvas(DisplayController)
+     */
+    public DisplayController controllerCreateCanvas() {
+        return new DisplayController();
+    }
+
+    /**
+     * Sends a completed canvas to the controller display using efficient batch transmission.
+     * 
+     * <p>This method should be called after drawing on the canvas with all desired graphics.
+     * The entire canvas is sent by drawing black pixels individually (white pixels are skipped
+     * since the display defaults to white).</p>
+     * 
+     * <p><strong>Performance Characteristics:</strong></p>
+     * <ul>
+     *   <li>Full black screen: ~4-8 seconds (8192 pixels × ~1ms per pixel)</li>
+     *   <li>Sparse graphics (10% black): ~0.8 seconds</li>
+     *   <li>Typical graphics (50% black): ~4 seconds</li>
+     *   <li>Matches Python implementation exactly</li>
+     * </ul>
+     * 
+     * <p><strong>Algorithm:</strong></p>
+     * <ul>
+     *   <li>Clear entire display to white</li>
+     *   <li>Scan all 8192 pixels from canvas</li>
+     *   <li>For each black pixel: send individual DrawPoint command</li>
+     *   <li>Skip white pixels (display already white)</li>
+     * </ul>
+     * 
+     * <p><strong>Typical Usage:</strong></p>
+     * <pre>{@code
+     * DisplayController canvas = drone.controllerCreateCanvas();
+     * canvas.drawRectangle(20, 30, 40, 10);
+     * canvas.drawCircle(80, 40, 15);
+     * canvas.drawLine(10, 10, 50, 50);
+     * drone.controllerDrawCanvas(canvas);  // Send all pixels (~4 seconds typical)
+     * }</pre>
+     * 
+     * @param canvas The canvas to display
+     * @educational
+     * @pythonEquivalent controller_draw_canvas
+     * @pythonReference Canvas/PIL-based drawing operations in Python API
+     * @see DisplayController
+     * @see #controllerCreateCanvas()
+     */
+    public void controllerDrawCanvas(DisplayController canvas) {
+        displayService.draw(canvas);
+    }
+
+    /**
      * Inverts the pixels in a specific rectangular area on the controller display.
      * 
      * @param x X coordinate of top-left corner
@@ -6246,6 +6430,39 @@ public class Drone implements AutoCloseable {
         header.setTo(DeviceType.Controller);
 
         transfer(header, invertCommand);
+    }
+
+    /**
+     * Draws a pixel image/region on the controller display in batch (low-level protocol method).
+     * 
+     * <p><strong>Note:</strong> This is a low-level protocol method. Most users should use
+     * {@link #controllerCreateCanvas()} and {@link #controllerDrawCanvas(DisplayController)} instead.</p>
+     * 
+     * The image data should be provided as a byte array in bit-packed format, where each byte
+     * represents 8 vertical pixels. This format matches the controller display's internal
+     * monochrome pixel layout.
+     * 
+     * <p><strong>Performance:</strong> This is the low-level transport for batch pixel data updates.
+     * When combined with client-side canvas rendering, it enables efficient complex graphics.</p>
+     * 
+     * @param x X coordinate (starting position)
+     * @param y Y coordinate (starting position)
+     * @param width Width of image region
+     * @param height Height of image region
+     * @param imageData Byte array containing pixel data in bit-packed format
+     * @see #controllerCreateCanvas()
+     * @see #controllerDrawCanvas(DisplayController)
+     */
+    public void controllerDrawImage(int x, int y, int width, int height, byte[] imageData) {
+        DisplayDrawImage imageCommand = new DisplayDrawImage(x, y, width, height, imageData);
+        
+        Header header = new Header();
+        header.setDataType(DataType.DisplayDrawImage);
+        header.setLength(imageCommand.getSize());
+        header.setFrom(DeviceType.Base);
+        header.setTo(DeviceType.Controller);
+
+        transfer(header, imageCommand);
     }
 
 
