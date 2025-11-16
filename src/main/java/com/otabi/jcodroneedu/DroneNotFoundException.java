@@ -47,7 +47,7 @@ package com.otabi.jcodroneedu;
  * 
  * @author CoDrone EDU Team
  * @version 2.3
- * @since 1.0
+ * @since 1.0.0
  * @see Drone#connect()
  * @see Drone#pair()
  */

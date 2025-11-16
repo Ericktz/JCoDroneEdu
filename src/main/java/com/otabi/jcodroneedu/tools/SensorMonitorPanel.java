@@ -48,7 +48,7 @@ import java.util.concurrent.TimeUnit;
  * sensorPanel.stopMonitoring();
  * }</pre>
  * 
- * @since 1.0
+ * @since 1.0.0
  * @educational
  */
 public class SensorMonitorPanel extends JPanel {

@@ -31,7 +31,7 @@ import org.apache.logging.log4j.Logger;
  * its own service, we keep TelemetryService focused on fresh sensor reads while providing
  * a natural home for altitude-related features like rate of climb, altitude history, etc.</p>
  * 
- * @since 1.0.15
+ * @since 1.0.0
  * @educational
  */
 public class ElevationService {

@@ -45,7 +45,7 @@ import java.awt.event.WindowEvent;
  *              one object and pass your drone - no GUI knowledge required!
  * 
  * @author CoDrone EDU Development Team
- * @since 1.0
+ * @since 1.0.0
  */
 public class SensorMonitor {
     private final JFrame frame;

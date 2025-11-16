@@ -23,7 +23,7 @@ import com.otabi.jcodroneedu.protocol.DataType;
  * @educational Use both monitors together to see everything your drone is doing!
  * 
  * @author CoDrone EDU Development Team
- * @since 1.0
+ * @since 1.0.0
  */
 public class BothMonitors {
     

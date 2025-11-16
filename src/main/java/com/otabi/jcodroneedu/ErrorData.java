@@ -72,7 +72,7 @@ import java.util.Set;
  * </ul>
  * 
  * @author JCoDroneEdu Development Team
- * @since 2.5
+ * @since 1.0.0 (Python equivalent: 2.5)
  * @see Drone#getErrors()
  * @see DroneSystem.ErrorFlagsForSensor
  * @see DroneSystem.ErrorFlagsForState

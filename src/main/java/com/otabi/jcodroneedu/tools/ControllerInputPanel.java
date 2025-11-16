@@ -55,7 +55,7 @@ import java.util.concurrent.ConcurrentHashMap;
  *              startMonitoring() to see live controller input.
  * 
  * @author CoDrone EDU Development Team
- * @since 1.0
+ * @since 1.0.0
  */
 public class ControllerInputPanel extends JPanel {
     private final Drone drone;

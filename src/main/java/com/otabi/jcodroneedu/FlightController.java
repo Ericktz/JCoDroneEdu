@@ -842,7 +842,7 @@ public class FlightController {
      * 
      * @throws IllegalArgumentException if power is outside valid range
      * 
-     * @since 1.0
+     * @since 1.0.0
      * @see #turnDegree(int)
      * 
      * @educational
@@ -903,7 +903,7 @@ public class FlightController {
      * 
      * @throws IllegalArgumentException if degree is outside valid range
      * 
-     * @since 1.0
+     * @since 1.0.0
      * @see #turn(int, Double)
      * 
      * @educational
@@ -999,7 +999,7 @@ public class FlightController {
      *                Automatically converted to positive value.
      * @param timeout Maximum time in seconds to attempt the turn (default: 3.0)
      * 
-     * @since 1.0
+     * @since 1.0.0
      * @see #turnRight(int, double)
      * @see #turnDegree(int)
      * @see #turn(int, Double)
@@ -1044,7 +1044,7 @@ public class FlightController {
      *                Automatically converted to positive value.
      * @param timeout Maximum time in seconds to attempt the turn (default: 3.0)
      * 
-     * @since 1.0
+     * @since 1.0.0
      * @see #turnLeft(int, double)
      * @see #turnDegree(int)
      * @see #turn(int, Double)
@@ -1081,7 +1081,7 @@ public class FlightController {
      * 
      * @return Battery level as a percentage (0-100)
      * @apiNote Provides access to the drone's current battery status for safety monitoring
-     * @since 1.0
+     * @since 1.0.0
      */
     public int getBattery() {
         // Request fresh state data
@@ -1115,7 +1115,7 @@ public class FlightController {
      * 
      * @return Flight state string (e.g., "READY", "FLIGHT", "TAKE_OFF", "LANDING")
      * @apiNote Provides human-readable flight state for educational and debugging purposes
-     * @since 1.0
+     * @since 1.0.0
      */
     public String getFlightState() {
         // Request fresh state data
@@ -1142,7 +1142,7 @@ public class FlightController {
      * 
      * @return Movement state string (e.g., "READY", "HOVERING", "MOVING", "RETURN_HOME")
      * @apiNote Provides human-readable movement state for educational and debugging purposes
-     * @since 1.0
+     * @since 1.0.0
      */
     public String getMovementState() {
         // Request fresh state data
@@ -1170,7 +1170,7 @@ public class FlightController {
      * @param unit The unit for the measurement ("cm", "mm", "m", or "in")
      * @return Height in the specified unit
      * @apiNote Equivalent to Python's get_height() method
-     * @since 1.0
+     * @since 1.0.0
      */
     public double getHeight(String unit) {
         return telemetry.getHeight(unit);
@@ -1195,7 +1195,7 @@ public class FlightController {
      * @param unit The unit for the measurement ("cm", "mm", "m", or "in")
      * @return Distance in the specified unit
      * @apiNote Equivalent to Python's get_front_range() method
-     * @since 1.0
+     * @since 1.0.0
      */
     public double getFrontRange(String unit) {
         // Use TRACE for repetitive polling (suppressed by default)
@@ -1223,7 +1223,7 @@ public class FlightController {
      * @param unit The unit for the measurement ("cm", "mm", "m", or "in")
      * @return Distance in the specified unit
      * @apiNote Equivalent to Python's get_bottom_range() method
-     * @since 1.0
+     * @since 1.0.0
      */
     public double getBottomRange(String unit) {
         // Use TRACE for repetitive polling (suppressed by default)
@@ -1251,7 +1251,7 @@ public class FlightController {
      * @param unit The unit for the measurement ("cm", "mm", "m", or "in")
      * @return X position in the specified unit
      * @apiNote Equivalent to Python's get_pos_x() method
-     * @since 1.0
+     * @since 1.0.0
      */
     public double getPosX(String unit) {
         // Use TRACE for repetitive polling (suppressed by default)
@@ -1279,7 +1279,7 @@ public class FlightController {
      * @param unit The unit for the measurement ("cm", "mm", "m", or "in")
      * @return Y position in the specified unit
      * @apiNote Equivalent to Python's get_pos_y() method
-     * @since 1.0
+     * @since 1.0.0
      */
     public double getPosY(String unit) {
         // Use TRACE for repetitive polling (suppressed by default)
@@ -1307,7 +1307,7 @@ public class FlightController {
      * @param unit The unit for the measurement ("cm", "mm", "m", or "in")
      * @return Z position in the specified unit
      * @apiNote Equivalent to Python's get_pos_z() method
-     * @since 1.0
+     * @since 1.0.0
      */
     public double getPosZ(String unit) {
         // Use TRACE for repetitive polling (suppressed by default)
@@ -1334,7 +1334,7 @@ public class FlightController {
      * 
      * @return X acceleration in G-force
      * @apiNote Equivalent to Python's get_accel_x() method
-     * @since 1.0
+     * @since 1.0.0
      */
     public double getAccelX() {
         double g = telemetry.getAccelX_G();
@@ -1350,7 +1350,7 @@ public class FlightController {
      * 
      * @return Y acceleration in G-force
      * @apiNote Equivalent to Python's get_accel_y() method
-     * @since 1.0
+     * @since 1.0.0
      */
     public double getAccelY() {
         double g = telemetry.getAccelY_G();
@@ -1366,7 +1366,7 @@ public class FlightController {
      * 
      * @return Z acceleration in G-force
      * @apiNote Equivalent to Python's get_accel_z() method
-     * @since 1.0
+     * @since 1.0.0
      */
     public double getAccelZ() {
         double g = telemetry.getAccelZ_G();
@@ -1382,7 +1382,7 @@ public class FlightController {
      * 
      * @return X angle in degrees
      * @apiNote Equivalent to Python's get_angle_x() method
-     * @since 1.0
+     * @since 1.0.0
      */
     public double getAngleX() {
         double deg = telemetry.getAngleX_Deg();
@@ -1398,7 +1398,7 @@ public class FlightController {
      * 
      * @return Y angle in degrees
      * @apiNote Equivalent to Python's get_angle_y() method
-     * @since 1.0
+     * @since 1.0.0
      */
     public double getAngleY() {
         double deg = telemetry.getAngleY_Deg();
@@ -1414,7 +1414,7 @@ public class FlightController {
      * 
      * @return Z angle in degrees
      * @apiNote Equivalent to Python's get_angle_z() method
-     * @since 1.0
+     * @since 1.0.0
      */
     public double getAngleZ() {
         double deg = telemetry.getAngleZ_Deg();
@@ -1442,7 +1442,7 @@ public class FlightController {
     *
     * @return int array containing [X, Y, Z] raw accelerometer protocol values
     * @apiNote Equivalent to Python's {@code drone.get_accel()} and returns raw protocol integers
-     * @since 1.0
+     * @since 1.0.0
      * @educational This demonstrates array usage and coordinate systems
      */
     public int[] getAccel() {
@@ -1465,7 +1465,7 @@ public class FlightController {
      * 
      * @return int array containing [roll, pitch, yaw] gyroscope values in degrees/second
      * @apiNote Equivalent to Python's various gyro methods, returns array for AP CSA compatibility
-     * @since 1.0
+     * @since 1.0.0
      * @educational This demonstrates array usage and rotational concepts
      */
     public int[] getGyro() {
@@ -1483,7 +1483,7 @@ public class FlightController {
      * 
      * @return int array containing [roll, pitch, yaw] angle values in degrees
      * @apiNote Equivalent to Python's various angle methods, returns array for AP CSA compatibility
-     * @since 1.0
+     * @since 1.0.0
      * @educational This demonstrates array usage and spatial orientation concepts
      */
     public int[] getAngle() {
