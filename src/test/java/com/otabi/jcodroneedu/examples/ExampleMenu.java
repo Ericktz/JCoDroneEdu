@@ -254,15 +254,13 @@ public class ExampleMenu {
                 case 40:
                     System.out.println("🧪 Running Smoke Test");
                     System.out.println("═".repeat(64) + "\n");
-                    System.out.println("Note: SmokeTest is now a JUnit test in integration-tests.");
-                    System.out.println("Run it with: ./gradlew test --tests SmokeTest");
+                    SmokeTest.main(new String[]{});
                     break;
                     
                 case 41:
                     System.out.println("🧪 Running Accel Test");
                     System.out.println("═".repeat(64) + "\n");
-                    System.out.println("Note: AccelTest is now a JUnit test in integration-tests.");
-                    System.out.println("Run it with: ./gradlew test --tests AccelTest");
+                    AccelTest.main(new String[]{});
                     break;
                     
                 case 42:
@@ -274,15 +272,13 @@ public class ExampleMenu {
                 case 43:
                     System.out.println("💡 Running Quick LED Test");
                     System.out.println("═".repeat(64) + "\n");
-                    System.out.println("Note: QuickLEDTest is now a JUnit test in integration-tests.");
-                    System.out.println("Run it with: ./gradlew test --tests QuickLEDTest");
+                    QuickLEDTest.main(new String[]{});
                     break;
                     
                 case 45:
                     System.out.println("🔧 Running Test Harness");
                     System.out.println("═".repeat(64) + "\n");
-                    System.out.println("Note: TestHarness is now a JUnit test in integration-tests.");
-                    System.out.println("Run it with: ./gradlew test --tests TestHarness");
+                    TestHarness.main(new String[]{});
                     break;
                 
                 default:

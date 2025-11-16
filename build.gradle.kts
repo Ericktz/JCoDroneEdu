@@ -79,9 +79,10 @@ tasks.register<JavaExec>("runTestHarness") {
 // -----------------------------------------------------------------
 tasks.register<JavaExec>("runSensorDisplayGui") {
     group = "verification"
-    description = "Runs the Swing-based SensorDisplay GUI (non-flying telemetry monitor)."
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    description = "Runs the Swing-based SensorDisplay GUI (non-flying telemetry monitor). Requires drone connection."
+    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.tools.SensorDisplayGui")
+    standardInput = System.`in`
 }
 
 // -----------------------------------------------------------------
@@ -130,9 +131,10 @@ tasks.register<JavaExec>("runMelodyPlayer") {
 // -----------------------------------------------------------------
 tasks.register<JavaExec>("runControllerInputGui") {
     group = "verification"
-    description = "Interactive GUI for testing controller joysticks and buttons."
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    description = "Interactive GUI for testing controller joysticks and buttons. Requires controller connection."
+    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.tools.ControllerInputGui")
+    standardInput = System.`in`
 }
 
 // -----------------------------------------------------------------
@@ -140,8 +142,8 @@ tasks.register<JavaExec>("runControllerInputGui") {
 // -----------------------------------------------------------------
 tasks.register<JavaExec>("runBothMonitors") {
     group = "verification"
-    description = "Runs both sensor and controller monitors with L1 hold takeoff test."
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    description = "Runs both sensor and controller monitors with L1 hold takeoff test. Requires drone + controller."
+    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.tools.BothMonitors")
     // Forward stdin so keyboard input (Q to quit) works
     standardInput = System.`in`
@@ -538,7 +540,7 @@ tasks.register<JavaExec>("runEchoTimingTest") {
 tasks.register<JavaExec>("runExampleMenu") {
     group = "application"
     description = "Runs the interactive Example Menu to launch any available example program."
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.ExampleMenu")
     // Forward stdin so the menu can read user input
     standardInput = System.`in`
