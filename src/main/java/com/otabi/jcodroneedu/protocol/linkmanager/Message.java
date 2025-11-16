@@ -29,11 +29,19 @@ public class Message implements Serializable {
         this.message = message.toCharArray();
     }
 
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize() {
         return (byte) message.length;
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         CharBuffer cb = buffer.asCharBuffer();
@@ -41,6 +49,10 @@ public class Message implements Serializable {
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         CharBuffer charBuffer = StandardCharsets.UTF_8.decode(buffer);

@@ -33,10 +33,18 @@ public enum ModeLinkBroadcast {
         this.mode = mode;
     }
 
+    /**
+     * value method.
+     * @since 1.0.0
+     */
     public byte value() {
         return mode;
     }
 
+    /**
+     * fromByte method.
+     * @since 1.0.0
+     */
     public static ModeLinkBroadcast fromByte(byte b) {
         return byteToModeLinkBroadcast.get(b);
     }

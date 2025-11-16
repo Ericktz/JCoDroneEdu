@@ -27,6 +27,7 @@ public class LinkController {
      * Sets the operational mode for the communication link.
      *
      * @param mode The desired link mode to set.
+      * @since 1.0.0
      */
     public void setLinkMode(LinkMode mode) {
         drone.sendCommand(CommandType.Link, mode.getValue(), DeviceType.Base, DeviceType.Controller);
@@ -36,6 +37,7 @@ public class LinkController {
      * Sets the controller's main operational mode.
      *
      * @param mode The desired controller mode.
+      * @since 1.0.0
      */
     public void setControllerMode(ControllerMode mode) {
         drone.sendCommand(CommandType.ModeController, mode.getValue(), DeviceType.Base, DeviceType.Controller);
@@ -45,6 +47,7 @@ public class LinkController {
      * Turns the controller's display backlight on or off.
      *
      * @param enable Set to true to turn the backlight on, false to turn it off.
+      * @since 1.0.0
      */
     public void setBacklight(boolean enable) {
         byte value = (byte) (enable ? 1 : 0);
@@ -65,6 +68,10 @@ public class LinkController {
             this.value = value;
         }
 
+        /**
+         * Gets the value.
+         * @since 1.0.0
+         */
         public byte getValue() {
             return value;
         }
@@ -83,6 +90,10 @@ public class LinkController {
             this.value = value;
         }
 
+        /**
+         * Gets the value.
+         * @since 1.0.0
+         */
         public byte getValue() {
             return value;
         }

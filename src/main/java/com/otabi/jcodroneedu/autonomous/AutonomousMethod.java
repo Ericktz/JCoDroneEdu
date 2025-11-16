@@ -155,6 +155,7 @@ public abstract class AutonomousMethod {
      * @param params Parameter values to use
      * @throws IllegalArgumentException if any parameter is invalid
      * @throws IllegalStateException if the drone is not ready for autonomous flight
+      * @since 1.0.0
      */
     public final void execute(Drone drone, Map<String, Integer> params) {
         // Pre-execution validation
@@ -234,6 +235,7 @@ public abstract class AutonomousMethod {
     
     /**
      * Get the name of this autonomous method.
+      * @since 1.0.0
      */
     public final String getMethodName() {
         return methodName;
@@ -241,6 +243,7 @@ public abstract class AutonomousMethod {
     
     /**
      * Get the description of this autonomous method.
+      * @since 1.0.0
      */
     public final String getDescription() {
         return description;
@@ -256,6 +259,7 @@ public abstract class AutonomousMethod {
     /**
      * Generate comprehensive documentation for this autonomous method.
      * Useful for auto-generating student reference materials.
+      * @since 1.0.0
      */
     public final String generateDocumentation() {
         StringBuilder doc = new StringBuilder();

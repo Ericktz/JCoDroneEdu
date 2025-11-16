@@ -44,6 +44,10 @@ public class CRC16 {
             0x6e17, 0x7e36, 0x4e55, 0x5e74, 0x2e93, 0x3eb2, 0x0ed1, 0x1ef0
     };
 
+    /**
+     * calc method.
+     * @since 1.0.0
+     */
     public static int calc(int data, int crc) {
         int result;
         int index = ((crc >> 8) ^ data) & 0x00FF;
@@ -51,6 +55,10 @@ public class CRC16 {
         return (result);
     }
 
+    /**
+     * calc method.
+     * @since 1.0.0
+     */
     public static int calc(byte[] data, int crc) {
 
         int result = crc;

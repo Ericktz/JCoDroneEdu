@@ -42,10 +42,18 @@ public enum DeviceType {
         this.value = value;
     }
 
+    /**
+     * Gets the value.
+     * @since 1.0.0
+     */
     public byte getValue() {
         return value;
     }
 
+    /**
+     * fromByte method.
+     * @since 1.0.0
+     */
     public static DeviceType fromByte(byte b) {
         for (DeviceType type : DeviceType.values()) {
             if (type.value == b) {

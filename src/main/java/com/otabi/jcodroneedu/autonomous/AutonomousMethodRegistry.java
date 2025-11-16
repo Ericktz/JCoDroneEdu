@@ -92,6 +92,7 @@ public class AutonomousMethodRegistry {
      * 
      * @param method The autonomous method to register
      * @throws IllegalArgumentException if a method with the same name already exists
+      * @since 1.0.0
      */
     public void register(AutonomousMethod method) {
         String name = method.getMethodName();
@@ -111,6 +112,7 @@ public class AutonomousMethodRegistry {
      * @param methodName The name of the method to retrieve
      * @return The autonomous method
      * @throws IllegalArgumentException if the method is not found
+      * @since 1.0.0
      */
     public AutonomousMethod getMethod(String methodName) {
         AutonomousMethod method = methods.get(methodName);
@@ -129,6 +131,7 @@ public class AutonomousMethodRegistry {
      * 
      * @param methodName The method name to check
      * @return true if the method exists, false otherwise
+      * @since 1.0.0
      */
     public boolean hasMethod(String methodName) {
         return methods.containsKey(methodName);
@@ -138,6 +141,7 @@ public class AutonomousMethodRegistry {
      * Get a list of all registered method names.
      * 
      * @return Sorted list of method names
+      * @since 1.0.0
      */
     public List<String> listMethods() {
         return methods.keySet().stream()
@@ -149,6 +153,7 @@ public class AutonomousMethodRegistry {
      * Get all registered methods.
      * 
      * @return Unmodifiable collection of all methods
+      * @since 1.0.0
      */
     public Collection<AutonomousMethod> getAllMethods() {
         return Collections.unmodifiableCollection(methods.values());
@@ -159,6 +164,7 @@ public class AutonomousMethodRegistry {
      * 
      * @param methodName The name of the method to remove
      * @return true if the method was removed, false if it didn't exist
+      * @since 1.0.0
      */
     public boolean unregister(String methodName) {
         AutonomousMethod removed = methods.remove(methodName);
@@ -172,6 +178,7 @@ public class AutonomousMethodRegistry {
     /**
      * Clear all registered methods (except built-ins).
      * This is primarily for testing purposes.
+      * @since 1.0.0
      */
     public void clearCustomMethods() {
         List<String> customMethods = methods.keySet().stream()
@@ -197,6 +204,7 @@ public class AutonomousMethodRegistry {
      * Generate comprehensive documentation for all registered methods.
      * 
      * @return Formatted documentation string
+      * @since 1.0.0
      */
     public String generateDocumentation() {
         StringBuilder docs = new StringBuilder();
@@ -234,6 +242,7 @@ public class AutonomousMethodRegistry {
      * Generate a simple usage guide for educators.
      * 
      * @return Formatted usage guide
+      * @since 1.0.0
      */
     public String generateUsageGuide() {
         StringBuilder guide = new StringBuilder();
@@ -284,12 +293,17 @@ public class AutonomousMethodRegistry {
      * Get the total number of registered methods.
      * 
      * @return The number of registered methods
+      * @since 1.0.0
      */
     public int getMethodCount() {
         return methods.size();
     }
     
     @Override
+    /**
+     * toString method.
+     * @since 1.0.0
+     */
     public String toString() {
         return String.format("AutonomousMethodRegistry{methods=%d, names=%s}", 
             methods.size(), listMethods());

@@ -52,27 +52,54 @@ public class DisplayDrawCircle implements Serializable {
     }
 
     // Getters and setters
+    /**
+     * Gets the x.
+     * @since 1.0.0
+     */
     public int getX() { return x; }
+    /** @since 1.0.0 */
     public void setX(int x) { this.x = (short) x; }
     
+    /** @since 1.0.0 */
     public int getY() { return y; }
+    /**
+     * Sets the y.
+     * @since 1.0.0
+     */
     public void setY(int y) { this.y = (short) y; }
     
+    /** @since 1.0.0 */
     public int getRadius() { return radius; }
+    /** @since 1.0.0 */
     public void setRadius(int radius) { this.radius = (short) radius; }
     
+    /**
+     * Gets the pixel.
+     * @since 1.0.0
+     */
     public DisplayPixel getPixel() { return pixel; }
+    /** @since 1.0.0 */
     public void setPixel(DisplayPixel pixel) { this.pixel = pixel; }
     
+    /** @since 1.0.0 */
     public boolean isFlagFill() { return flagFill; }
+    /**
+     * Sets the flag fill.
+     * @since 1.0.0
+     */
     public void setFlagFill(boolean flagFill) { this.flagFill = flagFill; }
 
     @Override
+    /** @since 1.0.0 */
     public byte getSize() {
         return 8;
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer) {
         buffer.putShort(x);
         buffer.putShort(y);
@@ -84,6 +111,10 @@ public class DisplayDrawCircle implements Serializable {
     // Note: toArray() inherited from Serializable interface (handles LITTLE_ENDIAN)
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException {
         if (buffer.remaining() < getSize()) {
             throw new InvalidDataSizeException(getSize(), buffer.remaining());

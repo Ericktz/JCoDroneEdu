@@ -33,10 +33,18 @@ public enum DeviceType {
         this.type = type;
     }
 
+    /**
+     * value method.
+     * @since 1.0.0
+     */
     public int value() {
         return type;
     }
 
+    /**
+     * forValue method.
+     * @since 1.0.0
+     */
     public static DeviceType forValue(int deviceType) {
         return INTEGER_DEVICE_TYPE_MAP.get(deviceType);
     }

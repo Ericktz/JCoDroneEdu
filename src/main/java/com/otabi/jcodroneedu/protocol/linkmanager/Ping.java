@@ -17,17 +17,29 @@ public class Ping implements Serializable
     public static final int PING_SIZE = 4;
     private int systemTime;
 
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize() {
         return PING_SIZE;
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         buffer.putInt(systemTime);
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         this.systemTime = buffer.getInt();

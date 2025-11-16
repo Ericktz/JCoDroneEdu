@@ -28,6 +28,10 @@ public enum LightFlagsDrone {
         this.value = value;
     }
 
+    /**
+     * Gets the value.
+     * @since 1.0.0
+     */
     public short getValue() {
         return value;
     }
@@ -40,6 +44,10 @@ public enum LightFlagsDrone {
         }
     }
 
+    /**
+     * fromValue method.
+     * @since 1.0.0
+     */
     public static LightFlagsDrone fromValue(short value) {
         return valueMap.get(value);
     }

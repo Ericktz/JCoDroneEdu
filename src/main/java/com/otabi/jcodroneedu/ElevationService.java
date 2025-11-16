@@ -31,7 +31,7 @@ import org.apache.logging.log4j.Logger;
  * its own service, we keep TelemetryService focused on fresh sensor reads while providing
  * a natural home for altitude-related features like rate of climb, altitude history, etc.</p>
  * 
- * @since 1.0.15
+ * @since 1.0.0
  * @educational
  */
 public class ElevationService {
@@ -58,6 +58,7 @@ public class ElevationService {
      * @param unit Target unit: "m", "cm", "km", "ft", or "mi" (case-insensitive)
      * @return Uncorrected elevation in the specified unit
      * @see #getCorrectedElevation()
+      * @since 1.0.0
      */
     public double getUncorrectedElevation(String unit) {
         return telemetryService.getUncorrectedElevation(unit);
@@ -81,6 +82,7 @@ public class ElevationService {
      * @return Corrected altitude in meters above sea level, or 0.0 if no pressure data
      * @see #getCorrectedElevation(double)
      * @see #getCorrectedElevation(double, double)
+      * @since 1.0.0
      */
     public double getCorrectedElevation() {
         double seaLevelPressure = com.otabi.jcodroneedu.util.WeatherService.getAutomaticSeaLevelPressure();
@@ -94,6 +96,7 @@ public class ElevationService {
      * @param unit Target unit: "m", "cm", "km", "ft", or "mi" (case-insensitive)
      * @return Corrected altitude in the specified unit
      * @see #getCorrectedElevation()
+      * @since 1.0.0
      */
     public double getCorrectedElevation(String unit) {
         double meters = getCorrectedElevation();
@@ -118,6 +121,7 @@ public class ElevationService {
      *                         Standard atmosphere is 101325 Pa (1013.25 hPa).
      * @return Corrected altitude in meters above sea level, or 0.0 if no pressure data
      * @see #getCorrectedElevation()
+      * @since 1.0.0
      */
     public double getCorrectedElevation(double seaLevelPressure) {
         double pressure = telemetryService.getPressure("pa");
@@ -138,6 +142,7 @@ public class ElevationService {
      * @param unit Target unit: "m", "cm", "km", "ft", or "mi" (case-insensitive)
      * @return Corrected altitude in the specified unit
      * @see #getCorrectedElevation(double)
+      * @since 1.0.0
      */
     public double getCorrectedElevation(double seaLevelPressure, String unit) {
         double meters = getCorrectedElevation(seaLevelPressure);
@@ -171,6 +176,7 @@ public class ElevationService {
      * @return Corrected elevation in meters with weather-calibrated sea-level pressure
      * @throws IllegalArgumentException if coordinates are out of valid range
      * @see com.otabi.jcodroneedu.util.WeatherService#getSeaLevelPressure(double, double)
+      * @since 1.0.0
      */
     public double getCorrectedElevation(double latitude, double longitude) {
         double seaLevelPressure = com.otabi.jcodroneedu.util.WeatherService.getSeaLevelPressure(latitude, longitude);
@@ -186,6 +192,7 @@ public class ElevationService {
      * @param unit Target unit: "m", "cm", "km", "ft", or "mi" (case-insensitive)
      * @return Corrected elevation in the specified unit
      * @see #getCorrectedElevation(double, double)
+      * @since 1.0.0
      */
     public double getCorrectedElevation(double latitude, double longitude, String unit) {
         double meters = getCorrectedElevation(latitude, longitude);

@@ -11,7 +11,15 @@ import java.nio.ByteBuffer;
 
 public interface LightModes
 {
+    /**
+     * Gets the value.
+     * @since 1.0.0
+     */
     public byte getValue();
 
+    /**
+     * Gets the mode from buffer.
+     * @since 1.0.0
+     */
     public LightModes getModeFromBuffer(ByteBuffer buffer);
 }

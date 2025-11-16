@@ -22,7 +22,7 @@ import org.json.JSONObject;
  * accuracy. Uses Open-Meteo API (free, no API key required).</p>
  * 
  * @educational
- * @since 1.0
+ * @since 1.0.0
  */
 public class WeatherService {
     
@@ -49,6 +49,7 @@ public class WeatherService {
      * Sets a custom OS-level location provider (for JNI implementations).
      * 
      * @param provider The location provider to use, or null to disable
+      * @since 1.0.0
      */
     public static void setOSLocationProvider(LocationProvider provider) {
         osLocationProvider = provider;
@@ -75,7 +76,7 @@ public class WeatherService {
      * </ul>
      * 
      * @return Sea-level pressure in Pascals (Pa)
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     public static double getAutomaticSeaLevelPressure() {
@@ -127,7 +128,7 @@ public class WeatherService {
      * </ul>
      * 
      * @return Array of [latitude, longitude] or null if unavailable
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     public static double[] getLocationFromIP() {
@@ -198,6 +199,7 @@ public class WeatherService {
      * @return Sea-level pressure in Pascals, or 101325.0 (standard atmosphere) if unavailable
      * @throws IllegalArgumentException if coordinates are out of valid range
      * @educational
+      * @since 1.0.0
      */
     public static double getSeaLevelPressure(double latitude, double longitude) {
         // Validate coordinates
@@ -259,6 +261,7 @@ public class WeatherService {
      * 
      * @return true if internet is available, false otherwise
      * @educational
+      * @since 1.0.0
      */
     public static boolean isInternetAvailable() {
         try {
@@ -301,6 +304,7 @@ public class WeatherService {
      * @param longitude Longitude in decimal degrees
      * @return Formatted string with weather information
      * @educational
+      * @since 1.0.0
      */
     public static String getWeatherReport(double latitude, double longitude) {
         try {

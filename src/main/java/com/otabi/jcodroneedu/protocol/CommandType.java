@@ -53,6 +53,10 @@ public enum CommandType {
         this.value =  value;
     }
 
+    /**
+     * Gets the value.
+     * @since 1.0.0
+     */
     public byte getValue() {
         return value;
     }
@@ -65,6 +69,10 @@ public enum CommandType {
         }
     }
 
+    /**
+     * fromValue method.
+     * @since 1.0.0
+     */
     public static CommandType fromValue(byte value) {
         return lookup.getOrDefault(value, None_);
     }

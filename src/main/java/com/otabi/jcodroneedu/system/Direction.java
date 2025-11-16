@@ -35,10 +35,18 @@ public enum Direction {
         this.direction = direction;
     }
 
+    /**
+     * value method.
+     * @since 1.0.0
+     */
     public byte value() {
         return direction;
     }
 
+    /**
+     * fromByte method.
+     * @since 1.0.0
+     */
     public static Direction fromByte(byte b) {
         return BYTE_DIRECTION_MAP.get(b);
     }

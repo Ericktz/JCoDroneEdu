@@ -168,10 +168,18 @@ public enum Colors {
         this.color = color;
     }
 
+    /**
+     * value method.
+     * @since 1.0.0
+     */
     public byte value() {
         return color;
     }
 
+    /**
+     * fromByte method.
+     * @since 1.0.0
+     */
     public static Colors fromByte(byte b) {
         return BYTE_COLORS_MAP.get(b);
     }

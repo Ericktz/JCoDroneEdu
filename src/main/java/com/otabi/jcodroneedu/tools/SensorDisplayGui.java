@@ -44,6 +44,10 @@ public class SensorDisplayGui {
     private Drone drone;
     private ScheduledExecutorService executor;
 
+    /**
+     * main method.
+     * @since 1.0.0
+     */
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             SensorDisplayGui gui = new SensorDisplayGui();
@@ -51,6 +55,10 @@ public class SensorDisplayGui {
         });
     }
 
+    /**
+     * start method.
+     * @since 1.0.0
+     */
     public void start() {
         setupUi();
 
@@ -151,6 +159,10 @@ public class SensorDisplayGui {
 
         frame.addWindowListener(new WindowAdapter() {
             @Override
+            /**
+             * windowClosed method.
+             * @since 1.0.0
+             */
             public void windowClosed(WindowEvent e) {
                 shutdown();
             }
@@ -309,6 +321,10 @@ public class SensorDisplayGui {
             setPreferredSize(new Dimension(120, 120));
         }
 
+        /**
+         * Sets the heading.
+         * @since 1.0.0
+         */
         public void setHeading(int degrees) {
             this.heading = degrees;
             repaint();
@@ -367,6 +383,10 @@ public class SensorDisplayGui {
             setMinimumSize(new Dimension(100, 30));
         }
 
+        /**
+         * Sets the angle.
+         * @since 1.0.0
+         */
         public void setAngle(int degrees) {
             this.angle = degrees;
             repaint();

@@ -43,12 +43,20 @@ public class State implements Serializable
     }
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize()
     {
         return STATE_SIZE;
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         this.modeSystem = DroneSystem.ModeSystem.fromValue(buffer.get());
@@ -62,6 +70,10 @@ public class State implements Serializable
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         buffer.put(this.modeSystem.getValue());
@@ -74,31 +86,59 @@ public class State implements Serializable
         buffer.put(this.battery);
     }
 
+    /**
+     * Gets the battery.
+     * @since 1.0.0
+     */
     public byte getBattery()
     {
         return battery;
     }
 
+    /**
+     * Gets the mode flight.
+     * @since 1.0.0
+     */
     public DroneSystem.ModeFlight getModeFlight() {
         return modeFlight;
     }
 
+    /**
+     * Gets the mode movement.
+     * @since 1.0.0
+     */
     public DroneSystem.ModeMovement getModeMovement() {
         return modeMovement;
     }
 
+    /**
+     * Checks if take off.
+     * @since 1.0.0
+     */
     public boolean isTakeOff() {
         return this.modeFlight == DroneSystem.ModeFlight.TAKE_OFF;
     }
 
+    /**
+     * Checks if landing.
+     * @since 1.0.0
+     */
     public boolean isLanding() {
         return this.modeFlight == DroneSystem.ModeFlight.LANDING;
     }
 
+    /**
+     * Checks if flight.
+     * @since 1.0.0
+     */
     public boolean isFlight() {
         return this.modeFlight == DroneSystem.ModeFlight.FLIGHT;
     }
 
+    /**
+     * Checks if ready.
+     * @since 1.0.0
+     */
     public boolean isReady() {
         return this.modeFlight == DroneSystem.ModeFlight.READY;
     }

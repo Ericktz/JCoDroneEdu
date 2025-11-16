@@ -101,7 +101,7 @@ import java.util.concurrent.TimeoutException;
  * 
  * @author Stephen Cerruti (with AI assistance from GitHub Copilot)
  * @version 2.3
- * @since 1.0
+ * @since 1.0.0
  * @see DroneNotFoundException
  */
 import com.otabi.jcodroneedu.ml.ColorClassifier;
@@ -116,6 +116,7 @@ public class Drone implements AutoCloseable {
      * @param datasetPath Path to color dataset directory
      * @param showGraph Whether to show a 3D plot (optional)
      * @throws java.io.IOException if loading fails
+      * @since 1.0.0
      */
     public void loadColorClassifier(String datasetPath, boolean showGraph) throws java.io.IOException {
         colorClassifier = new ColorClassifier();
@@ -125,6 +126,7 @@ public class Drone implements AutoCloseable {
 
     /**
      * Unloads the color classifier (for test or reset).
+      * @since 1.0.0
      */
     public void unloadColorClassifier() {
         colorClassifier = null;
@@ -261,6 +263,7 @@ public class Drone implements AutoCloseable {
      * @see #connect()
      * @pythonEquivalent pair
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#pair
+      * @since 1.0.0
      */
     public boolean pair()
     {
@@ -286,6 +289,7 @@ public class Drone implements AutoCloseable {
      * @see #connect(String)
      * @pythonEquivalent pair
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#pair
+      * @since 1.0.0
      */
     public boolean pair(String portName)
     {
@@ -325,6 +329,7 @@ public class Drone implements AutoCloseable {
      * @see #pair()
      * @pythonEquivalent connect_bluetooth
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#connect_bluetooth
+      * @since 1.0.0
      */
     public boolean connect() throws DroneNotFoundException
     {
@@ -337,6 +342,7 @@ public class Drone implements AutoCloseable {
      * @return true if the connection was successful, false otherwise.
      * @pythonEquivalent connect_bluetooth
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#connect_bluetooth
+      * @since 1.0.0
      */
     public boolean connect(String portName) throws DroneNotFoundException
     {
@@ -395,8 +401,10 @@ public class Drone implements AutoCloseable {
      * Disconnects from the drone controller and closes the serial port.
      * @pythonEquivalent close
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#close
+      * @since 1.0.0
      */
     // @Deprecated
+    /** @since 1.0.0 */
     public void close() {
         disconnect();
     }
@@ -405,6 +413,7 @@ public class Drone implements AutoCloseable {
      * Disconnects from the drone controller and closes the serial port.
      * @pythonEquivalent close
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#close
+      * @since 1.0.0
      */
     public void disconnect() {
         serialPortManager.disconnect();
@@ -414,6 +423,7 @@ public class Drone implements AutoCloseable {
     /**
      * Checks if the serial port to the controller is open.
      * @return true if the port is open, false otherwise.
+      * @since 1.0.0
      */
     public boolean isOpen() {
         return serialPortManager.isOpen();
@@ -422,6 +432,7 @@ public class Drone implements AutoCloseable {
     /**
      * Checks if the application is successfully connected and communicating with the drone.
      * @return true if connected, false otherwise.
+      * @since 1.0.0
      */
     public boolean isConnected() {
         return isOpen() && isConnected;
@@ -537,12 +548,17 @@ public class Drone implements AutoCloseable {
     /**
      * Sends a request for a specific type of data from the drone.
      * @param dataType The type of data to request.
+      * @since 1.0.0
      */
     public void sendRequest(DataType dataType) {
         Request request = new Request(dataType);
         sendMessage(request);
     }
 
+    /**
+     * sendRequestWait method.
+     * @since 1.0.0
+     */
     public void sendRequestWait(DataType dataType) {
         Request request = new Request(dataType);
         sendMessage(request);
@@ -558,6 +574,7 @@ public class Drone implements AutoCloseable {
      * reports it is in the takeoff state or a timeout occurs.
      * @pythonEquivalent takeoff
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#takeoff
+      * @since 1.0.0
      */
     public void takeoff() {
         flightController.takeoff();
@@ -568,6 +585,7 @@ public class Drone implements AutoCloseable {
      * until the drone reports it is in the landing state or a timeout occurs.
      * @pythonEquivalent land
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#land
+      * @since 1.0.0
      */
     public void land() {
         flightController.land();
@@ -577,6 +595,7 @@ public class Drone implements AutoCloseable {
      * Immediately stops all motors. This is a critical safety command used for emergencies.
      * @pythonEquivalent emergency_stop
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#emergency_stop
+      * @since 1.0.0
      */
     public void emergencyStop() {
         flightController.emergencyStop();
@@ -589,6 +608,7 @@ public class Drone implements AutoCloseable {
      * @param durationSeconds The duration to hover, in seconds (matching Python behavior).
      * @pythonEquivalent hover
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#hover
+      * @since 1.0.0
      */
     public void hover(double durationSeconds) {
         flightController.hover(durationSeconds);
@@ -598,6 +618,7 @@ public class Drone implements AutoCloseable {
      * Hovers the drone in place for the default duration.
      * @pythonEquivalent hover
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#hover
+      * @since 1.0.0
      */
     public void hover() {
         hover(DroneSystem.FlightControlConstants.DEFAULT_HOVER_DURATION_SECONDS);
@@ -607,6 +628,7 @@ public class Drone implements AutoCloseable {
      * Resets the drone's movement values to zero to ensure it stops any prior movement.
      * @pythonEquivalent reset_move_values
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#reset_move_values
+      * @since 1.0.0
      */
     public void resetMoveValues() {
         flightController.resetMoveValues();
@@ -661,6 +683,7 @@ public class Drone implements AutoCloseable {
      * @educational
      * @pythonEquivalent avoid_wall(timeout, distance)
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#avoid_wall
+      * @since 1.0.0
      */
     public void avoidWall(int timeout, int distance) {
         AutonomousMethodRegistry registry = AutonomousMethodRegistry.getInstance();
@@ -724,6 +747,7 @@ public class Drone implements AutoCloseable {
      * @throws IllegalArgumentException if timeout not in range 1-30 or distance not in range 10-100
      * @see #avoidWall(int, int)
      * @see #getFrontRange()
+     * @since 1.0.0
      * @educational
      * @pythonEquivalent keep_distance(timeout, distance)
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#keep_distance
@@ -769,6 +793,7 @@ public class Drone implements AutoCloseable {
      *              Negative pitch is backwards, positive pitch is forwards.
      * @pythonEquivalent set_pitch
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#set_pitch
+      * @since 1.0.0
      */
     public void setPitch(int pitch) {
         flightController.setPitch(pitch);
@@ -800,6 +825,7 @@ public class Drone implements AutoCloseable {
      *             Negative roll is left, positive roll is right.
      * @pythonEquivalent set_roll
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#set_roll
+      * @since 1.0.0
      */
     public void setRoll(int roll) {
         flightController.setRoll(roll);
@@ -831,6 +857,7 @@ public class Drone implements AutoCloseable {
      *            Negative yaw is right, positive yaw is left.
      * @pythonEquivalent set_yaw
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#set_yaw
+      * @since 1.0.0
      */
     public void setYaw(int yaw) {
         flightController.setYaw(yaw);
@@ -863,6 +890,7 @@ public class Drone implements AutoCloseable {
      *                 Negative throttle is down, positive throttle is up.
      * @pythonEquivalent set_throttle
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#set_throttle
+      * @since 1.0.0
      */
     public void setThrottle(int throttle) {
         flightController.setThrottle(throttle);
@@ -873,6 +901,7 @@ public class Drone implements AutoCloseable {
      * Sends flight movement values to the drone.
      * @pythonEquivalent move
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#move
+      * @since 1.0.0
      */
     public void move()
     {
@@ -886,6 +915,7 @@ public class Drone implements AutoCloseable {
      * @param duration Number of seconds to perform the action
      * @pythonEquivalent move
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#move
+      * @since 1.0.0
      */
     public void move(double duration)
     {
@@ -894,6 +924,7 @@ public class Drone implements AutoCloseable {
 
     /**
      * Prints current values of roll, pitch, yaw, and throttle.
+      * @since 1.0.0
      */
     public void printMoveValues() {
         flightController.printMoveValues();
@@ -905,6 +936,7 @@ public class Drone implements AutoCloseable {
      * @return A byte array of roll(0), pitch (1), yaw (2) and throttle (3) values.
      * @pythonEquivalent get_move_values
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_move_values
+      * @since 1.0.0
      */
     public byte[] getMoveValues() {
         return flightController.getMoveValues();
@@ -914,6 +946,7 @@ public class Drone implements AutoCloseable {
      * Sets the drone's flight responsiveness level.
      *
      * @param speedLevel The desired speed level, from 1 (slow) to 3 (fast).
+      * @since 1.0.0
      */
     public void changeSpeed(int speedLevel) {
         flightController.changeSpeed(speedLevel);
@@ -923,6 +956,7 @@ public class Drone implements AutoCloseable {
      * Enables or disables headless mode.
      *
      * @param enable Set to true to enable headless mode, false to disable.
+      * @since 1.0.0
      */
     public void setHeadlessMode(boolean enable) {
         flightController.setHeadlessMode(enable);
@@ -932,6 +966,7 @@ public class Drone implements AutoCloseable {
      * Triggers a pre-programmed flight event, such as a flip.
      *
      * @param event The flight event to execute.
+      * @since 1.0.0
      */
     public void triggerFlightEvent(FlightController.FlightEvent event) {
         flightController.triggerFlightEvent(event);
@@ -961,6 +996,7 @@ public class Drone implements AutoCloseable {
      *                 ({@link DroneSystem.FlightControlConstants#CONTROL_VALUE_MIN} to {@link DroneSystem.FlightControlConstants#CONTROL_VALUE_MAX}).
      * @param throttle Controls altitude. Positive values increase altitude, negative values decrease altitude 
      *                 ({@link DroneSystem.FlightControlConstants#CONTROL_VALUE_MIN} to {@link DroneSystem.FlightControlConstants#CONTROL_VALUE_MAX}).
+      * @since 1.0.0
      */
     public void sendControl(int roll, int pitch, int yaw, int throttle) {
         flightController.sendControl(roll, pitch, yaw, throttle);
@@ -989,6 +1025,7 @@ public class Drone implements AutoCloseable {
      * @param yaw      The yaw value to maintain ({@link DroneSystem.FlightControlConstants#CONTROL_VALUE_MIN} to {@link DroneSystem.FlightControlConstants#CONTROL_VALUE_MAX}).
      * @param throttle The throttle value to maintain ({@link DroneSystem.FlightControlConstants#CONTROL_VALUE_MIN} to {@link DroneSystem.FlightControlConstants#CONTROL_VALUE_MAX}).
      * @param timeMs   The duration to send the command for, in milliseconds.
+      * @since 1.0.0
      */
     public void sendControlWhile(int roll, int pitch, int yaw, int throttle, long timeMs) {
         flightController.sendControlWhile(roll, pitch, yaw, throttle, timeMs);
@@ -1003,6 +1040,7 @@ public class Drone implements AutoCloseable {
      * @param velocity           The speed to move towards the target position in m/s.
      * @param heading            The target heading in degrees. Positive is a left turn, negative is a right turn.
      * @param rotationalVelocity The speed for turning in degrees per second.
+      * @since 1.0.0
      */
     public void sendControlPosition(float positionX, float positionY, float positionZ, float velocity, int heading, int rotationalVelocity) {
         flightController.sendControlPosition(positionX, positionY, positionZ, velocity, heading, rotationalVelocity);
@@ -1016,6 +1054,7 @@ public class Drone implements AutoCloseable {
      * Sets the operational mode for the communication link.
      *
      * @param mode The desired link mode (e.g., Client, Server, Pairing).
+      * @since 1.0.0
      */
     public void setLinkMode(LinkController.LinkMode mode) {
         linkController.setLinkMode(mode);
@@ -1025,6 +1064,7 @@ public class Drone implements AutoCloseable {
      * Sets the controller's main operational mode (e.g., flight control vs. link management).
      *
      * @param mode The desired controller mode.
+      * @since 1.0.0
      */
     public void setControllerMode(LinkController.ControllerMode mode) {
         linkController.setControllerMode(mode);
@@ -1034,6 +1074,7 @@ public class Drone implements AutoCloseable {
      * Turns the controller's display backlight on or off.
      *
      * @param enable Set to true to turn the backlight on, false to turn it off.
+      * @since 1.0.0
      */
     public void setBacklight(boolean enable) {
         linkController.setBacklight(enable);
@@ -1047,6 +1088,7 @@ public class Drone implements AutoCloseable {
      * Resets the drone's internal gyroscope sensor bias to correct for drift.
      * @pythonEquivalent clear_bias
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#clear_bias
+      * @since 1.0.0
      */
     public void clearBias() {
         settingsController.clearBias();
@@ -1056,6 +1098,7 @@ public class Drone implements AutoCloseable {
      * Resets the flight trim values to their default (zero) settings.
      * @pythonEquivalent reset_trim
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#reset_trim
+      * @since 1.0.0
      */
     public void clearTrim() {
         settingsController.clearTrim();
@@ -1063,6 +1106,7 @@ public class Drone implements AutoCloseable {
 
     /**
      * Resets all drone settings to their factory defaults.
+      * @since 1.0.0
      */
     public void setDefault() {
         settingsController.setDefault();
@@ -1093,6 +1137,7 @@ public class Drone implements AutoCloseable {
      * @educational
      * @pythonEquivalent reset_gyro
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#reset_gyro
+      * @since 1.0.0
      */
     public void resetGyro() {
         log.info("Starting gyroscope calibration - keep drone stationary on flat surface");
@@ -1174,6 +1219,7 @@ public class Drone implements AutoCloseable {
      * @educational
      * @pythonEquivalent set_trim
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#set_trim
+      * @since 1.0.0
      */
     public void setTrim(int roll, int pitch) {
         // Validate input parameters
@@ -1211,6 +1257,7 @@ public class Drone implements AutoCloseable {
      * @educational  
      * @pythonEquivalent reset_trim
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#reset_trim
+      * @since 1.0.0
      */
     public void resetTrim() {
         log.debug("Resetting trim values to zero");
@@ -1241,6 +1288,7 @@ public class Drone implements AutoCloseable {
      * @educational
      * @pythonEquivalent get_trim
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_trim
+      * @since 1.0.0
      */
     public int[] getTrim() {
         log.debug("Requesting current trim values");
@@ -1274,6 +1322,7 @@ public class Drone implements AutoCloseable {
 
     /**
      * Clears internal flight counters, such as total flight time.
+      * @since 1.0.0
      */
     public void clearCounter() {
         settingsController.clearCounter();
@@ -1290,6 +1339,7 @@ public class Drone implements AutoCloseable {
      * Most educational assignments should use the direct methods on {@code Drone} instead.</p>
      * 
      * @return the flight controller instance
+      * @since 1.0.0
      */
     public FlightController getFlightController() {
         return flightController;
@@ -1301,6 +1351,7 @@ public class Drone implements AutoCloseable {
      * <p><strong>⚠️ Advanced Usage:</strong> This exposes internal implementation details.</p>
      * 
      * @return the link controller instance
+      * @since 1.0.0
      */
     public LinkController getLinkController() {
         return linkController;
@@ -1312,6 +1363,7 @@ public class Drone implements AutoCloseable {
      * <p><strong>⚠️ Advanced Usage:</strong> This exposes internal implementation details.</p>
      * 
      * @return the settings controller instance
+      * @since 1.0.0
      */
     public SettingsController getSettingsController() {
         return settingsController;
@@ -1323,6 +1375,7 @@ public class Drone implements AutoCloseable {
      * <p>This provides access to battery level, flight state, and other status data.</p>
      * 
      * @return the drone status instance
+      * @since 1.0.0
      */
     public DroneStatus getDroneStatus() {
         return droneStatus;
@@ -1334,6 +1387,7 @@ public class Drone implements AutoCloseable {
      * <p>This provides access to controller model, firmware version, and connection details.</p>
      * 
      * @return the link manager instance
+      * @since 1.0.0
      */
     public LinkManager getLinkManager() {
         return linkManager;
@@ -1358,6 +1412,7 @@ public class Drone implements AutoCloseable {
      * details and should typically not be used in educational assignments.</p>
      * 
      * @return the receiver instance
+      * @since 1.0.0
      */
     public Receiver getReceiver()
     {
@@ -1417,6 +1472,7 @@ public class Drone implements AutoCloseable {
      *                  or use {@link DroneSystem.DirectionConstants} for type safety
      * @param power Power level from 0-100 (higher = faster movement)
      * @param duration Duration in seconds (how long to fly in that direction)
+     * @since 1.0.0
      * @pythonEquivalent go
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#go
      */
@@ -1432,6 +1488,7 @@ public class Drone implements AutoCloseable {
      * @param direction String direction: "forward", "backward", "left", "right", "up", "down"
      *                  or use {@link DroneSystem.DirectionConstants} for type safety
      * @param duration Duration in seconds
+      * @since 1.0.0
      */
     public void go(String direction, int duration) {
         go(direction, 50, duration);
@@ -1444,6 +1501,7 @@ public class Drone implements AutoCloseable {
      * 
      * @param direction String direction: "forward", "backward", "left", "right", "up", "down"
      *                  or use {@link DroneSystem.DirectionConstants} for type safety
+      * @since 1.0.0
      */
     public void go(String direction) {
         go(direction, 50, 1);
@@ -1485,6 +1543,7 @@ public class Drone implements AutoCloseable {
      * @see #moveBackward(double, String, double)
      * @see #moveLeft(double, String, double)
      * @see #moveRight(double, String, double)
+      * @since 1.0.0
      */
     public void moveForward(double distance, String units, double speed) {
         flightController.moveForward(distance, units, speed);
@@ -1510,6 +1569,7 @@ public class Drone implements AutoCloseable {
      * @educational
      * @pythonEquivalent move_forward(distance)
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#move_forward
+      * @since 1.0.0
      */
     public void moveForward(double distance) {
         moveForward(distance, "cm");
@@ -1538,6 +1598,7 @@ public class Drone implements AutoCloseable {
      * @educational
      * @pythonEquivalent move_forward(distance, units)
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#move_forward
+      * @since 1.0.0
      */
     public void moveForward(double distance, String units) {
         moveForward(distance, units, 0.5);
@@ -1560,6 +1621,7 @@ public class Drone implements AutoCloseable {
      *              {@link DroneSystem.UnitConversion#UNIT_FEET}, 
      *              {@link DroneSystem.UnitConversion#UNIT_METERS}
      * @param speed The speed from {@value com.otabi.jcodroneedu.DroneSystem.FlightControlConstants#DEFAULT_MOVEMENT_SPEED_MPS} to 2.0 m/s (default: {@value com.otabi.jcodroneedu.DroneSystem.FlightControlConstants#DEFAULT_MOVEMENT_SPEED_MPS})
+      * @since 1.0.0
      */
     public void moveBackward(double distance, String units, double speed) {
         flightController.moveBackward(distance, units, speed);
@@ -1567,6 +1629,7 @@ public class Drone implements AutoCloseable {
     
     /**
      * Move backward with default units (cm) and speed ({@value com.otabi.jcodroneedu.DroneSystem.FlightControlConstants#DEFAULT_MOVEMENT_SPEED_MPS} m/s).
+      * @since 1.0.0
      */
     public void moveBackward(double distance) {
         /**
@@ -1595,6 +1658,7 @@ public class Drone implements AutoCloseable {
     
     /**
      * Move backward with specified units and default speed ({@value com.otabi.jcodroneedu.DroneSystem.FlightControlConstants#DEFAULT_MOVEMENT_SPEED_MPS} m/s).
+      * @since 1.0.0
      */
     public void moveBackward(double distance, String units) {
         /**
@@ -1641,6 +1705,7 @@ public class Drone implements AutoCloseable {
      *              {@link DroneSystem.UnitConversion#UNIT_FEET}, 
      *              {@link DroneSystem.UnitConversion#UNIT_METERS}
      * @param speed The speed from {@value com.otabi.jcodroneedu.DroneSystem.FlightControlConstants#DEFAULT_MOVEMENT_SPEED_MPS} to 2.0 m/s (default: {@value com.otabi.jcodroneedu.DroneSystem.FlightControlConstants#DEFAULT_MOVEMENT_SPEED_MPS})
+      * @since 1.0.0
      */
     public void moveLeft(double distance, String units, double speed) {
         flightController.moveLeft(distance, units, speed);
@@ -1648,6 +1713,7 @@ public class Drone implements AutoCloseable {
     
     /**
      * Move left with default units (cm) and speed ({@value com.otabi.jcodroneedu.DroneSystem.FlightControlConstants#DEFAULT_MOVEMENT_SPEED_MPS} m/s).
+      * @since 1.0.0
      */
     public void moveLeft(double distance) {
         /**
@@ -1676,6 +1742,7 @@ public class Drone implements AutoCloseable {
     
     /**
      * Move left with specified units and default speed ({@value com.otabi.jcodroneedu.DroneSystem.FlightControlConstants#DEFAULT_MOVEMENT_SPEED_MPS} m/s).
+      * @since 1.0.0
      */
     public void moveLeft(double distance, String units) {
         /**
@@ -1722,6 +1789,7 @@ public class Drone implements AutoCloseable {
      *              {@link DroneSystem.UnitConversion#UNIT_FEET}, 
      *              {@link DroneSystem.UnitConversion#UNIT_METERS}
      * @param speed The speed from {@value com.otabi.jcodroneedu.DroneSystem.FlightControlConstants#DEFAULT_MOVEMENT_SPEED_MPS} to 2.0 m/s (default: {@value com.otabi.jcodroneedu.DroneSystem.FlightControlConstants#DEFAULT_MOVEMENT_SPEED_MPS})
+      * @since 1.0.0
      */
     public void moveRight(double distance, String units, double speed) {
         flightController.moveRight(distance, units, speed);
@@ -1729,6 +1797,7 @@ public class Drone implements AutoCloseable {
     
     /**
      * Move right with default units (cm) and speed ({@value com.otabi.jcodroneedu.DroneSystem.FlightControlConstants#DEFAULT_MOVEMENT_SPEED_MPS} m/s).
+      * @since 1.0.0
      */
     public void moveRight(double distance) {
         /**
@@ -1757,6 +1826,7 @@ public class Drone implements AutoCloseable {
     
     /**
      * Move right with specified units and default speed ({@value com.otabi.jcodroneedu.DroneSystem.FlightControlConstants#DEFAULT_MOVEMENT_SPEED_MPS} m/s).
+      * @since 1.0.0
      */
     public void moveRight(double distance, String units) {
         /**
@@ -1802,6 +1872,7 @@ public class Drone implements AutoCloseable {
      * @param positionY Distance in meters (+ left, - right)
      * @param positionZ Distance in meters (+ up, - down)
      * @param velocity Speed from 0.5 to 2.0 m/s
+      * @since 1.0.0
      */
     public void moveDistance(double positionX, double positionY, double positionZ, double velocity) {
         flightController.moveDistance(positionX, positionY, positionZ, velocity);
@@ -1825,6 +1896,7 @@ public class Drone implements AutoCloseable {
      * @param velocity Speed from 0.5 to 2.0 m/s
      * @param heading Target heading in degrees (-360 to 360)
      * @param rotationalVelocity Rotational speed in degrees/s (10 to 360)
+      * @since 1.0.0
      */
     public void sendAbsolutePosition(double positionX, double positionY, double positionZ, 
                                    double velocity, int heading, int rotationalVelocity) {
@@ -1855,7 +1927,7 @@ public class Drone implements AutoCloseable {
      *              negative values turn right.
      * @param seconds The duration to turn in seconds. Use null for single command.
      * 
-     * @since 1.0
+     * @since 1.0.0
      * @see #turnLeft(int)
      * @see #turnRight(int)
      * @see #turnDegree(int)
@@ -1898,6 +1970,7 @@ public class Drone implements AutoCloseable {
      * // Turn right at 40% power
      * drone.turn(-40);
      * }</pre>
+      * @since 1.0.0
      */
     public void turn(int power) {
         turn(power, null);
@@ -1918,6 +1991,7 @@ public class Drone implements AutoCloseable {
      * // Turn left for 2 seconds at default power
      * drone.turn(2.0);
      * }</pre>
+      * @since 1.0.0
      */
     public void turn(Double seconds) {
         turn(50, seconds);
@@ -1937,6 +2011,7 @@ public class Drone implements AutoCloseable {
      * // Quick default turn
      * drone.turn();
      * }</pre>
+      * @since 1.0.0
      */
     public void turn() {
         turn(50, null);
@@ -1957,7 +2032,7 @@ public class Drone implements AutoCloseable {
      * @param timeout Maximum time in seconds to attempt the turn (default: {@value com.otabi.jcodroneedu.DroneSystem.FlightControlConstants#DEFAULT_TURN_TIMEOUT_SECONDS})lue com.otabi.jcodroneedu.DroneSystem.FlightControlConstants#DEFAULT_TURN_TIMEOUT_SECONDS})
     * @param pValue Proportional gain for the control system (default: {@value com.otabi.jcodroneedu.DroneSystem.FlightControlConstants#DEFAULT_TURN_P_VALUE})
      * 
-     * @since 1.0
+     * @since 1.0.0
      * @see #turnLeft(int)
      * @see #turnRight(int)
      * @see #turn(int, Double)
@@ -1994,6 +2069,7 @@ public class Drone implements AutoCloseable {
      * // Turn 45 degrees right with custom timeout
      * drone.turnDegree(-45, 5.0);
      * }</pre>
+      * @since 1.0.0
      */
     public void turnDegree(int degree, double timeout) {
         turnDegree(degree, timeout, DroneSystem.FlightControlConstants.DEFAULT_TURN_P_VALUE);
@@ -2015,6 +2091,7 @@ public class Drone implements AutoCloseable {
      * }</pre>
      * @pythonEquivalent turn_degree
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#turn_degree
+      * @since 1.0.0
      */
     public void turnDegree(int degree) {
         turnDegree(degree, DroneSystem.FlightControlConstants.DEFAULT_TURN_TIMEOUT_SECONDS, DroneSystem.FlightControlConstants.DEFAULT_TURN_P_VALUE);
@@ -2033,6 +2110,7 @@ public class Drone implements AutoCloseable {
      * // Default {@value com.otabi.jcodroneedu.DroneSystem.FlightControlConstants#DEFAULT_TURN_DEGREES} degree left turn
      * drone.turnDegree();
      * }</pre>
+      * @since 1.0.0
      */
     public void turnDegree() {
         turnDegree(DroneSystem.FlightControlConstants.DEFAULT_TURN_DEGREES, DroneSystem.FlightControlConstants.DEFAULT_TURN_TIMEOUT_SECONDS, DroneSystem.FlightControlConstants.DEFAULT_TURN_P_VALUE);
@@ -2051,7 +2129,7 @@ public class Drone implements AutoCloseable {
      * @param degrees The number of degrees to turn left (0 to 179)
      * @param timeout Maximum time in seconds to attempt the turn (default: {@value com.otabi.jcodroneedu.DroneSystem.FlightControlConstants#DEFAULT_TURN_TIMEOUT_SECONDS})
      * 
-     * @since 1.0
+     * @since 1.0.0
      * @see #turnRight(int, double)
      * @see #turnDegree(int)
      * @see #turn(int, Double)
@@ -2093,6 +2171,7 @@ public class Drone implements AutoCloseable {
     * drone.turnLeft(60);
     * }
     * </pre>
+      * @since 1.0.0
      */
     public void turnLeft(int degrees) {
         turnLeft(degrees, DroneSystem.FlightControlConstants.DEFAULT_TURN_TIMEOUT_SECONDS);
@@ -2112,6 +2191,7 @@ public class Drone implements AutoCloseable {
     * drone.turnLeft();
     * }
     * </pre>
+      * @since 1.0.0
      */
     public void turnLeft() {
         turnLeft(90, 3.0);
@@ -2130,7 +2210,7 @@ public class Drone implements AutoCloseable {
      * @param degrees The number of degrees to turn right (0 to 179)
      * @param timeout Maximum time in seconds to attempt the turn (default: {@value com.otabi.jcodroneedu.DroneSystem.FlightControlConstants#DEFAULT_TURN_TIMEOUT_SECONDS})
      * 
-     * @since 1.0
+     * @since 1.0.0
      * @see #turnLeft(int, double)
      * @see #turnDegree(int)
      * @see #turn(int, Double)
@@ -2172,6 +2252,7 @@ public class Drone implements AutoCloseable {
      * drone.turnRight({@value com.otabi.jcodroneedu.DroneSystem.FlightControlConstants#DEFAULT_TURN_DEGREES});
      * }
      * </pre>
+      * @since 1.0.0
      */
     public void turnRight(int degrees) {
         turnRight(degrees, DroneSystem.FlightControlConstants.DEFAULT_TURN_TIMEOUT_SECONDS);
@@ -2194,6 +2275,7 @@ public class Drone implements AutoCloseable {
      * drone.turnRight(45);
      * }
      * </pre>
+      * @since 1.0.0
      */
     public void turnRight() {
         turnRight(DroneSystem.FlightControlConstants.DEFAULT_TURN_DEGREES, DroneSystem.FlightControlConstants.DEFAULT_TURN_TIMEOUT_SECONDS);
@@ -2218,7 +2300,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return battery level as percentage (0-100)
      * @apiNote Equivalent to Python's {@code drone.get_battery()}
-     * @since 1.0
+     * @since 1.0.0
      * 
      * @example
      * <pre>{@code
@@ -2252,7 +2334,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return flight state string (e.g., "READY", "FLIGHT", "TAKE_OFF", "LANDING")
      * @apiNote Equivalent to Python's {@code drone.get_flight_state()}
-     * @since 1.0
+     * @since 1.0.0
      * 
      * @example
      * <pre>{@code
@@ -2278,7 +2360,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return movement state string (e.g., "READY", "HOVERING", "MOVING", "RETURN_HOME")
      * @apiNote Equivalent to Python's {@code drone.get_movement_state()}
-     * @since 1.0
+     * @since 1.0.0
      */
     public String getMovementState() {
         return flightController.getMovementState();
@@ -2334,7 +2416,7 @@ public class Drone implements AutoCloseable {
      * @return Array containing [timestamp, sensorErrorFlags, stateErrorFlags], 
      *         or null if error data is unavailable
      * @apiNote Equivalent to Python's {@code drone.get_error_data()}
-     * @since 2.5
+     * @since 1.0.0 (Python equivalent: 2.5)
      * 
      * @example
      * <pre>{@code
@@ -2383,7 +2465,7 @@ public class Drone implements AutoCloseable {
      * @return Array containing [timestamp, sensorErrorFlags, stateErrorFlags], 
      *         or null if error data is unavailable
      * @apiNote Equivalent to Python's {@code drone.get_error_data(delay)}
-     * @since 2.5
+     * @since 1.0.0 (Python equivalent: 2.5)
      * 
      * @see #getErrorData()
      * @pythonEquivalent get_error_data
@@ -2513,6 +2595,7 @@ public class Drone implements AutoCloseable {
      * </ul>
      * 
      * @return ErrorData object containing type-safe error information, or null if unavailable
+     * @since 1.0.0
      * @see ErrorData
      * @see #getErrorData()
      * @see DroneSystem.ErrorFlagsForSensor
@@ -2543,6 +2626,7 @@ public class Drone implements AutoCloseable {
      * @see ErrorData
      * @see #getErrors()
      * @see #getErrorData(double)
+      * @since 1.0.0
      */
     public ErrorData getErrors(double delay) {
         double[] errorArray = getErrorData(delay);
@@ -2564,7 +2648,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return height in centimeters
      * @apiNote Equivalent to Python's {@code drone.get_height()}
-     * @since 1.0
+     * @since 1.0.0
      * 
      * @example
      * <pre>{@code
@@ -2590,7 +2674,7 @@ public class Drone implements AutoCloseable {
      * 
      * @param unit measurement unit ("cm", "mm", "m", or "in")
      * @return height in the specified unit
-     * @since 1.0
+     * @since 1.0.0
      * @pythonEquivalent get_height
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_height
      */
@@ -2613,7 +2697,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return distance in centimeters
      * @apiNote Equivalent to Python's {@code drone.get_front_range()}
-     * @since 1.0
+     * @since 1.0.0
      * 
      * @example
      * <pre>{@code
@@ -2638,7 +2722,7 @@ public class Drone implements AutoCloseable {
      * 
      * @param unit measurement unit ("cm", "mm", "m", or "in")
      * @return distance in the specified unit
-     * @since 1.0
+     * @since 1.0.0
      * @pythonEquivalent get_front_range
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_front_range
      */
@@ -2661,7 +2745,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return distance in centimeters  
      * @apiNote Equivalent to Python's {@code drone.get_bottom_range()}
-     * @since 1.0
+     * @since 1.0.0
      * 
      * @example
      * <pre>{@code
@@ -2683,7 +2767,7 @@ public class Drone implements AutoCloseable {
      * 
      * @param unit measurement unit ("cm", "mm", "m", or "in")
      * @return distance in the specified unit
-     * @since 1.0
+     * @since 1.0.0
      * @pythonEquivalent get_bottom_range
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_bottom_range
      */
@@ -2706,7 +2790,7 @@ public class Drone implements AutoCloseable {
      * @param distance the distance threshold in centimeters
      * @return true if an obstacle is detected within the specified distance, false otherwise
      * @apiNote Equivalent to Python's {@code drone.detect_wall(distance)}
-     * @since 1.1
+     * @since 1.1.0
      *
      * @example
      * <pre>{@code
@@ -2735,7 +2819,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return X position in centimeters
      * @apiNote Equivalent to Python's {@code drone.get_pos_x()}
-     * @since 1.0
+     * @since 1.0.0
      * 
      * @example
      * <pre>{@code
@@ -2755,7 +2839,7 @@ public class Drone implements AutoCloseable {
      * 
      * @param unit measurement unit ("cm", "mm", "m", or "in")
      * @return X position in the specified unit
-     * @since 1.0
+     * @since 1.0.0
      */
     public double getPosX(String unit) {
         return telemetryService.getPosX(unit);
@@ -2769,7 +2853,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return Y position in centimeters
      * @apiNote Equivalent to Python's {@code drone.get_pos_y()}
-     * @since 1.0
+     * @since 1.0.0
      */
     public double getPosY() {
         return telemetryService.getPosY(DroneSystem.UnitConversion.UNIT_CENTIMETERS);
@@ -2780,7 +2864,7 @@ public class Drone implements AutoCloseable {
      * 
      * @param unit measurement unit ("cm", "mm", "m", or "in")
      * @return Y position in the specified unit
-     * @since 1.0
+     * @since 1.0.0
      */
     public double getPosY(String unit) {
         return telemetryService.getPosY(unit);
@@ -2794,7 +2878,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return Z position in centimeters
      * @apiNote Equivalent to Python's {@code drone.get_pos_z()}
-     * @since 1.0
+     * @since 1.0.0
      */
     public double getPosZ() {
         return telemetryService.getPosZ(DroneSystem.UnitConversion.UNIT_CENTIMETERS);
@@ -2805,12 +2889,16 @@ public class Drone implements AutoCloseable {
      * 
      * @param unit measurement unit ("cm", "mm", "m", or "in")
      * @return Z position in the specified unit
-     * @since 1.0
+     * @since 1.0.0
      */
     public double getPosZ(String unit) {
         return telemetryService.getPosZ(unit);
     }
 
+    /**
+     * Gets the telemetry service.
+     * @since 1.0.0
+     */
     public TelemetryService getTelemetryService() {
         return telemetryService;
     }
@@ -2830,7 +2918,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return X acceleration in G-force
      * @apiNote Equivalent to Python's {@code drone.get_accel_x()}
-     * @since 1.0
+     * @since 1.0.0
      * @pythonEquivalent get_accel_x
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_accel_x
      */
@@ -2845,7 +2933,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return Y acceleration in G-force
      * @apiNote Equivalent to Python's {@code drone.get_accel_y()}
-     * @since 1.0
+     * @since 1.0.0
      * @pythonEquivalent get_accel_y
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_accel_y
      */
@@ -2860,7 +2948,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return Z acceleration in G-force
      * @apiNote Equivalent to Python's {@code drone.get_accel_z()}
-     * @since 1.0
+     * @since 1.0.0
      * @pythonEquivalent get_accel_z
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_accel_z
      */
@@ -2883,7 +2971,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return X angle (roll) in degrees
      * @apiNote Equivalent to Python's {@code drone.get_angle_x()}
-     * @since 1.0
+     * @since 1.0.0
      * @pythonEquivalent get_angle_x
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_angle_x
      */
@@ -2899,7 +2987,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return Y angle (pitch) in degrees
      * @apiNote Equivalent to Python's {@code drone.get_angle_y()}
-     * @since 1.0
+     * @since 1.0.0
      * @pythonEquivalent get_angle_y
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_angle_y
      */
@@ -2915,7 +3003,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return Z angle (yaw) in degrees
      * @apiNote Equivalent to Python's {@code drone.get_angle_z()}
-     * @since 1.0
+     * @since 1.0.0
      * @pythonEquivalent get_angle_z
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_angle_z
      */
@@ -2941,7 +3029,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return Array containing [x, y, z] acceleration values in G-force
      * @apiNote Equivalent to Python's {@code drone.get_accel()}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     /**
@@ -2949,7 +3037,7 @@ public class Drone implements AutoCloseable {
      *
      * @return Array containing [x, y, z] acceleration values in G-force
      * @apiNote Equivalent to Python's {@code drone.get_accel()}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     public int[] getAccel() {
@@ -2972,7 +3060,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return Array containing [x, y, z] angular velocity values in degrees/second
      * @apiNote Equivalent to Python's {@code drone.get_gyro()}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     /**
@@ -2980,7 +3068,7 @@ public class Drone implements AutoCloseable {
      *
      * @return Array containing [x, y, z] angular velocity values in degrees/second
      * @apiNote Equivalent to Python's {@code drone.get_gyro()}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     public int[] getGyro() {
@@ -3003,7 +3091,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return Array containing [x, y, z] angle values in degrees (roll, pitch, yaw)
      * @apiNote Equivalent to Python's {@code drone.get_angle()}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     /**
@@ -3011,7 +3099,7 @@ public class Drone implements AutoCloseable {
      *
      * @return Array containing [x, y, z] angle values in degrees (roll, pitch, yaw)
      * @apiNote Equivalent to Python's {@code drone.get_angle()}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     public int[] getAngle() {
@@ -3042,7 +3130,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return 2D array containing HSV data for front and back color sensors, or null if no data available
      * @apiNote Equivalent to Python's {@code drone.get_color_data()}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     /**
@@ -3050,7 +3138,7 @@ public class Drone implements AutoCloseable {
      *
      * @return 2D array containing HSV data for front and back color sensors, or null if no data available
      * @apiNote Equivalent to Python's {@code drone.get_color_data()}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      * @pythonEquivalent get_color_data
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_color_data
@@ -3111,7 +3199,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return Array containing [front_color, back_color] values, or null if no data available
      * @apiNote Equivalent to Python's {@code drone.get_colors()}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     /**
@@ -3119,7 +3207,7 @@ public class Drone implements AutoCloseable {
      *
      * @return Array containing [front_color, back_color] values, or null if no data available
      * @apiNote Equivalent to Python's {@code drone.get_colors()}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      * @pythonEquivalent get_colors
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_colors
@@ -3209,7 +3297,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return Color value from front sensor (0-8), or -1 if no data available
      * @apiNote Equivalent to Python's {@code drone.get_front_color()}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     /**
@@ -3217,7 +3305,7 @@ public class Drone implements AutoCloseable {
      *
      * @return Color value from front sensor (0-8), or -1 if no data available
      * @apiNote Equivalent to Python's {@code drone.get_front_color()}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      * @pythonEquivalent get_front_color
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_front_color
@@ -3258,7 +3346,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return Color value from back sensor (0-8), or -1 if no data available
      * @apiNote Equivalent to Python's {@code drone.get_back_color()}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     /**
@@ -3266,7 +3354,7 @@ public class Drone implements AutoCloseable {
      *
      * @return Color value from back sensor (0-8), or -1 if no data available
      * @apiNote Equivalent to Python's {@code drone.get_back_color()}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      * @pythonEquivalent get_back_color
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_back_color
@@ -3305,7 +3393,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return Array containing [x, y, z] position values in millimeters, or null if no data
      * @apiNote Equivalent to Python's {@code drone.get_position_data()}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     /**
@@ -3313,7 +3401,7 @@ public class Drone implements AutoCloseable {
      *
      * @return Array containing [x, y, z] position in mm
      * @apiNote Equivalent to Python's {@code drone.get_position_data()}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     public float[] getPositionData() {
@@ -3332,6 +3420,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return X position in meters, or 0 if no data available
      * @educational
+      * @since 1.0.0
      */
     public float getPositionX() {
         var position = droneStatus.getPosition();
@@ -3346,6 +3435,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return Y position in meters, or 0 if no data available
      * @educational
+      * @since 1.0.0
      */
     public float getPositionY() {
         var position = droneStatus.getPosition();
@@ -3360,6 +3450,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return Z position in meters, or 0 if no data available
      * @educational
+      * @since 1.0.0
      */
     public float getPositionZ() {
         var position = droneStatus.getPosition();
@@ -3375,7 +3466,7 @@ public class Drone implements AutoCloseable {
      * <b>Python Compatibility:</b> Equivalent to Python's {@code drone.get_altitude_data()}.
      * </p>
      * @return Altitude data object containing altitude, pressure, and temperature
-     * @since 1.0
+     * @since 1.0.0
      */
     public Altitude getAltitude() {
         sendRequestWait(DataType.Altitude);
@@ -3389,8 +3480,10 @@ public class Drone implements AutoCloseable {
      * Please use {@link #getAltitude()} for new Java code.
      * </p>
      * @return Altitude data object containing altitude, pressure, and temperature
+      * @since 1.0.0
      */
     @Deprecated(since = "1.0", forRemoval = false)
+    /** @since 1.0.0 */
     public Altitude getAltitudeData() {
         return getAltitude();
     }
@@ -3413,7 +3506,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return Pressure in Pascals, or 0.0 if no data available
      * @apiNote Equivalent to Python's {@code drone.get_pressure("Pa")}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     /**
@@ -3421,7 +3514,7 @@ public class Drone implements AutoCloseable {
      *
      * @return Pressure in Pascals (Pa)
      * @apiNote Equivalent to Python's {@code drone.get_pressure()}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      * @pythonEquivalent get_pressure
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_pressure
@@ -3442,7 +3535,7 @@ public class Drone implements AutoCloseable {
      * @return Pressure in the specified unit, or 0.0 if no data available
      * @throws IllegalArgumentException if unit is not supported
      * @apiNote Equivalent to Python's {@code drone.get_pressure(unit)}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     /**
@@ -3451,7 +3544,7 @@ public class Drone implements AutoCloseable {
      * @param unit The unit for the return value: "hPa", "psi", etc.
      * @return Pressure in the specified unit
      * @apiNote Equivalent to Python's {@code drone.get_pressure(unit)}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      * @pythonEquivalent get_pressure
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_pressure
@@ -3498,7 +3591,7 @@ public class Drone implements AutoCloseable {
      * @see #getCorrectedElevation()
      * @see #getElevation()
      * @apiNote Equivalent to Python's {@code drone.get_elevation()}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     public double getUncorrectedElevation() {
@@ -3509,6 +3602,7 @@ public class Drone implements AutoCloseable {
      * Gets the uncorrected elevation converted to the requested unit.
      * @param unit Target unit: "m", "cm", "km", "ft", or "mi" (case-insensitive)
      * @return Elevation in the specified unit (0.0 if no data)
+      * @since 1.0.0
      */
     public double getUncorrectedElevation(String unit) {
         return elevationService.getUncorrectedElevation(unit);
@@ -3546,7 +3640,7 @@ public class Drone implements AutoCloseable {
      * @see #getCorrectedElevation()
      * @see #useCorrectedElevation(boolean)
      * @apiNote Equivalent to Python's {@code drone.get_elevation()}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      * @pythonEquivalent get_elevation
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_elevation
@@ -3561,6 +3655,7 @@ public class Drone implements AutoCloseable {
      * @return Elevation in the specified unit
      * @pythonEquivalent get_elevation
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_elevation
+      * @since 1.0.0
      */
     public double getElevation(String unit) {
         double meters = getElevation();
@@ -3581,7 +3676,7 @@ public class Drone implements AutoCloseable {
      * @param useCorrected If true, {@code getElevation()} returns corrected altitude.
      *                     If false (default), returns uncorrected firmware value.
      * @see #getElevation()
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     public void useCorrectedElevation(boolean useCorrected) {
@@ -3624,7 +3719,7 @@ public class Drone implements AutoCloseable {
      * @see #getUncorrectedElevation()
      * @see #getCorrectedElevation(double)
      * @see #getCorrectedElevation(double, double)
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     public double getCorrectedElevation() {
@@ -3635,6 +3730,7 @@ public class Drone implements AutoCloseable {
      * Gets corrected elevation converted to the requested unit.
      * @param unit Target unit: "m", "cm", "km", "ft", or "mi" (case-insensitive)
      * @return Elevation in the specified unit
+      * @since 1.0.0
      */
     public double getCorrectedElevation(String unit) {
         return elevationService.getCorrectedElevation(unit);
@@ -3660,7 +3756,7 @@ public class Drone implements AutoCloseable {
      * @return Corrected altitude in meters above sea level, or 0.0 if no pressure data available
      * @see #getPressure()
      * @see #getCorrectedElevation()
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     public double getCorrectedElevation(double seaLevelPressure) {
@@ -3670,8 +3766,10 @@ public class Drone implements AutoCloseable {
     /**
      * @deprecated Use {@link #getCorrectedElevation()} instead.
      *             Method renamed for clarity (calculated → corrected).
+      * @since 1.0.0
      */
     @Deprecated(since = "1.0", forRemoval = true)
+    /** @since 1.0.0 */
     public double getCalculatedAltitude() {
         return getCorrectedElevation();
     }
@@ -3679,8 +3777,10 @@ public class Drone implements AutoCloseable {
     /**
      * @deprecated Use {@link #getCorrectedElevation(double)} instead.
      *             Method renamed for clarity (calculated → corrected).
+      * @since 1.0.0
      */
     @Deprecated(since = "1.0", forRemoval = true)
+    /** @since 1.0.0 */
     public double getCalculatedAltitude(double seaLevelPressure) {
         return getCorrectedElevation(seaLevelPressure);
     }
@@ -3725,7 +3825,7 @@ public class Drone implements AutoCloseable {
      * @return Corrected elevation in meters with weather-calibrated sea-level pressure
      * @throws IllegalArgumentException if coordinates are out of valid range
      * @see com.otabi.jcodroneedu.util.WeatherService#getSeaLevelPressure(double, double)
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     public double getCorrectedElevation(double latitude, double longitude) {
@@ -3767,7 +3867,7 @@ public class Drone implements AutoCloseable {
      * @see #getHeightFromPressure()
      * @see #getHeightFromPressure(double, double)
      * @apiNote Equivalent to Python's {@code drone.set_initial_pressure()}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      * @pythonEquivalent set_initial_pressure
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#set_initial_pressure
@@ -3805,7 +3905,7 @@ public class Drone implements AutoCloseable {
      * @see #setInitialPressure()
      * @see #getHeightFromPressure(double, double)
      * @apiNote Equivalent to Python's {@code drone.height_from_pressure()}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      * @pythonEquivalent height_from_pressure
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#height_from_pressure
@@ -3854,7 +3954,7 @@ public class Drone implements AutoCloseable {
      * @see #setInitialPressure()
      * @see #getHeightFromPressure()
      * @apiNote Equivalent to Python's {@code drone.height_from_pressure(b, m)}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      * @pythonEquivalent height_from_pressure
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#height_from_pressure
@@ -3882,11 +3982,12 @@ public class Drone implements AutoCloseable {
      * @deprecated Use {@link #getDroneTemperature()} instead. This method is deprecated
      *             to match Python's API deprecation.
      * @apiNote Equivalent to Python's deprecated {@code drone.get_temperature()}
-     * @since 1.0
+     * @since 1.0.0
      * @pythonEquivalent get_temperature
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_temperature
      */
     @Deprecated(since = "1.0", forRemoval = true)
+    /** @since 1.0.0 */
     public double getTemperature() {
         log.warn("getTemperature() is deprecated. Use getDroneTemperature() instead.");
         return getDroneTemperature();
@@ -3903,11 +4004,12 @@ public class Drone implements AutoCloseable {
      * @deprecated Use {@link #getDroneTemperature(String)} instead. This method is deprecated
      *             to match Python's API deprecation.
      * @apiNote Equivalent to Python's deprecated {@code drone.get_temperature(unit)}
-     * @since 1.0
+     * @since 1.0.0
      * @pythonEquivalent get_temperature
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_temperature
      */
     @Deprecated(since = "1.0", forRemoval = true)
+    /** @since 1.0.0 */
     public double getTemperature(String unit) {
         log.warn("getTemperature(unit) is deprecated. Use getDroneTemperature(unit) instead.");
         return getDroneTemperature(unit);
@@ -3941,7 +4043,7 @@ public class Drone implements AutoCloseable {
      * @return Uncalibrated temperature in Celsius (sensor die temperature), or 0.0 if no data available
      * @see #getCalibratedTemperature() for calibrated ambient temperature
      * @see #getDroneTemperature() for switchable temperature (respects settings)
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     public double getUncalibratedTemperature() {
@@ -3961,7 +4063,7 @@ public class Drone implements AutoCloseable {
      * @throws IllegalArgumentException if unit is not supported
      * @see #getUncalibratedTemperature() for Celsius version
      * @see #getCalibratedTemperature(String) for calibrated temperature with unit
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     public double getUncalibratedTemperature(String unit) {
@@ -4001,7 +4103,7 @@ public class Drone implements AutoCloseable {
      * @see #getCalibratedTemperature()
      * @see #useCalibratedTemperature(boolean)
      * @apiNote Equivalent to Python's {@code drone.get_drone_temperature()}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      * @pythonEquivalent get_drone_temperature
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_drone_temperature
@@ -4032,7 +4134,7 @@ public class Drone implements AutoCloseable {
      * @see #getUncalibratedTemperature(String) for always uncalibrated
      * @see #getCalibratedTemperature(String) for always calibrated
      * @see #useCalibratedTemperature(boolean)
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      * @pythonEquivalent get_drone_temperature
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_drone_temperature
@@ -4069,7 +4171,7 @@ public class Drone implements AutoCloseable {
      * @param useCalibrated If true, {@code getDroneTemperature()} returns calibrated temperature.
      *                      If false (default), returns uncalibrated sensor value.
      * @see #getDroneTemperature()
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     public void useCalibratedTemperature(boolean useCalibrated) {
@@ -4120,7 +4222,7 @@ public class Drone implements AutoCloseable {
      * @see #getUncalibratedTemperature() for raw sensor reading
      * @see #getCalibratedTemperature(double) for custom offset
      * @see #getDroneTemperature() for switchable temperature (respects settings)
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     public double getCalibratedTemperature() {
@@ -4159,7 +4261,7 @@ public class Drone implements AutoCloseable {
      * @return Calibrated temperature in Celsius, or offset value if no data available
      * @see #getUncalibratedTemperature() for raw sensor reading
      * @see #getCalibratedTemperature() for default offset
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     public double getCalibratedTemperature(double offsetCelsius) {
@@ -4177,7 +4279,7 @@ public class Drone implements AutoCloseable {
      * @throws IllegalArgumentException if unit is not supported
      * @see #getCalibratedTemperature() for Celsius version
      * @see #getCalibratedTemperature(double, String) for custom offset with unit conversion
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     public double getCalibratedTemperature(String unit) {
@@ -4202,7 +4304,7 @@ public class Drone implements AutoCloseable {
      * @return Calibrated temperature in the specified unit
      * @throws IllegalArgumentException if unit is not supported
      * @see #getCalibratedTemperature(double) for Celsius version
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     public double getCalibratedTemperature(double offsetCelsius, String unit) {
@@ -4262,7 +4364,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return Array containing all sensor values, or null if no data available
      * @apiNote Equivalent to Python's {@code drone.get_sensor_data()}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     /**
@@ -4270,7 +4372,7 @@ public class Drone implements AutoCloseable {
      *
      * @return Array containing all sensor values, or null if no data available
      * @apiNote Equivalent to Python's {@code drone.get_sensor_data()}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     public double[] getSensorData() {
@@ -4351,7 +4453,7 @@ public class Drone implements AutoCloseable {
      * @return X-axis flow velocity in the specified unit, or 0.0 if no data available
      * 
      * @apiNote Equivalent to Python's {@code drone.get_flow_velocity_x(unit)}
-     * @since 1.0
+     * @since 1.0.0
      * @educational Advanced navigation and robotics curricula
      */
     /**
@@ -4361,7 +4463,7 @@ public class Drone implements AutoCloseable {
      * @param unit The unit for the return value: "cm", "in", "mm", or "m"
      * @return X-axis flow velocity in the specified unit, or 0.0 if no data available
      * @apiNote Equivalent to Python's {@code drone.get_flow_velocity_x(unit)}
-     * @since 1.0
+     * @since 1.0.0
      * @educational Advanced navigation and robotics curricula
      */
     public double getFlowVelocityX(String unit) {
@@ -4396,7 +4498,7 @@ public class Drone implements AutoCloseable {
      * @return X-axis flow velocity in centimeters, or 0.0 if no data available
      * 
      * @apiNote Equivalent to Python's {@code drone.get_flow_velocity_x()}
-     * @since 1.0
+     * @since 1.0.0
      * @educational Advanced navigation and robotics curricula
      */
     /**
@@ -4405,7 +4507,7 @@ public class Drone implements AutoCloseable {
      *
      * @return X-axis flow velocity in centimeters, or 0.0 if no data available
      * @apiNote Equivalent to Python's {@code drone.get_flow_velocity_x()}
-     * @since 1.0
+     * @since 1.0.0
      * @educational Advanced navigation and robotics curricula
      * @pythonEquivalent get_flow_velocity_x
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_flow_velocity_x
@@ -4435,7 +4537,7 @@ public class Drone implements AutoCloseable {
      * @return Y-axis flow velocity in the specified unit, or 0.0 if no data available
      * 
      * @apiNote Equivalent to Python's {@code drone.get_flow_velocity_y(unit)}
-     * @since 1.0
+     * @since 1.0.0
      * @educational Advanced navigation and robotics curricula
      */
     /**
@@ -4445,7 +4547,7 @@ public class Drone implements AutoCloseable {
      * @param unit The unit for the return value: "cm", "in", "mm", or "m"
      * @return Y-axis flow velocity in the specified unit, or 0.0 if no data available
      * @apiNote Equivalent to Python's {@code drone.get_flow_velocity_y(unit)}
-     * @since 1.0
+     * @since 1.0.0
      * @educational Advanced navigation and robotics curricula
      */
     public double getFlowVelocityY(String unit) {
@@ -4480,7 +4582,7 @@ public class Drone implements AutoCloseable {
      * @return Y-axis flow velocity in centimeters, or 0.0 if no data available
      * 
      * @apiNote Equivalent to Python's {@code drone.get_flow_velocity_y()}
-     * @since 1.0
+     * @since 1.0.0
      * @educational Advanced navigation and robotics curricula
      */
     /**
@@ -4489,7 +4591,7 @@ public class Drone implements AutoCloseable {
      *
      * @return Y-axis flow velocity in centimeters, or 0.0 if no data available
      * @apiNote Equivalent to Python's {@code drone.get_flow_velocity_y()}
-     * @since 1.0
+     * @since 1.0.0
      * @educational Advanced navigation and robotics curricula
      * @pythonEquivalent get_flow_velocity_y
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_flow_velocity_y
@@ -4511,7 +4613,7 @@ public class Drone implements AutoCloseable {
      * @return Array containing [timestamp, x_velocity, y_velocity] in meters, or null if no data available
      * 
      * @apiNote Similar to Python's {@code drone.get_flow_data()} but returns simplified array
-     * @since 1.0
+     * @since 1.0.0
      * @educational Advanced robotics and data analysis curricula
      */
     /**
@@ -4519,7 +4621,7 @@ public class Drone implements AutoCloseable {
      *
      * @return Array containing [timestamp, x_velocity, y_velocity] in meters, or null if no data available
      * @apiNote Similar to Python's {@code drone.get_flow_data()} but returns simplified array
-     * @since 1.0
+     * @since 1.0.0
      * @educational Advanced robotics and data analysis curricula
      */
     public double[] getFlowData() {
@@ -4585,8 +4687,10 @@ public class Drone implements AutoCloseable {
     /**
      * @deprecated Use {@link #getFlowVelocityX(String)} instead.
      * This method is provided for backward compatibility with older Python code.
+      * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public double getFlowX(String unit) {
         return getFlowVelocityX(unit);
     }
@@ -4594,8 +4698,10 @@ public class Drone implements AutoCloseable {
     /**
      * @deprecated Use {@link #getFlowVelocityX()} instead.
      * This method is provided for backward compatibility with older Python code.
+      * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public double getFlowX() {
         return getFlowVelocityX();
     }
@@ -4603,8 +4709,10 @@ public class Drone implements AutoCloseable {
     /**
      * @deprecated Use {@link #getFlowVelocityY(String)} instead.
      * This method is provided for backward compatibility with older Python code.
+      * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public double getFlowY(String unit) {
         return getFlowVelocityY(unit);
     }
@@ -4612,8 +4720,10 @@ public class Drone implements AutoCloseable {
     /**
      * @deprecated Use {@link #getFlowVelocityY()} instead.
      * This method is provided for backward compatibility with older Python code.
+      * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public double getFlowY() {
         return getFlowVelocityY();
     }
@@ -4643,7 +4753,7 @@ public class Drone implements AutoCloseable {
      * @param direction Direction of flight (1 for right, -1 for left)
      * 
      * @apiNote Equivalent to Python's {@code drone.square(speed, seconds, direction)}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     /**
@@ -4669,8 +4779,10 @@ public class Drone implements AutoCloseable {
      * @throws UnsupportedOperationException Always thrown to guide students to BasicPatternDrone
      * @deprecated Use {@link com.otabi.jcodroneedu.patterns.BasicPatternDrone#square(int, int, int)} instead
      * @educational This method teaches inheritance by requiring students to use the specialized class
+      * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public void square(int speed, int seconds, int direction) {
         throw new UnsupportedOperationException(
             "Pattern methods have been moved to BasicPatternDrone for educational purposes.\n" +
@@ -4685,24 +4797,30 @@ public class Drone implements AutoCloseable {
 
     /**
      * @deprecated Use {@link com.otabi.jcodroneedu.patterns.BasicPatternDrone#square(int, int)} instead
+      * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public void square(int speed, int seconds) {
         square(speed, seconds, 1);
     }
 
     /**
      * @deprecated Use {@link com.otabi.jcodroneedu.patterns.BasicPatternDrone#square(int)} instead
+      * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public void square(int speed) {
         square(speed, 1, 1);
     }
 
     /**
      * @deprecated Use {@link com.otabi.jcodroneedu.patterns.BasicPatternDrone#square()} instead
+      * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public void square() {
         square(60, 1, 1);
     }
@@ -4712,8 +4830,10 @@ public class Drone implements AutoCloseable {
      * 
      * @deprecated Use {@link com.otabi.jcodroneedu.patterns.BasicPatternDrone#triangle(int, int, int)} instead
      * @throws UnsupportedOperationException Always thrown to guide students to BasicPatternDrone
+      * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public void triangle(int speed, int seconds, int direction) {
         throw new UnsupportedOperationException(
             "Pattern methods have been moved to BasicPatternDrone for educational purposes.\n" +
@@ -4728,8 +4848,10 @@ public class Drone implements AutoCloseable {
 
     /**
      * @deprecated Use {@link com.otabi.jcodroneedu.patterns.BasicPatternDrone#circle(int, int)} instead
+      * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public void circle(int speed, int direction) {
         throw new UnsupportedOperationException(
             "Pattern methods have been moved to BasicPatternDrone for educational purposes.\n" +
@@ -4744,8 +4866,10 @@ public class Drone implements AutoCloseable {
 
     /**
      * @deprecated Use {@link com.otabi.jcodroneedu.patterns.BasicPatternDrone#spiral(int, int, int)} instead
+      * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public void spiral(int speed, int seconds, int direction) {
         throw new UnsupportedOperationException(
             "Pattern methods have been moved to BasicPatternDrone for educational purposes.\n" +
@@ -4760,8 +4884,10 @@ public class Drone implements AutoCloseable {
 
     /**
      * @deprecated Use {@link com.otabi.jcodroneedu.patterns.BasicPatternDrone#sway(int, int, int)} instead
+      * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public void sway(int speed, int seconds, int direction) {
         throw new UnsupportedOperationException(
             "Pattern methods have been moved to BasicPatternDrone for educational purposes.\n" +
@@ -4782,6 +4908,7 @@ public class Drone implements AutoCloseable {
      * @apiNote Delegates to {@link #flip(String)} using default direction
      * @pythonEquivalent flip
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#flip
+      * @since 1.0.0
      */
     public void flip() {
         flip(DroneSystem.FlightControlConstants.DEFAULT_FLIP_DIRECTION);
@@ -4794,6 +4921,7 @@ public class Drone implements AutoCloseable {
      * 
      * @param direction The flip direction: "front", "back", "left", "right"
      * @apiNote Delegates to {@link FlightController#flip(String)}
+      * @since 1.0.0
      */
     public void flip(String direction) {
         flightController.flip(direction);
@@ -4801,8 +4929,10 @@ public class Drone implements AutoCloseable {
 
     /**
      * @deprecated Use {@link com.otabi.jcodroneedu.patterns.BasicPatternDrone#triangleTurn(int, int, int)} instead
+      * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public void triangleTurn(int speed, int seconds, int direction) {
         throw new UnsupportedOperationException(
             "Pattern methods have been moved to BasicPatternDrone for educational purposes.\n" +
@@ -4817,16 +4947,20 @@ public class Drone implements AutoCloseable {
 
     /**
      * @deprecated Use {@link com.otabi.jcodroneedu.patterns.BasicPatternDrone#triangleTurn()} instead
+      * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public void triangleTurn() {
         triangleTurn(60, 2, 1);
     }
 
     /**
      * @deprecated Use {@link com.otabi.jcodroneedu.patterns.BasicPatternDrone#circleTurn(int, int, int)} instead
+      * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public void circleTurn(int speed, int seconds, int direction) {
         throw new UnsupportedOperationException(
             "Pattern methods have been moved to BasicPatternDrone for educational purposes.\n" +
@@ -4841,8 +4975,10 @@ public class Drone implements AutoCloseable {
 
     /**
      * @deprecated Use {@link com.otabi.jcodroneedu.patterns.BasicPatternDrone#circleTurn()} instead
+      * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public void circleTurn() {
         circleTurn(30, 1, 1);
     }
@@ -4927,7 +5063,7 @@ public class Drone implements AutoCloseable {
      * 
      * @throws IllegalArgumentException if any color value is outside 0-255 range
      * @apiNote Equivalent to Python's {@code drone.set_drone_LED(r, g, b, brightness)}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     public void setDroneLED(int red, int green, int blue, int brightness) {
@@ -4977,7 +5113,7 @@ public class Drone implements AutoCloseable {
      * @param blue Blue component (0-255)
      * 
      * @apiNote Equivalent to Python's {@code drone.set_drone_LED(r, g, b, 255)}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      * @pythonEquivalent set_drone_LED
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#set_drone_led
@@ -5020,7 +5156,7 @@ public class Drone implements AutoCloseable {
      * 
      * @throws IllegalArgumentException if any parameter is out of range
      * @apiNote Equivalent to Python's {@code drone.set_drone_LED_mode(r, g, b, mode, speed)}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      * @pythonEquivalent set_drone_LED_mode
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#set_drone_led_mode
@@ -5109,7 +5245,7 @@ public class Drone implements AutoCloseable {
      * </ul>
      * 
      * @apiNote Equivalent to Python's {@code drone.drone_LED_off()}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      * @pythonEquivalent drone_LED_off
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#drone_led_off
@@ -5151,7 +5287,7 @@ public class Drone implements AutoCloseable {
      * 
      * @throws IllegalArgumentException if any color value is outside 0-255 range
      * @apiNote Equivalent to Python's {@code drone.set_controller_LED(r, g, b, brightness)}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     public void setControllerLED(int red, int green, int blue, int brightness) {
@@ -5198,7 +5334,7 @@ public class Drone implements AutoCloseable {
      * @param blue Blue component (0-255)
      * 
      * @apiNote Equivalent to Python's {@code drone.set_controller_LED(r, g, b, 255)}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      * @pythonEquivalent set_controller_LED
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#set_controller_led
@@ -5213,7 +5349,7 @@ public class Drone implements AutoCloseable {
      * <p>Turns off all LED lights on the controller, returning it to its default state.</p>
      * 
      * @apiNote Equivalent to Python's {@code drone.controller_LED_off()}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      */
     public void controllerLEDOff() {
@@ -5267,7 +5403,7 @@ public class Drone implements AutoCloseable {
      * 
      * @throws IllegalArgumentException if any parameter is out of range
      * @apiNote Equivalent to Python's {@code drone.set_controller_LED_mode(r, g, b, mode, speed)}
-     * @since 1.0
+     * @since 1.0.0
      * @educational
      * @pythonEquivalent set_controller_LED_mode
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#set_controller_led_mode
@@ -5354,6 +5490,7 @@ public class Drone implements AutoCloseable {
      * @educational
      * @pythonEquivalent set_drone_LED
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#set_drone_led
+      * @since 1.0.0
      */
     public void setDroneLEDRed() {
         setDroneLED(DroneSystem.ColorConstants.RGB_RED[0], 
@@ -5367,6 +5504,7 @@ public class Drone implements AutoCloseable {
      * @educational
      * @pythonEquivalent set_drone_LED
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#set_drone_led
+      * @since 1.0.0
      */
     public void setDroneLEDGreen() {
         setDroneLED(DroneSystem.ColorConstants.RGB_GREEN[0], 
@@ -5380,6 +5518,7 @@ public class Drone implements AutoCloseable {
      * @educational
      * @pythonEquivalent set_drone_LED
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#set_drone_led
+      * @since 1.0.0
      */
     public void setDroneLEDBlue() {
         setDroneLED(DroneSystem.ColorConstants.RGB_BLUE[0], 
@@ -5393,6 +5532,7 @@ public class Drone implements AutoCloseable {
      * @educational
      * @pythonEquivalent set_drone_LED
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#set_drone_led
+      * @since 1.0.0
      */
     public void setDroneLEDYellow() {
         setDroneLED(DroneSystem.ColorConstants.RGB_YELLOW[0], 
@@ -5406,6 +5546,7 @@ public class Drone implements AutoCloseable {
      * @educational
      * @pythonEquivalent set_drone_LED
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#set_drone_led
+      * @since 1.0.0
      */
     public void setDroneLEDPurple() {
         setDroneLED(DroneSystem.ColorConstants.RGB_PURPLE[0], 
@@ -5419,6 +5560,7 @@ public class Drone implements AutoCloseable {
      * @educational
      * @pythonEquivalent set_drone_LED
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#set_drone_led
+      * @since 1.0.0
      */
     public void setDroneLEDWhite() {
         setDroneLED(DroneSystem.ColorConstants.RGB_WHITE[0], 
@@ -5432,6 +5574,7 @@ public class Drone implements AutoCloseable {
      * @educational
      * @pythonEquivalent set_drone_LED
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#set_drone_led
+      * @since 1.0.0
      */
     public void setDroneLEDOrange() {
         setDroneLED(DroneSystem.ColorConstants.RGB_ORANGE[0], 
@@ -5453,6 +5596,7 @@ public class Drone implements AutoCloseable {
      * @educational
      * @pythonEquivalent drone_buzzer
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#drone_buzzer
+      * @since 1.0.0
      */
     public void droneBuzzer(Object note, int duration) {
         if (duration < 0) {
@@ -5501,6 +5645,7 @@ public class Drone implements AutoCloseable {
      * @param frequency The frequency in Hz (e.g., 500, 1000, 1500)
      * @param durationMs The duration in milliseconds
      * @educational
+      * @since 1.0.0
      */
     public void droneBuzzer(int frequency, int durationMs) {
         droneBuzzer((Integer) frequency, durationMs);
@@ -5516,6 +5661,7 @@ public class Drone implements AutoCloseable {
      * @educational
      * @pythonEquivalent controller_buzzer
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#controller_buzzer
+      * @since 1.0.0
      */
     public void controllerBuzzer(Object note, int duration) {
         if (duration < 0) {
@@ -5555,6 +5701,7 @@ public class Drone implements AutoCloseable {
      * @param frequency The frequency in Hz (e.g., 500, 1000, 1500)
      * @param durationMs The duration in milliseconds
      * @educational
+      * @since 1.0.0
      */
     public void controllerBuzzer(int frequency, int durationMs) {
         controllerBuzzer((Integer) frequency, durationMs);
@@ -5567,6 +5714,7 @@ public class Drone implements AutoCloseable {
      * @param note The musical note to play (Note enum) or frequency (Integer)
      * @throws IllegalArgumentException if note is neither Note nor Integer
      * @educational
+      * @since 1.0.0
      */
     public void startDroneBuzzer(Object note) {
         BuzzerMode mode;
@@ -5604,6 +5752,7 @@ public class Drone implements AutoCloseable {
      * Stops the drone buzzer.
      * 
      * @educational
+      * @since 1.0.0
      */
     public void stopDroneBuzzer() {
         sendBuzzerMute(DeviceType.Drone, 1);
@@ -5623,6 +5772,7 @@ public class Drone implements AutoCloseable {
      * @param note The musical note to play (Note enum) or frequency (Integer)
      * @throws IllegalArgumentException if note is neither Note nor Integer
      * @educational
+      * @since 1.0.0
      */
     public void startControllerBuzzer(Object note) {
         BuzzerMode mode;
@@ -5652,6 +5802,7 @@ public class Drone implements AutoCloseable {
      * Stops the controller buzzer.
      * 
      * @educational
+      * @since 1.0.0
      */
     public void stopControllerBuzzer() {
         sendBuzzerMute(DeviceType.Controller, 1);
@@ -5716,6 +5867,7 @@ public class Drone implements AutoCloseable {
      * @param red Red component (0-255), or null for random
      * @param green Green component (0-255), or null for random
      * @param blue Blue component (0-255), or null for random
+     * @since 1.0.0
      * @educational
      * @pythonEquivalent ping(r, g, b)
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#ping
@@ -5758,6 +5910,7 @@ public class Drone implements AutoCloseable {
      * @educational
      * @pythonEquivalent ping()
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#ping
+      * @since 1.0.0
      */
     public void ping() {
         ping(null, null, null);
@@ -5812,6 +5965,7 @@ public class Drone implements AutoCloseable {
      * @educational
      * @pythonEquivalent drone_buzzer_sequence(kind)
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#drone_buzzer_sequence
+      * @since 1.0.0
      */
     public void droneBuzzerSequence(String sequenceName) {
         BuzzerSequenceRegistry registry = BuzzerSequenceRegistry.getInstance();
@@ -5870,6 +6024,7 @@ public class Drone implements AutoCloseable {
      * @educational
      * @pythonEquivalent controller_buzzer_sequence(kind)
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#controller_buzzer_sequence
+      * @since 1.0.0
      */
     public void controllerBuzzerSequence(String sequenceName) {
         BuzzerSequenceRegistry registry = BuzzerSequenceRegistry.getInstance();
@@ -5931,6 +6086,7 @@ public class Drone implements AutoCloseable {
      * @param name The name to register the sequence under
      * @param sequence The buzzer sequence to register
      * @throws IllegalArgumentException if name is null/empty or sequence is null
+     * @since 1.0.0
      * @see BuzzerSequence.Builder
      * @see #droneBuzzerSequence(String)
      * @see #controllerBuzzerSequence(String)
@@ -6034,6 +6190,7 @@ public class Drone implements AutoCloseable {
      * 
      * @param pixel The pixel type to use for clearing (WHITE or BLACK)
      * @educational
+      * @since 1.0.0
      */
     public void controllerClearScreen(DisplayPixel pixel) {
         DisplayClearAll clearCommand = new DisplayClearAll(pixel);
@@ -6051,6 +6208,7 @@ public class Drone implements AutoCloseable {
      * Clears the entire controller display screen with white pixels.
      * 
      * @educational
+      * @since 1.0.0
      */
     public void controllerClearScreen() {
         controllerClearScreen(DisplayPixel.WHITE);
@@ -6063,6 +6221,7 @@ public class Drone implements AutoCloseable {
      * @param y Y coordinate (0-63)
      * @param pixel The pixel type to draw (BLACK, WHITE, INVERSE, OUTLINE)
      * @educational
+      * @since 1.0.0
      */
     public void controllerDrawPoint(int x, int y, DisplayPixel pixel) {
         DisplayDrawPoint drawCommand = new DisplayDrawPoint(x, y, pixel);
@@ -6082,6 +6241,7 @@ public class Drone implements AutoCloseable {
      * @param x X coordinate (0-127)
      * @param y Y coordinate (0-63)
      * @educational
+      * @since 1.0.0
      */
     public void controllerDrawPoint(int x, int y) {
         controllerDrawPoint(x, y, DisplayPixel.BLACK);
@@ -6098,6 +6258,7 @@ public class Drone implements AutoCloseable {
      * @param canvas The canvas to draw on
      * @educational
      * @pythonEquivalent controller_draw_point(x, y, canvas)
+      * @since 1.0.0
      */
     public void controllerDrawPoint(int x, int y, DisplayController canvas) {
         canvas.getGraphics().drawLine(x, y, x, y);
@@ -6113,6 +6274,7 @@ public class Drone implements AutoCloseable {
      * @param pixel The pixel type to draw
      * @param line The line style (SOLID, DOTTED, DASHED)
      * @educational
+      * @since 1.0.0
      */
     public void controllerDrawLine(int x1, int y1, int x2, int y2, DisplayPixel pixel, DisplayLine line) {
         DisplayDrawLine drawCommand = new DisplayDrawLine(x1, y1, x2, y2, pixel, line);
@@ -6134,6 +6296,7 @@ public class Drone implements AutoCloseable {
      * @param x2 Ending X coordinate
      * @param y2 Ending Y coordinate
      * @educational
+      * @since 1.0.0
      */
     public void controllerDrawLine(int x1, int y1, int x2, int y2) {
         controllerDrawLine(x1, y1, x2, y2, DisplayPixel.BLACK, DisplayLine.SOLID);
@@ -6152,6 +6315,7 @@ public class Drone implements AutoCloseable {
      * @param canvas The canvas to draw on
      * @educational
      * @pythonEquivalent controller_draw_line(x1, y1, x2, y2, canvas)
+      * @since 1.0.0
      */
     public void controllerDrawLine(int x1, int y1, int x2, int y2, DisplayController canvas) {
         canvas.drawLine(x1, y1, x2, y2);
@@ -6168,6 +6332,7 @@ public class Drone implements AutoCloseable {
      * @param filled Whether to fill the rectangle
      * @param line The line style for outline
      * @educational
+      * @since 1.0.0
      */
     public void controllerDrawRectangle(int x, int y, int width, int height, DisplayPixel pixel, boolean filled, DisplayLine line) {
         DisplayDrawRect drawCommand = new DisplayDrawRect(x, y, width, height, pixel, filled, line);
@@ -6189,6 +6354,7 @@ public class Drone implements AutoCloseable {
      * @param width Width of the rectangle
      * @param height Height of the rectangle
      * @educational
+      * @since 1.0.0
      */
     public void controllerDrawRectangle(int x, int y, int width, int height) {
         controllerDrawRectangle(x, y, width, height, DisplayPixel.BLACK, false, DisplayLine.SOLID);
@@ -6207,6 +6373,7 @@ public class Drone implements AutoCloseable {
      * @param canvas The canvas to draw on
      * @educational
      * @pythonEquivalent controller_draw_rectangle(x, y, width, height, canvas)
+      * @since 1.0.0
      */
     public void controllerDrawRectangle(int x, int y, int width, int height, DisplayController canvas) {
         canvas.drawRectangle(x, y, width, height);
@@ -6221,6 +6388,7 @@ public class Drone implements AutoCloseable {
      * @param pixel The pixel type to draw
      * @param filled Whether to fill the circle
      * @educational
+      * @since 1.0.0
      */
     public void controllerDrawCircle(int x, int y, int radius, DisplayPixel pixel, boolean filled) {
         DisplayDrawCircle drawCommand = new DisplayDrawCircle(x, y, radius, pixel, filled);
@@ -6241,6 +6409,7 @@ public class Drone implements AutoCloseable {
      * @param y Y coordinate of center
      * @param radius Radius of the circle
      * @educational
+      * @since 1.0.0
      */
     public void controllerDrawCircle(int x, int y, int radius) {
         controllerDrawCircle(x, y, radius, DisplayPixel.BLACK, true);
@@ -6258,6 +6427,7 @@ public class Drone implements AutoCloseable {
      * @param canvas The canvas to draw on
      * @educational
      * @pythonEquivalent controller_draw_circle(x, y, radius, canvas)
+      * @since 1.0.0
      */
     public void controllerDrawCircle(int x, int y, int radius, DisplayController canvas) {
         canvas.drawCircle(x, y, radius);
@@ -6272,6 +6442,7 @@ public class Drone implements AutoCloseable {
      * @param font The font to use (LIBERATION_MONO_5X8 or LIBERATION_MONO_10X16)
      * @param pixel The pixel type to draw
      * @educational
+      * @since 1.0.0
      */
     public void controllerDrawString(int x, int y, String message, DisplayFont font, DisplayPixel pixel) {
         DisplayDrawString drawCommand = new DisplayDrawString(x, y, font, pixel, message);
@@ -6292,6 +6463,7 @@ public class Drone implements AutoCloseable {
      * @param y Y coordinate for text position
      * @param message The text message to display
      * @educational
+      * @since 1.0.0
      */
     public void controllerDrawString(int x, int y, String message) {
         controllerDrawString(x, y, message, DisplayFont.LIBERATION_MONO_5X8, DisplayPixel.BLACK);
@@ -6306,6 +6478,7 @@ public class Drone implements AutoCloseable {
      * @param height Height of area to clear
      * @param pixel The pixel type to use for clearing
      * @educational
+      * @since 1.0.0
      */
     public void controllerClearArea(int x, int y, int width, int height, DisplayPixel pixel) {
         DisplayClear clearCommand = new DisplayClear(x, y, width, height, pixel);
@@ -6327,6 +6500,7 @@ public class Drone implements AutoCloseable {
      * @param width Width of area to clear
      * @param height Height of area to clear
      * @educational
+      * @since 1.0.0
      */
     public void controllerClearArea(int x, int y, int width, int height) {
         controllerClearArea(x, y, width, height, DisplayPixel.WHITE);
@@ -6370,6 +6544,7 @@ public class Drone implements AutoCloseable {
      * @pythonReference Canvas/PIL-based drawing operations in Python API
      * @see DisplayController
      * @see #controllerDrawCanvas(DisplayController)
+      * @since 1.0.0
      */
     public DisplayController controllerCreateCanvas() {
         return new DisplayController();
@@ -6413,6 +6588,7 @@ public class Drone implements AutoCloseable {
      * @pythonReference Canvas/PIL-based drawing operations in Python API
      * @see DisplayController
      * @see #controllerCreateCanvas()
+      * @since 1.0.0
      */
     public void controllerDrawCanvas(DisplayController canvas) {
         displayService.draw(canvas);
@@ -6426,6 +6602,7 @@ public class Drone implements AutoCloseable {
      * @param width Width of area to invert
      * @param height Height of area to invert
      * @educational
+      * @since 1.0.0
      */
     public void controllerInvertArea(int x, int y, int width, int height) {
         DisplayInvert invertCommand = new DisplayInvert(x, y, width, height);
@@ -6459,6 +6636,7 @@ public class Drone implements AutoCloseable {
      * @param imageData Byte array containing pixel data in bit-packed format
      * @see #controllerCreateCanvas()
      * @see #controllerDrawCanvas(DisplayController)
+      * @since 1.0.0
      */
     public void controllerDrawImage(int x, int y, int width, int height, byte[] imageData) {
         DisplayDrawImage imageCommand = new DisplayDrawImage(x, y, width, height, imageData);
@@ -6495,6 +6673,7 @@ public class Drone implements AutoCloseable {
      * @see #getButtonDataObject() Recommended Java alternative
      * @pythonEquivalent get_button_data
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_button_data
+      * @since 1.0.0
      */
     public Object[] getButtonData() {
         return controllerInputManager.getButtonDataArray();
@@ -6512,6 +6691,7 @@ public class Drone implements AutoCloseable {
      * @return int array with joystick state information
      * @educational
      * @see #getJoystickDataObject() Recommended Java alternative
+      * @since 1.0.0
      */
     public int[] getJoystickData() {
         return controllerInputManager.getJoystickDataArray();
@@ -6522,6 +6702,7 @@ public class Drone implements AutoCloseable {
      *
      * @return X-axis value from -100 to 100, where 0 is neutral
      * @educational
+      * @since 1.0.0
      */
     public int getLeftJoystickX() {
         return controllerInputManager.getLeftJoystickX();
@@ -6532,6 +6713,7 @@ public class Drone implements AutoCloseable {
      *
      * @return Y-axis value from -100 to 100, where 0 is neutral
      * @educational
+      * @since 1.0.0
      */
     public int getLeftJoystickY() {
         return controllerInputManager.getLeftJoystickY();
@@ -6542,6 +6724,7 @@ public class Drone implements AutoCloseable {
      *
      * @return X-axis value from -100 to 100, where 0 is neutral
      * @educational
+      * @since 1.0.0
      */
     public int getRightJoystickX() {
         return controllerInputManager.getRightJoystickX();
@@ -6552,6 +6735,7 @@ public class Drone implements AutoCloseable {
      *
      * @return Y-axis value from -100 to 100, where 0 is neutral
      * @educational
+      * @since 1.0.0
      */
     public int getRightJoystickY() {
         return controllerInputManager.getRightJoystickY();
@@ -6562,6 +6746,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return true if L1 button is pressed, false otherwise
      * @educational
+      * @since 1.0.0
      */
     public boolean l1_pressed() {
         return isButtonPressed(DroneSystem.ButtonFlag.FRONT_LEFT_TOP);
@@ -6572,6 +6757,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return true if L2 button is pressed, false otherwise
      * @educational
+      * @since 1.0.0
      */
     public boolean l2_pressed() {
         return isButtonPressed(DroneSystem.ButtonFlag.FRONT_LEFT_BOTTOM);
@@ -6582,6 +6768,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return true if R1 button is pressed, false otherwise
      * @educational
+      * @since 1.0.0
      */
     public boolean r1_pressed() {
         return isButtonPressed(DroneSystem.ButtonFlag.FRONT_RIGHT_TOP);
@@ -6592,6 +6779,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return true if R2 button is pressed, false otherwise
      * @educational
+      * @since 1.0.0
      */
     public boolean r2_pressed() {
         return isButtonPressed(DroneSystem.ButtonFlag.FRONT_RIGHT_BOTTOM);
@@ -6602,6 +6790,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return true if H button is pressed, false otherwise
      * @educational
+      * @since 1.0.0
      */
     public boolean h_pressed() {
         return isButtonPressed(DroneSystem.ButtonFlag.TOP_LEFT);
@@ -6612,6 +6801,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return true if power button is pressed, false otherwise
      * @educational
+      * @since 1.0.0
      */
     public boolean power_pressed() {
         return isButtonPressed(DroneSystem.ButtonFlag.TOP_RIGHT);
@@ -6622,6 +6812,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return true if up arrow is pressed, false otherwise
      * @educational
+      * @since 1.0.0
      */
     public boolean up_arrow_pressed() {
         return isButtonPressed(DroneSystem.ButtonFlag.MID_UP);
@@ -6632,6 +6823,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return true if left arrow is pressed, false otherwise
      * @educational
+      * @since 1.0.0
      */
     public boolean left_arrow_pressed() {
         return isButtonPressed(DroneSystem.ButtonFlag.MID_LEFT);
@@ -6642,6 +6834,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return true if right arrow is pressed, false otherwise
      * @educational
+      * @since 1.0.0
      */
     public boolean right_arrow_pressed() {
         return isButtonPressed(DroneSystem.ButtonFlag.MID_RIGHT);
@@ -6652,6 +6845,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return true if down arrow is pressed, false otherwise
      * @educational
+      * @since 1.0.0
      */
     public boolean down_arrow_pressed() {
         return isButtonPressed(DroneSystem.ButtonFlag.MID_DOWN);
@@ -6662,6 +6856,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return true if S button is pressed, false otherwise
      * @educational
+      * @since 1.0.0
      */
     public boolean s_pressed() {
         return isButtonPressed(DroneSystem.ButtonFlag.BOTTOM_LEFT);
@@ -6672,6 +6867,7 @@ public class Drone implements AutoCloseable {
      * 
      * @return true if P button is pressed, false otherwise
      * @educational
+      * @since 1.0.0
      */
     public boolean p_pressed() {
         return isButtonPressed(DroneSystem.ButtonFlag.BOTTOM_RIGHT);
@@ -6702,6 +6898,7 @@ public class Drone implements AutoCloseable {
      * This method is called internally by the receiver.
      * 
      * @param button The button protocol data received
+      * @since 1.0.0
      */
     public void updateButtonData(com.otabi.jcodroneedu.protocol.controllerinput.Button button) {
         controllerInputManager.updateButtonData(button);
@@ -6712,6 +6909,7 @@ public class Drone implements AutoCloseable {
      * This method is called internally by the receiver.
      * 
      * @param joystick The joystick protocol data received
+      * @since 1.0.0
      */
     public void updateJoystickData(com.otabi.jcodroneedu.protocol.controllerinput.Joystick joystick) {
         controllerInputManager.updateJoystickData(joystick);

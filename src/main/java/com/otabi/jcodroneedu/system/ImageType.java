@@ -49,10 +49,18 @@ public enum ImageType {
         this.type = type;
     }
 
+    /**
+     * value method.
+     * @since 1.0.0
+     */
     public byte value() {
         return type;
     }
 
+    /**
+     * forValue method.
+     * @since 1.0.0
+     */
     public static ImageType forValue(byte b) {
         return BYTE_IMAGE_TYPE_MAP.get(b);
     }

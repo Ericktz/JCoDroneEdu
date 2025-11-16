@@ -26,6 +26,10 @@ public abstract class LightMode implements Serializable
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         this.mode = mode.getModeFromBuffer(buffer);
@@ -33,6 +37,10 @@ public abstract class LightMode implements Serializable
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         buffer.put(mode.getValue());
@@ -40,11 +48,19 @@ public abstract class LightMode implements Serializable
     }
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize()
     {
         return LIGHT_MODE_SIZE;
     }
 
+    /**
+     * Gets the mode.
+     * @since 1.0.0
+     */
     public LightModes getMode()
     {
         return mode;

@@ -45,7 +45,7 @@ import java.awt.event.WindowEvent;
  *              one object and pass your drone - no GUI knowledge required!
  * 
  * @author CoDrone EDU Development Team
- * @since 1.0
+ * @since 1.0.0
  */
 public class SensorMonitor {
     private final JFrame frame;
@@ -72,6 +72,10 @@ public class SensorMonitor {
         // Handle window closing
         frame.addWindowListener(new WindowAdapter() {
             @Override
+            /**
+             * windowClosing method.
+             * @since 1.0.0
+             */
             public void windowClosing(WindowEvent e) {
                 cleanup();
             }
@@ -101,6 +105,7 @@ public class SensorMonitor {
      * This is optional - students can just close the window manually.
      * 
      * @educational You can call this when done, or just close the window with the X button.
+      * @since 1.0.0
      */
     public void close() {
         if (isOpen) {
@@ -121,6 +126,7 @@ public class SensorMonitor {
      * Checks if the monitor window is still open.
      * 
      * @return true if the window is open, false if closed
+      * @since 1.0.0
      */
     public boolean isOpen() {
         return isOpen && frame.isVisible();

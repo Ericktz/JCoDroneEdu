@@ -119,6 +119,7 @@ public class DroneSystem
          * Gets the integer value of the model number.
          *
          * @return The integer value.
+          * @since 1.0.0
          */
         public int getValue() {
             return value;
@@ -140,6 +141,7 @@ public class DroneSystem
          * @param value The integer value to look up.
          * @return The corresponding ModelNumber enum constant, or null if not found.
          * @throws IllegalArgumentException if the value is not a valid model number.
+          * @since 1.0.0
          */
         public static ModelNumber fromValue(int value) {
             ModelNumber modelNumber = VALUE_MAP.get(value);
@@ -179,6 +181,10 @@ public class DroneSystem
             this.value = value;
         }
 
+        /**
+         * Gets the value.
+         * @since 1.0.0
+         */
         public int getValue()
         {
             return value;
@@ -214,6 +220,7 @@ public class DroneSystem
          * Gets the integer value of the system mode.
          *
          * @return The integer value.
+          * @since 1.0.0
          */
         public byte getValue() {
             return value;
@@ -234,6 +241,7 @@ public class DroneSystem
          *
          * @param value The integer value to look up.
          * @return The corresponding ModeSystem enum constant, or null if not found.
+          * @since 1.0.0
          */
         public static ModeSystem fromValue(byte value) {
             return VALUE_MAP.get(value);
@@ -268,6 +276,7 @@ public class DroneSystem
          * Gets the integer value of the control mode.
          *
          * @return The integer value.
+          * @since 1.0.0
          */
         public byte getValue() {
             return value;
@@ -288,6 +297,7 @@ public class DroneSystem
          *
          * @param value The integer value to look up.
          * @return The corresponding ModeControlFlight enum constant, or null if not found.
+          * @since 1.0.0
          */
         public static ModeControlFlight fromValue(byte value) {
             return VALUE_MAP.get(value);
@@ -328,6 +338,7 @@ public class DroneSystem
          * Gets the integer value of the flight mode.
          *
          * @return The integer value.
+          * @since 1.0.0
          */
         public byte getValue() {
             return value;
@@ -348,6 +359,7 @@ public class DroneSystem
          *
          * @param value The integer value to look up.
          * @return The corresponding ModeFlight enum constant, or null if not found.
+          * @since 1.0.0
          */
         public static ModeFlight fromValue(byte value) {
             return VALUE_MAP.get(value);
@@ -384,6 +396,7 @@ public class DroneSystem
          * Gets the integer value of the update mode.
          *
          * @return The integer value.
+          * @since 1.0.0
          */
         public byte getValue() {
             return value;
@@ -404,6 +417,7 @@ public class DroneSystem
          *
          * @param value The byte value to look up.
          * @return The corresponding ModeUpdate enum constant, or null if not found.
+          * @since 1.0.0
          */
         public static ModeUpdate fromValue(byte value) {
             return VALUE_MAP.get(value);
@@ -434,6 +448,10 @@ public class DroneSystem
             this.value = value;
         }
 
+        /**
+         * Gets the value.
+         * @since 1.0.0
+         */
         public int getValue()
         {
             return value;
@@ -461,6 +479,10 @@ public class DroneSystem
             this.value = value;
         }
 
+        /**
+         * Gets the value.
+         * @since 1.0.0
+         */
         public int getValue()
         {
             return value;
@@ -487,6 +509,10 @@ public class DroneSystem
             this.value = value;
         }
 
+        /**
+         * Gets the value.
+         * @since 1.0.0
+         */
         public int getValue()
         {
             return value;
@@ -508,6 +534,10 @@ public class DroneSystem
             this.value = value;
         }
 
+        /**
+         * Gets the value.
+         * @since 1.0.0
+         */
         public int getValue()
         {
             return value;
@@ -540,6 +570,7 @@ public class DroneSystem
          * Gets the byte value of the sensor orientation mode.
          *
          * @return The byte value.
+          * @since 1.0.0
          */
         public byte getValue() {
             return value;
@@ -560,6 +591,7 @@ public class DroneSystem
          *
          * @param value The byte value to look up.
          * @return The corresponding SensorOrientation enum constant, or null if not found.
+          * @since 1.0.0
          */
         public static SensorOrientation fromValue(byte value) {
             return VALUE_MAP.get(value);
@@ -591,6 +623,7 @@ public class DroneSystem
          * Gets the byte value of the headless mode.
          *
          * @return The byte value.
+          * @since 1.0.0
          */
         public byte getValue() {
             return value;
@@ -611,6 +644,7 @@ public class DroneSystem
          *
          * @param value The byte value to look up.
          * @return The corresponding Headless enum constant, or null if not found.
+          * @since 1.0.0
          */
         public static Headless fromValue(byte value) {
             return VALUE_MAP.get(value);
@@ -639,6 +673,10 @@ public class DroneSystem
             this.value = value;
         }
 
+        /**
+         * Gets the value.
+         * @since 1.0.0
+         */
         public int getValue()
         {
             return value;
@@ -672,6 +710,7 @@ public class DroneSystem
          * Gets the byte value of the movement mode.
          *
          * @return The byte value.
+          * @since 1.0.0
          */
         public byte getValue() {
             return value;
@@ -692,6 +731,7 @@ public class DroneSystem
          *
          * @param value The byte value to look up.
          * @return The corresponding ModeMovement enum constant, or null if not found.
+          * @since 1.0.0
          */
         public static ModeMovement fromValue(byte value) {
             return VALUE_MAP.get(value);
@@ -719,6 +759,10 @@ public class DroneSystem
             this.value = value;
         }
 
+        /**
+         * Gets the value.
+         * @since 1.0.0
+         */
         public int getValue()
         {
             return value;
@@ -729,6 +773,7 @@ public class DroneSystem
          * Useful for GUI display and visualization.
          * 
          * @return The AWT Color object corresponding to this card color
+          * @since 1.0.0
          */
         public java.awt.Color toAwtColor() {
             switch (this) {
@@ -750,6 +795,7 @@ public class DroneSystem
          * 
          * @param index The color index (0-8)
          * @return The corresponding CardColorIndex enum value, or UNKNOWN if invalid
+          * @since 1.0.0
          */
         public static CardColorIndex fromIndex(int index) {
             for (CardColorIndex color : values()) {
@@ -767,6 +813,7 @@ public class DroneSystem
      * 
      * @param idx The color index value (0-8)
      * @return Human-readable color name
+      * @since 1.0.0
      */
     public static String cardColorIndexToName(int idx) {
         switch (idx) {
@@ -859,6 +906,10 @@ public class DroneSystem
             this.value = value;
         }
 
+        /**
+         * Gets the value.
+         * @since 1.0.0
+         */
         public int getValue()
         {
             return value;
@@ -919,6 +970,7 @@ public class DroneSystem
          * Gets the byte value of the button event type.
          *
          * @return The byte value.
+          * @since 1.0.0
          */
         public byte getValue() {
             return value;
@@ -939,6 +991,7 @@ public class DroneSystem
          *
          * @param value The byte value to look up.
          * @return The corresponding ButtonEvent enum constant, or null if not found.
+          * @since 1.0.0
          */
         public static ButtonEvent fromValue(byte value) {
             return VALUE_MAP.get(value);
@@ -984,6 +1037,7 @@ public class DroneSystem
          * Gets the byte value of the joystick direction.
          *
          * @return The byte value.
+          * @since 1.0.0
          */
         public byte getValue() {
             return value;
@@ -1004,6 +1058,7 @@ public class DroneSystem
          *
          * @param value The byte value to look up.
          * @return The corresponding JoystickDirection enum constant, or null if not found.
+          * @since 1.0.0
          */
         public static JoystickDirection fromValue(byte value) {
             return VALUE_MAP.get(value);
@@ -1035,6 +1090,7 @@ public class DroneSystem
          * Gets the byte value of the joystick event.
          *
          * @return The byte value.
+          * @since 1.0.0
          */
         public byte getValue() {
             return value;
@@ -1055,6 +1111,7 @@ public class DroneSystem
          *
          * @param value The byte value to look up.
          * @return The corresponding JoystickEvent enum constant, or null if not found.
+          * @since 1.0.0
          */
         public static JoystickEvent fromValue(byte value) {
             return VALUE_MAP.get(value);

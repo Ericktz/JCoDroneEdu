@@ -43,6 +43,7 @@ public class ColorClassifier {
      * @param datasetPath Path to the dataset directory
      * @param showGraph   If true, displays a 3D scatter plot of the data
      * @throws IOException if files cannot be read
+      * @since 1.0.0
      */
     public void loadColorData(String datasetPath, boolean showGraph) throws IOException {
         File dir = new File(datasetPath);
@@ -80,6 +81,7 @@ public class ColorClassifier {
      * Predicts the color label for the given HSVL data.
      * @param colorData double[] of HSVL values
      * @return Predicted label name
+      * @since 1.0.0
      */
     public String predictColor(double[] colorData) {
         if (knn == null) throw new IllegalStateException("Classifier not trained. Call loadColorData() first.");
@@ -93,6 +95,7 @@ public class ColorClassifier {
      * @param samples 2D array of HSVL samples
      * @param datasetPath Path to dataset directory
      * @throws IOException if file cannot be written
+      * @since 1.0.0
      */
     public void appendColorData(String label, double[][] samples, String datasetPath) throws IOException {
         File file = new File(datasetPath, label + ".txt");
@@ -123,6 +126,7 @@ public class ColorClassifier {
      * @param samples 2D array of HSVL samples
      * @param datasetPath Path to dataset directory
      * @throws IOException if file cannot be written
+      * @since 1.0.0
      */
     public void newColorData(String label, double[][] samples, String datasetPath) throws IOException {
         File file = new File(datasetPath, label + ".txt");
@@ -137,6 +141,7 @@ public class ColorClassifier {
 
     /**
      * Resets the classifier and all loaded data.
+      * @since 1.0.0
      */
     public void resetClassifier() {
         knn = null;

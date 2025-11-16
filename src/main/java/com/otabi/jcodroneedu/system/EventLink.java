@@ -64,10 +64,18 @@ public enum EventLink {
         this.event = event;
     }
 
+    /**
+     * value method.
+     * @since 1.0.0
+     */
     public byte value() {
         return event;
     }
 
+    /**
+     * fromByte method.
+     * @since 1.0.0
+     */
     public static EventLink fromByte(byte b) {
         return byteToEventLink.get(b);
     }

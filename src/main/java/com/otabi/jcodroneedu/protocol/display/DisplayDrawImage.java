@@ -58,22 +58,45 @@ public class DisplayDrawImage implements Serializable {
     }
 
     // Getters and setters
+    /**
+     * Gets the x.
+     * @since 1.0.0
+     */
     public int getX() { return x; }
+    /** @since 1.0.0 */
     public void setX(int x) { this.x = (short) x; }
     
+    /** @since 1.0.0 */
     public int getY() { return y; }
+    /**
+     * Sets the y.
+     * @since 1.0.0
+     */
     public void setY(int y) { this.y = (short) y; }
     
+    /** @since 1.0.0 */
     public int getWidth() { return width; }
+    /** @since 1.0.0 */
     public void setWidth(int width) { this.width = (short) width; }
     
+    /**
+     * Gets the height.
+     * @since 1.0.0
+     */
     public int getHeight() { return height; }
+    /** @since 1.0.0 */
     public void setHeight(int height) { this.height = (short) height; }
     
+    /** @since 1.0.0 */
     public byte[] getImageData() { return imageData; }
+    /**
+     * Sets the image data.
+     * @since 1.0.0
+     */
     public void setImageData(byte[] imageData) { this.imageData = imageData != null ? imageData : new byte[0]; }
 
     @Override
+    /** @since 1.0.0 */
     public byte getSize() {
         // 2 bytes (x) + 2 bytes (y) + 2 bytes (width) + 2 bytes (height) + image data length
         // Note: Protocol payload limit is 255 bytes, so large images must be sent in chunks
@@ -81,6 +104,10 @@ public class DisplayDrawImage implements Serializable {
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer) {
         buffer.putShort(x);
         buffer.putShort(y);
@@ -92,6 +119,10 @@ public class DisplayDrawImage implements Serializable {
     // Note: toArray() inherited from Serializable interface (handles LITTLE_ENDIAN)
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException {
         if (buffer.remaining() < 8) {
             throw new InvalidDataSizeException(8, buffer.remaining());

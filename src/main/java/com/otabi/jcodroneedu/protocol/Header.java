@@ -29,11 +29,19 @@ public class Header implements Serializable
     }
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize() {
         return HEADER_SIZE;
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         buffer.put(dataType.value())
@@ -45,6 +53,10 @@ public class Header implements Serializable
 
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         this.dataType = DataType.fromByte(buffer.get());
@@ -53,37 +65,69 @@ public class Header implements Serializable
         this.to = DeviceType.fromByte(buffer.get());
     }
 
+    /**
+     * Gets the data type.
+     * @since 1.0.0
+     */
     public DataType getDataType() {
         return dataType;
     }
 
+    /**
+     * Gets the length.
+     * @since 1.0.0
+     */
     public byte getLength() {
         return length;
     }
 
+    /**
+     * Gets the from.
+     * @since 1.0.0
+     */
     public DeviceType getFrom() {
         return from;
     }
 
+    /**
+     * Gets the to.
+     * @since 1.0.0
+     */
     public DeviceType getTo() {
         return to;
     }
 
+    /**
+     * Sets the data type.
+     * @since 1.0.0
+     */
     public void setDataType(DataType dataType)
     {
         this.dataType = dataType;
     }
 
+    /**
+     * Sets the length.
+     * @since 1.0.0
+     */
     public void setLength(byte length)
     {
         this.length = length;
     }
 
+    /**
+     * Sets the from.
+     * @since 1.0.0
+     */
     public void setFrom(DeviceType from)
     {
         this.from = from;
     }
 
+    /**
+     * Sets the to.
+     * @since 1.0.0
+     */
     public void setTo(DeviceType to)
     {
         this.to = to;

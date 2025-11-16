@@ -21,10 +21,18 @@ public enum DisplayAlign {
         this.value = value;
     }
 
+    /**
+     * value method.
+     * @since 1.0.0
+     */
     public byte value() {
         return value;
     }
 
+    /**
+     * fromByte method.
+     * @since 1.0.0
+     */
     public static DisplayAlign fromByte(byte b) {
         for (DisplayAlign align : values()) {
             if (align.value == b) {

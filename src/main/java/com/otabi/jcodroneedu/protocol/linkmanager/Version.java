@@ -28,12 +28,20 @@ public class Version implements Serializable
     }
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize()
     {
         return VERSION_SIZE;
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         buffer.putShort(build);
@@ -42,6 +50,10 @@ public class Version implements Serializable
     }
 
         @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         this.build = buffer.getShort();
@@ -50,6 +62,10 @@ public class Version implements Serializable
     }
 
     @Override
+    /**
+     * toString method.
+     * @since 1.0.0
+     */
     public String toString()
     {
         return String.format("%d.%d.%d", major & 0xFF, minor & 0xFF, build & 0xFFFF);

@@ -37,11 +37,19 @@ public class Information implements Serializable
         this.day = day;
     }
 
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize() {
         return INFORMATION_LENGTH;
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         modeUpdate = DroneSystem.ModeUpdate.fromValue(buffer.get());
@@ -65,6 +73,10 @@ public class Information implements Serializable
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         buffer.put(modeUpdate.getValue());
@@ -75,11 +87,19 @@ public class Information implements Serializable
         buffer.put(day);
     }
 
+    /**
+     * Gets the model number.
+     * @since 1.0.0
+     */
     public DroneSystem.ModelNumber getModelNumber()
     {
         return modelNumber;
     }
 
+    /**
+     * Gets the version.
+     * @since 1.0.0
+     */
     public Version getVersion()
     {
         return version;

@@ -32,12 +32,20 @@ public class Error implements Serializable
     }
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize()
     {
         return ERROR_SIZE;
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         systemTime = buffer.getLong();
@@ -46,6 +54,10 @@ public class Error implements Serializable
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         buffer.putLong(systemTime);
@@ -55,14 +67,26 @@ public class Error implements Serializable
 
     // --- Getters ---
 
+    /**
+     * Gets the system time.
+     * @since 1.0.0
+     */
     public long getSystemTime() {
         return systemTime;
     }
 
+    /**
+     * Gets the error flags for sensor.
+     * @since 1.0.0
+     */
     public int getErrorFlagsForSensor() {
         return errorFlagsForSensor;
     }
 
+    /**
+     * Gets the error flags for state.
+     * @since 1.0.0
+     */
     public int getErrorFlagsForState() {
         return errorFlagsForState;
     }

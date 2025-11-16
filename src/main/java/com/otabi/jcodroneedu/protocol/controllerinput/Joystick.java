@@ -30,12 +30,20 @@ public class Joystick implements Serializable
     }
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize()
     {
         return (byte) (left.getSize() + right.getSize());
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         left.unpack(buffer);
@@ -43,6 +51,10 @@ public class Joystick implements Serializable
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         left.pack(buffer);
@@ -50,10 +62,18 @@ public class Joystick implements Serializable
     }
 
     // Getter methods
+    /**
+     * Gets the left.
+     * @since 1.0.0
+     */
     public JoystickBlock getLeft() {
         return left;
     }
 
+    /**
+     * Gets the right.
+     * @since 1.0.0
+     */
     public JoystickBlock getRight() {
         return right;
     }

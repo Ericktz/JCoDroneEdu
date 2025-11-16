@@ -24,12 +24,20 @@ class Monitor0 implements Serializable
     }
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize()
     {
         return MONITOR_0_SIZE;
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         buffer.put(this.monitorDataType.getValue());
@@ -37,6 +45,10 @@ class Monitor0 implements Serializable
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         monitorDataType = MonitorDataType.fromByte(buffer.get());

@@ -39,21 +39,41 @@ public class Buzzer implements Serializable {
     }
 
     // Getters
+    /**
+     * Gets the mode.
+     * @since 1.0.0
+     */
     public BuzzerMode getMode() { return mode; }
+    /** @since 1.0.0 */
     public int getValue() { return value; }
+    /** @since 1.0.0 */
     public int getTime() { return time; }
 
     // Setters
+    /**
+     * Sets the mode.
+     * @since 1.0.0
+     */
     public void setMode(BuzzerMode mode) { this.mode = mode; }
+    /** @since 1.0.0 */
     public void setValue(int value) { this.value = value; }
+    /** @since 1.0.0 */
     public void setTime(int time) { this.time = time; }
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize() {
         return 5; // mode(1) + value(2) + time(2)
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer) {
         buffer.put((byte) mode.getValue());
         buffer.putShort((short) value);
@@ -61,6 +81,10 @@ public class Buzzer implements Serializable {
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException {
         if (buffer.remaining() < getSize()) {
             throw new InvalidDataSizeException(getSize(), buffer.remaining());
@@ -73,23 +97,43 @@ public class Buzzer implements Serializable {
     }
 
     // Static factory methods for common operations
+    /**
+     * stop method.
+     * @since 1.0.0
+     */
     public static Buzzer stop() {
         return new Buzzer(BuzzerMode.STOP, Note.MUTE.getValue(), 1);
     }
 
+    /**
+     * mute method.
+     * @since 1.0.0
+     */
     public static Buzzer mute(int duration) {
         return new Buzzer(BuzzerMode.MUTE, Note.MUTE.getValue(), duration);
     }
 
+    /**
+     * note method.
+     * @since 1.0.0
+     */
     public static Buzzer note(Note note, int duration) {
         return new Buzzer(BuzzerMode.SCALE, note.getValue(), duration);
     }
 
+    /**
+     * frequency method.
+     * @since 1.0.0
+     */
     public static Buzzer frequency(int hz, int duration) {
         return new Buzzer(BuzzerMode.HZ, hz, duration);
     }
 
     @Override
+    /**
+     * toString method.
+     * @since 1.0.0
+     */
     public String toString() {
         return String.format("Buzzer(mode=%s, value=%d, time=%d)", mode, value, time);
     }

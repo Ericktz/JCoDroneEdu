@@ -39,12 +39,20 @@ public class JoystickBlock implements Serializable
     }
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize()
     {
         return JOYSTICK_BLOCK_SIZE;
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         this.x = buffer.get();
@@ -54,6 +62,10 @@ public class JoystickBlock implements Serializable
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         buffer.put(this.x);
@@ -63,18 +75,34 @@ public class JoystickBlock implements Serializable
     }
 
     // Getter methods
+    /**
+     * Gets the x.
+     * @since 1.0.0
+     */
     public byte getX() {
         return x;
     }
 
+    /**
+     * Gets the y.
+     * @since 1.0.0
+     */
     public byte getY() {
         return y;
     }
 
+    /**
+     * Gets the direction.
+     * @since 1.0.0
+     */
     public DroneSystem.JoystickDirection getDirection() {
         return direction;
     }
 
+    /**
+     * Gets the event.
+     * @since 1.0.0
+     */
     public DroneSystem.JoystickEvent getEvent() {
         return event;
     }

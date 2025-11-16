@@ -47,6 +47,10 @@ public class TelemetryService {
 
     // ---------------- Range (mm) -> converted ----------------
 
+    /**
+     * Gets the front range.
+     * @since 1.0.0
+     */
     public double getFrontRange(String unit) {
         ensureFresh(DataType.Range, DroneSystem.CommunicationConstants.TelemetryConfig.FRESHNESS_RANGE_MS);
         Range range = drone.getDroneStatus().getRange();
@@ -57,6 +61,10 @@ public class TelemetryService {
         return convertMillimeter(range.getFront(), unit);
     }
 
+    /**
+     * Gets the bottom range.
+     * @since 1.1.0
+     */
     public double getBottomRange(String unit) {
         ensureFresh(DataType.Range, DroneSystem.CommunicationConstants.TelemetryConfig.FRESHNESS_RANGE_MS);
         Range range = drone.getDroneStatus().getRange();
@@ -67,12 +75,20 @@ public class TelemetryService {
         return convertMillimeter(range.getBottom(), unit);
     }
 
+    /**
+     * Gets the height.
+     * @since 1.0.0
+     */
     public double getHeight(String unit) {
         return getBottomRange(unit);
     }
 
     // ---------------- Position (m) -> converted ----------------
 
+    /**
+     * Gets the pos x.
+     * @since 1.0.0
+     */
     public double getPosX(String unit) {
         ensureFresh(DataType.Position, DroneSystem.CommunicationConstants.TelemetryConfig.FRESHNESS_POSITION_MS);
         Position p = drone.getDroneStatus().getPosition();
@@ -83,6 +99,10 @@ public class TelemetryService {
         return convertMeter(p.getX(), unit);
     }
 
+    /**
+     * Gets the pos y.
+     * @since 1.0.0
+     */
     public double getPosY(String unit) {
         ensureFresh(DataType.Position, DroneSystem.CommunicationConstants.TelemetryConfig.FRESHNESS_POSITION_MS);
         Position p = drone.getDroneStatus().getPosition();
@@ -93,6 +113,10 @@ public class TelemetryService {
         return convertMeter(p.getY(), unit);
     }
 
+    /**
+     * Gets the pos z.
+     * @since 1.0.0
+     */
     public double getPosZ(String unit) {
         ensureFresh(DataType.Position, DroneSystem.CommunicationConstants.TelemetryConfig.FRESHNESS_POSITION_MS);
         Position p = drone.getDroneStatus().getPosition();
@@ -105,12 +129,20 @@ public class TelemetryService {
 
     // ---------------- Altitude/Barometer snapshot (no unit helpers here yet) ----------------
 
+    /**
+     * Gets the altitude snapshot.
+     * @since 1.0.0
+     */
     public Altitude getAltitudeSnapshot() {
         ensureFresh(DataType.Altitude, DroneSystem.CommunicationConstants.TelemetryConfig.FRESHNESS_ALTITUDE_MS);
         return drone.getDroneStatus().getAltitude();
     }
 
     // Pressure (Pa) with unit conversion
+    /**
+     * Gets the pressure.
+     * @since 1.0.0
+     */
     public double getPressure(String unit) {
         Altitude alt = getAltitudeSnapshot();
         double pascals = (alt != null) ? alt.getPressure() : 0.0;
@@ -148,6 +180,10 @@ public class TelemetryService {
     }
 
     // Temperature with unit conversion (C default)
+    /**
+     * Gets the temperature.
+     * @since 1.0.0
+     */
     public double getTemperature(String unit) {
         Altitude alt = getAltitudeSnapshot();
         if (alt == null) return 0.0;
@@ -167,6 +203,10 @@ public class TelemetryService {
     }
 
     // Uncorrected elevation (from firmware) with unit conversion
+    /**
+     * Gets the uncorrected elevation.
+     * @since 1.0.0
+     */
     public double getUncorrectedElevation(String unit) {
         Altitude alt = getAltitudeSnapshot();
         if (alt == null) return 0.0;
@@ -191,11 +231,19 @@ public class TelemetryService {
 
     // ---------------- Motion snapshot and helpers ----------------
 
+    /**
+     * Gets the motion snapshot.
+     * @since 1.0.0
+     */
     public Motion getMotionSnapshot() {
         ensureFresh(DataType.Motion, DroneSystem.CommunicationConstants.TelemetryConfig.FRESHNESS_MOTION_MS);
         return drone.getDroneStatus().getMotion();
     }
 
+    /**
+     * Gets the accel x_ g.
+     * @since 1.0.0
+     */
     public double getAccelX_G() {
         Motion m = getMotionSnapshot();
         if (m == null) return 0.0;
@@ -203,6 +251,10 @@ public class TelemetryService {
         return ax_ms2 / 9.80665;
     }
 
+    /**
+     * Gets the accel y_ g.
+     * @since 1.0.0
+     */
     public double getAccelY_G() {
         Motion m = getMotionSnapshot();
         if (m == null) return 0.0;
@@ -210,6 +262,10 @@ public class TelemetryService {
         return ay_ms2 / 9.80665;
     }
 
+    /**
+     * Gets the accel z_ g.
+     * @since 1.0.0
+     */
     public double getAccelZ_G() {
         Motion m = getMotionSnapshot();
         if (m == null) return 0.0;
@@ -217,36 +273,60 @@ public class TelemetryService {
         return az_ms2 / 9.80665;
     }
 
+    /**
+     * Gets the accel raw.
+     * @since 1.0.0
+     */
     public int[] getAccelRaw() {
         Motion m = getMotionSnapshot();
         if (m == null) return new int[]{0,0,0};
         return new int[]{ m.getAccelX(), m.getAccelY(), m.getAccelZ() };
     }
 
+    /**
+     * Gets the gyro raw.
+     * @since 1.0.0
+     */
     public int[] getGyroRaw() {
         Motion m = getMotionSnapshot();
         if (m == null) return new int[]{0,0,0};
         return new int[]{ m.getGyroRoll(), m.getGyroPitch(), m.getGyroYaw() };
     }
 
+    /**
+     * Gets the angle raw.
+     * @since 1.0.0
+     */
     public int[] getAngleRaw() {
         Motion m = getMotionSnapshot();
         if (m == null) return new int[]{0,0,0};
         return new int[]{ m.getAngleRoll(), m.getAnglePitch(), m.getAngleYaw() };
     }
 
+    /**
+     * Gets the angle x_ deg.
+     * @since 1.0.0
+     */
     public double getAngleX_Deg() {
         Motion m = getMotionSnapshot();
         if (m == null) return 0.0;
         return m.getAngleRoll() * DroneSystem.SensorScales.ANGLE_RAW_TO_DEG;
     }
 
+    /**
+     * Gets the angle y_ deg.
+     * @since 1.0.0
+     */
     public double getAngleY_Deg() {
         Motion m = getMotionSnapshot();
         if (m == null) return 0.0;
         return m.getAnglePitch() * DroneSystem.SensorScales.ANGLE_RAW_TO_DEG;
     }
 
+    /**
+     * Gets the angle z_ deg.
+     * @since 1.0.0
+     */
     public double getAngleZ_Deg() {
         Motion m = getMotionSnapshot();
         if (m == null) return 0.0;
@@ -255,26 +335,46 @@ public class TelemetryService {
 
     // ---------------- Other snapshots (for future expansion) ----------------
 
+    /**
+     * Gets the state snapshot.
+     * @since 1.0.0
+     */
     public State getStateSnapshot() {
         ensureFresh(DataType.State, DroneSystem.CommunicationConstants.TelemetryConfig.FRESHNESS_STATE_MS);
         return drone.getDroneStatus().getState();
     }
 
+    /**
+     * Gets the attitude snapshot.
+     * @since 1.0.0
+     */
     public Attitude getAttitudeSnapshot() {
         ensureFresh(DataType.Attitude, DroneSystem.CommunicationConstants.TelemetryConfig.FRESHNESS_STATE_MS);
         return drone.getDroneStatus().getAttitude();
     }
 
+    /**
+     * Gets the range snapshot.
+     * @since 1.0.0
+     */
     public Range getRangeSnapshot() {
         ensureFresh(DataType.Range, DroneSystem.CommunicationConstants.TelemetryConfig.FRESHNESS_RANGE_MS);
         return drone.getDroneStatus().getRange();
     }
 
+    /**
+     * Gets the position snapshot.
+     * @since 1.0.0
+     */
     public Position getPositionSnapshot() {
         ensureFresh(DataType.Position, DroneSystem.CommunicationConstants.TelemetryConfig.FRESHNESS_POSITION_MS);
         return drone.getDroneStatus().getPosition();
     }
 
+    /**
+     * Gets the flow snapshot.
+     * @since 1.0.0
+     */
     public Flow getFlowSnapshot() {
         ensureFresh(DataType.Flow, DroneSystem.CommunicationConstants.TelemetryConfig.FRESHNESS_RANGE_MS);
         return drone.getDroneStatus().getFlow();
@@ -368,6 +468,7 @@ public class TelemetryService {
     /**
      * Returns the age in milliseconds of the last update for the given DataType,
      * or -1 if no update has been received.
+      * @since 1.0.0
      */
     public long getLastUpdateAgeMillis(DataType type) {
         Long last = lastUpdateMillis.get(type);

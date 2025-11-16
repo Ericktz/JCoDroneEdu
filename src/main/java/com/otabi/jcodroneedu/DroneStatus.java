@@ -54,6 +54,10 @@ public class DroneStatus
         this.button = new Button();
     }
 
+    /**
+     * waitForUpdate method.
+     * @since 1.0.0
+     */
     public void waitForUpdate(DataType dataType)
     {
         CompletableFuture<Object> future = new CompletableFuture<>();
@@ -70,6 +74,10 @@ public class DroneStatus
         }
     }
 
+    /**
+     * complete method.
+     * @since 1.0.0
+     */
     public void complete(DataType dataType)
     {
         CompletableFuture<Object> future = futures.remove(dataType.toString());
@@ -78,131 +86,235 @@ public class DroneStatus
         }
     }
 
+    /**
+     * Gets the attitude.
+     * @since 1.0.0
+     */
     public Attitude getAttitude()
     {
         return attitude;
     }
 
+    /**
+     * Sets the attitude.
+     * @since 1.0.0
+     */
     public void setAttitude(Attitude attitude)
     {
         this.attitude = attitude;
     }
 
+    /**
+     * Gets the altitude.
+     * @since 1.1.0
+     */
     public Altitude getAltitude()
     {
         return altitude;
     }
 
+    /**
+     * Sets the altitude.
+     * @since 1.0.0
+     */
     public void setAltitude(Altitude altitude)
     {
         this.altitude = altitude;
     }
 
+    /**
+     * Gets the flow.
+     * @since 1.0.0
+     */
     public Flow getFlow()
     {
         return flow;
     }
 
+    /**
+     * Sets the flow.
+     * @since 1.0.0
+     */
     public void setFlow(Flow flow)
     {
         this.flow = flow;
     }
 
+    /**
+     * Gets the motion.
+     * @since 1.0.0
+     */
     public Motion getMotion()
     {
         return motion;
     }
 
+    /**
+     * Sets the motion.
+     * @since 1.0.0
+     */
     public void setMotion(Motion motion)
     {
         this.motion = motion;
     }
 
+    /**
+     * Gets the position.
+     * @since 1.0.0
+     */
     public Position getPosition()
     {
         return position;
     }
 
+    /**
+     * Sets the position.
+     * @since 1.0.0
+     */
     public void setPosition(Position position)
     {
         this.position = position;
     }
 
+    /**
+     * Gets the range.
+     * @since 1.0.0
+     */
     public Range getRange()
     {
         return range;
     }
 
+    /**
+     * Sets the range.
+     * @since 1.0.0
+     */
     public void setRange(Range range)
     {
         this.range = range;
     }
 
+    /**
+     * Gets the raw flow.
+     * @since 1.0.0
+     */
     public RawFlow getRawFlow()
     {
         return rawFlow;
     }
 
+    /**
+     * Sets the raw flow.
+     * @since 1.0.0
+     */
     public void setRawFlow(RawFlow rawFlow)
     {
         this.rawFlow = rawFlow;
     }
 
+    /**
+     * Gets the raw motion.
+     * @since 1.0.0
+     */
     public RawMotion getRawMotion()
     {
         return rawMotion;
     }
 
+    /**
+     * Sets the raw motion.
+     * @since 1.0.0
+     */
     public void setRawMotion(RawMotion rawMotion)
     {
         this.rawMotion = rawMotion;
     }
 
+    /**
+     * Gets the state.
+     * @since 1.0.0
+     */
     public State getState()
     {
         return state;
     }
 
+    /**
+     * Sets the state.
+     * @since 1.0.0
+     */
     public void setState(State state)
     {
         this.state = state;
     }
 
+    /**
+     * Gets the card color.
+     * @since 1.0.0
+     */
     public CardColor getCardColor()
     {
         return cardColor;
     }
 
+    /**
+     * Sets the card color.
+     * @since 1.0.0
+     */
     public void setCardColor(CardColor cardColor)
     {
         this.cardColor = cardColor;
     }
 
+    /**
+     * Gets the trim.
+     * @since 1.0.0
+     */
     public Trim getTrim()
     {
         return trim;
     }
 
+    /**
+     * Sets the trim.
+     * @since 1.0.0
+     */
     public void setTrim(Trim trim)
     {
         this.trim = trim;
     }
 
+    /**
+     * Gets the joystick.
+     * @since 1.0.0
+     */
     public Joystick getJoystick()
     {
         return joystick;
     }
 
+    /**
+     * Sets the joystick.
+     * @since 1.0.0
+     */
     public void setJoystick(Joystick joystick)
     {
         this.joystick = joystick;
     }
 
+    /**
+     * Gets the button.
+     * @since 1.0.0
+     */
     public Button getButton()
     {
         return button;
     }
 
+    /**
+     * Sets the button.
+     * @since 1.0.0
+     */
     public void setButton(Button button)
     {
         this.button = button;

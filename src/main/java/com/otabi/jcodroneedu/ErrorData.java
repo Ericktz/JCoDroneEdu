@@ -72,7 +72,7 @@ import java.util.Set;
  * </ul>
  * 
  * @author JCoDroneEdu Development Team
- * @since 2.5
+ * @since 1.0.0 (Python equivalent: 2.5)
  * @see Drone#getErrors()
  * @see DroneSystem.ErrorFlagsForSensor
  * @see DroneSystem.ErrorFlagsForState
@@ -104,6 +104,7 @@ public class ErrorData {
      * 
      * @param errorArray Array containing [timestamp, sensorFlags, stateFlags]
      * @return ErrorData instance, or null if array is invalid
+      * @since 1.0.0
      */
     public static ErrorData fromArray(double[] errorArray) {
         if (errorArray == null || errorArray.length != 3) {
@@ -119,6 +120,7 @@ public class ErrorData {
      * 
      * @param errorFlag The sensor error flag to check
      * @return true if this error is present, false otherwise
+      * @since 1.0.0
      */
     public boolean hasSensorError(DroneSystem.ErrorFlagsForSensor errorFlag) {
         return sensorErrors.contains(errorFlag);
@@ -128,6 +130,7 @@ public class ErrorData {
      * Gets all active sensor errors as an immutable set.
      * 
      * @return Set of active sensor errors (empty if no errors)
+      * @since 1.0.0
      */
     public Set<DroneSystem.ErrorFlagsForSensor> getSensorErrors() {
         return EnumSet.copyOf(sensorErrors);
@@ -140,6 +143,7 @@ public class ErrorData {
      * For Java code, prefer {@link #hasSensorError(DroneSystem.ErrorFlagsForSensor)}.</p>
      * 
      * @return Raw sensor error flags
+      * @since 1.0.0
      */
     public int getSensorErrorFlags() {
         return sensorErrorFlags;
@@ -149,6 +153,7 @@ public class ErrorData {
      * Checks if any sensor errors are present.
      * 
      * @return true if any sensor errors exist, false otherwise
+      * @since 1.0.0
      */
     public boolean hasAnySensorErrors() {
         return !sensorErrors.isEmpty();
@@ -161,6 +166,7 @@ public class ErrorData {
      * 
      * @param errorFlag The state error flag to check
      * @return true if this error is present, false otherwise
+      * @since 1.0.0
      */
     public boolean hasStateError(DroneSystem.ErrorFlagsForState errorFlag) {
         return stateErrors.contains(errorFlag);
@@ -170,6 +176,7 @@ public class ErrorData {
      * Gets all active state errors as an immutable set.
      * 
      * @return Set of active state errors (empty if no errors)
+      * @since 1.0.0
      */
     public Set<DroneSystem.ErrorFlagsForState> getStateErrors() {
         return EnumSet.copyOf(stateErrors);
@@ -182,6 +189,7 @@ public class ErrorData {
      * For Java code, prefer {@link #hasStateError(DroneSystem.ErrorFlagsForState)}.</p>
      * 
      * @return Raw state error flags
+      * @since 1.0.0
      */
     public int getStateErrorFlags() {
         return stateErrorFlags;
@@ -191,6 +199,7 @@ public class ErrorData {
      * Checks if any state errors are present.
      * 
      * @return true if any state errors exist, false otherwise
+      * @since 1.0.0
      */
     public boolean hasAnyStateErrors() {
         return !stateErrors.isEmpty();
@@ -202,6 +211,7 @@ public class ErrorData {
      * Checks if any errors (sensor or state) are present.
      * 
      * @return true if any errors exist, false otherwise
+      * @since 1.0.0
      */
     public boolean hasAnyErrors() {
         return hasAnySensorErrors() || hasAnyStateErrors();
@@ -211,6 +221,7 @@ public class ErrorData {
      * Gets the timestamp when this error data was captured.
      * 
      * @return Timestamp as Instant
+      * @since 1.0.0
      */
     public Instant getTimestamp() {
         return timestamp;
@@ -220,6 +231,7 @@ public class ErrorData {
      * Gets the timestamp in seconds (Python-compatible format).
      * 
      * @return Timestamp in seconds since epoch
+      * @since 1.0.0
      */
     public double getTimestampSeconds() {
         return timestamp.toEpochMilli() / 1000.0;
@@ -231,6 +243,7 @@ public class ErrorData {
      * Checks if the drone is currently calibrating.
      * 
      * @return true if motion calibration is in progress
+      * @since 1.0.0
      */
     public boolean isCalibrating() {
         return hasSensorError(DroneSystem.ErrorFlagsForSensor.MOTION_CALIBRATING);
@@ -240,6 +253,7 @@ public class ErrorData {
      * Checks if the battery is low.
      * 
      * @return true if low battery error is present
+      * @since 1.0.0
      */
     public boolean isLowBattery() {
         return hasStateError(DroneSystem.ErrorFlagsForState.LOW_BATTERY);
@@ -249,6 +263,7 @@ public class ErrorData {
      * Checks if there are any critical errors that should stop flight.
      * 
      * @return true if critical errors exist
+      * @since 1.0.0
      */
     public boolean hasCriticalErrors() {
         return hasStateError(DroneSystem.ErrorFlagsForState.LOW_BATTERY)
@@ -285,8 +300,10 @@ public class ErrorData {
      * Returns a string representation of this error data.
      * 
      * @return String representation listing all active errors
+      * @since 1.0.0
      */
     @Override
+    /** @since 1.0.0 */
     public String toString() {
         StringBuilder sb = new StringBuilder("ErrorData{");
         sb.append("timestamp=").append(timestamp);
@@ -311,6 +328,7 @@ public class ErrorData {
      * Returns a detailed multi-line string describing all active errors.
      * 
      * @return Detailed error description
+      * @since 1.0.0
      */
     public String toDetailedString() {
         if (!hasAnyErrors()) {

@@ -104,6 +104,7 @@ public class ControllerInputManager {
      * <p>Returns: [timestamp, button_flags, event_name]</p>
      * 
      * @return Object array with button data
+      * @since 1.0.0
      */
     public Object[] getButtonDataArray() {
         return new Object[]{buttonTimestamp, buttonFlags, buttonEventName};
@@ -116,6 +117,7 @@ public class ControllerInputManager {
      * right_x, right_y, right_dir, right_event]</p>
      * 
      * @return int array with joystick data
+      * @since 1.0.0
      */
     public int[] getJoystickDataArray() {
         return new int[]{
@@ -133,6 +135,7 @@ public class ControllerInputManager {
      * Gets the left joystick X (horizontal) value.
      * 
      * @return X value from -100 to 100 (0 is neutral)
+      * @since 1.0.0
      */
     public int getLeftJoystickX() {
         return leftX;
@@ -142,6 +145,7 @@ public class ControllerInputManager {
      * Gets the left joystick Y (vertical) value.
      * 
      * @return Y value from -100 to 100 (0 is neutral)
+      * @since 1.0.0
      */
     public int getLeftJoystickY() {
         return leftY;
@@ -151,6 +155,7 @@ public class ControllerInputManager {
      * Gets the right joystick X (horizontal) value.
      * 
      * @return X value from -100 to 100 (0 is neutral)
+      * @since 1.0.0
      */
     public int getRightJoystickX() {
         return rightX;
@@ -160,6 +165,7 @@ public class ControllerInputManager {
      * Gets the right joystick Y (vertical) value.
      * 
      * @return Y value from -100 to 100 (0 is neutral)
+      * @since 1.0.0
      */
     public int getRightJoystickY() {
         return rightY;
@@ -169,6 +175,7 @@ public class ControllerInputManager {
      * Gets current button flags value.
      * 
      * @return Button flags as integer
+      * @since 1.0.0
      */
     public int getButtonFlags() {
         return buttonFlags;
@@ -178,6 +185,7 @@ public class ControllerInputManager {
      * Gets current button event name.
      * 
      * @return Event name (e.g., "Press", "Down", "Up", "None_")
+      * @since 1.0.0
      */
     public String getButtonEventName() {
         return buttonEventName;
@@ -191,6 +199,7 @@ public class ControllerInputManager {
      * Gets button data as a type-safe Java object (recommended for Java code).
      * 
      * @return ButtonData object containing timestamp, flags, and event name
+      * @since 1.0.0
      */
     public ButtonData getButtonDataObject() {
         return new ButtonData(buttonTimestamp, buttonFlags, buttonEventName);
@@ -200,6 +209,7 @@ public class ControllerInputManager {
      * Gets joystick data as a type-safe Java object (recommended for Java code).
      * 
      * @return JoystickData object containing all joystick values
+      * @since 1.0.0
      */
     public JoystickData getJoystickDataObject() {
         return new JoystickData(

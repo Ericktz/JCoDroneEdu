@@ -97,6 +97,7 @@ public class DisplayController {
      * 
      * @param color The color to use for drawing (typically Color.BLACK or Color.WHITE)
      * @educational
+      * @since 1.0.0
      */
     public void setColor(Color color) {
         this.currentColor = color;
@@ -107,6 +108,7 @@ public class DisplayController {
      * Gets the current drawing color.
      * 
      * @return The current color
+      * @since 1.0.0
      */
     public Color getColor() {
         return currentColor;
@@ -120,6 +122,7 @@ public class DisplayController {
      * @param width Width of rectangle
      * @param height Height of rectangle
      * @educational
+      * @since 1.0.0
      */
     public void drawRectangle(int x, int y, int width, int height) {
         graphics.drawRect(x, y, width, height);
@@ -133,6 +136,7 @@ public class DisplayController {
      * @param width Width of rectangle
      * @param height Height of rectangle
      * @educational
+      * @since 1.0.0
      */
     public void fillRectangle(int x, int y, int width, int height) {
         graphics.fillRect(x, y, width, height);
@@ -145,6 +149,7 @@ public class DisplayController {
      * @param y Y coordinate of center
      * @param radius Radius of circle
      * @educational
+      * @since 1.0.0
      */
     public void drawCircle(int x, int y, int radius) {
         int diameter = radius * 2;
@@ -158,6 +163,7 @@ public class DisplayController {
      * @param y Y coordinate of center
      * @param radius Radius of circle
      * @educational
+      * @since 1.0.0
      */
     public void fillCircle(int x, int y, int radius) {
         int diameter = radius * 2;
@@ -172,6 +178,7 @@ public class DisplayController {
      * @param x2 Ending X coordinate
      * @param y2 Ending Y coordinate
      * @educational
+      * @since 1.0.0
      */
     public void drawLine(int x1, int y1, int x2, int y2) {
         graphics.drawLine(x1, y1, x2, y2);
@@ -181,6 +188,7 @@ public class DisplayController {
      * Clears the canvas, filling it with white.
      * 
      * @educational
+      * @since 1.0.0
      */
     public void clear() {
         graphics.setColor(Color.WHITE);
@@ -201,6 +209,7 @@ public class DisplayController {
      * 
      * @return The Graphics2D object for this canvas
      * @see java.awt.Graphics2D
+      * @since 1.0.0
      */
     public Graphics2D getGraphics() {
         return graphics;
@@ -210,6 +219,7 @@ public class DisplayController {
      * Gets the underlying BufferedImage containing the canvas bitmap.
      * 
      * @return The BufferedImage used for rendering
+      * @since 1.0.0
      */
     public BufferedImage getImage() {
         return image;
@@ -219,6 +229,7 @@ public class DisplayController {
      * Gets the width of the display canvas.
      * 
      * @return Width in pixels (128)
+      * @since 1.0.0
      */
     public int getWidth() {
         return DISPLAY_WIDTH;
@@ -228,6 +239,7 @@ public class DisplayController {
      * Gets the height of the display canvas.
      * 
      * @return Height in pixels (64)
+      * @since 1.0.0
      */
     public int getHeight() {
         return DISPLAY_HEIGHT;
@@ -240,6 +252,7 @@ public class DisplayController {
      * Byte layout: bit 0 = top pixel, bit 7 = bottom pixel of 8-pixel column.
      * 
      * @return Byte array containing the canvas pixel data
+      * @since 1.0.0
      */
     public byte[] toByteArray() {
         byte[] data = new byte[(DISPLAY_WIDTH * DISPLAY_HEIGHT) / 8];

@@ -53,6 +53,7 @@ public class AddressData {
      * Gets the timestamp when this data was retrieved.
      * 
      * @return Timestamp in seconds since program start
+      * @since 1.0.0
      */
     public double getTimestamp() {
         return timestamp;
@@ -62,6 +63,7 @@ public class AddressData {
      * Gets the drone's Bluetooth address.
      * 
      * @return Bluetooth address as string
+      * @since 1.0.0
      */
     public String getDroneAddress() {
         return droneAddress;
@@ -71,6 +73,7 @@ public class AddressData {
      * Gets the controller's Bluetooth address.
      * 
      * @return Bluetooth address as string
+      * @since 1.0.0
      */
     public String getControllerAddress() {
         return controllerAddress;
@@ -80,8 +83,10 @@ public class AddressData {
      * Returns a string representation of the address data.
      * 
      * @return Human-readable string with Bluetooth addresses
+      * @since 1.0.0
      */
     @Override
+    /** @since 1.0.0 */
     public String toString() {
         return String.format("AddressData{timestamp=%.2f, droneAddress=%s, controllerAddress=%s}",
                 timestamp, droneAddress, controllerAddress);

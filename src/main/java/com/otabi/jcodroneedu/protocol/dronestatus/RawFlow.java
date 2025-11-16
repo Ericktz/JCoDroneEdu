@@ -33,6 +33,7 @@ public class RawFlow implements Serializable
     /**
      * Gets the X-axis flow velocity.
      * @return X-axis velocity in meters
+      * @since 1.0.0
      */
     public float getX() {
         return x;
@@ -41,6 +42,7 @@ public class RawFlow implements Serializable
     /**
      * Gets the Y-axis flow velocity.
      * @return Y-axis velocity in meters
+      * @since 1.0.0
      */
     public float getY() {
         return y;
@@ -49,6 +51,7 @@ public class RawFlow implements Serializable
     /**
      * Sets the X-axis flow velocity.
      * @param x X-axis velocity in meters
+      * @since 1.0.0
      */
     public void setX(float x) {
         this.x = x;
@@ -57,18 +60,27 @@ public class RawFlow implements Serializable
     /**
      * Sets the Y-axis flow velocity.
      * @param y Y-axis velocity in meters
+      * @since 1.0.0
      */
     public void setY(float y) {
         this.y = y;
     }
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize()
     {
         return RAW_FLOW_SIZE;
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         this.x = buffer.getFloat();
@@ -76,6 +88,10 @@ public class RawFlow implements Serializable
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         buffer.putFloat(this.x);

@@ -42,6 +42,10 @@ import com.otabi.jcodroneedu.autonomous.ParameterBuilder;
  */
 public class AutonomousMethodDemo {
     
+    /**
+     * main method.
+     * @since 1.0.0
+     */
     public static void main(String[] args) {
         System.out.println("🤖 === Autonomous Method Framework Demo ===");
         

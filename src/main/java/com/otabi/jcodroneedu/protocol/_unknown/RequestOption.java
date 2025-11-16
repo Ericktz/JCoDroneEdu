@@ -19,11 +19,19 @@ public class RequestOption implements Serializable
     private DataType dataType;
     private int option;
 
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize() {
         return REQUEST_SIZE;
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         buffer.put(dataType.value());
@@ -31,6 +39,10 @@ public class RequestOption implements Serializable
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         this.dataType = DataType.fromByte(buffer.get());

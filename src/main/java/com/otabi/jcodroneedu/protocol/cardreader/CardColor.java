@@ -33,12 +33,20 @@ public class CardColor implements Serializable
     }
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize()
     {
         return CARD_COLOR_SIZE;
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         // HSVL: 2 sensors, 4 shorts each (H,S,V,L) = 8 shorts = 16 bytes
@@ -54,6 +62,10 @@ public class CardColor implements Serializable
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         // HSVL: 2 sensors, 4 shorts each (H,S,V,L) = 8 shorts = 16 bytes
@@ -71,14 +83,26 @@ public class CardColor implements Serializable
     }
 
     // Getter methods for accessing the color data
+    /**
+     * Gets the hsvl.
+     * @since 1.0.0
+     */
     public byte[][] getHsvl() {
         return hsvl;
     }
 
+    /**
+     * Gets the color.
+     * @since 1.0.0
+     */
     public byte[] getColor() {
         return color;
     }
 
+    /**
+     * Gets the card.
+     * @since 1.0.0
+     */
     public byte getCard() {
         return card;
     }
@@ -88,8 +112,10 @@ public class CardColor implements Serializable
      * Format: "Front: [COLOR_NAME], Back: [COLOR_NAME]"
      * 
      * @return String describing front and back sensor colors, or "No color data" if unavailable
+      * @since 1.0.0
      */
     @Override
+    /** @since 1.0.0 */
     public String toString() {
         if (color == null || color.length < 2) {
             return "No color data";
@@ -107,6 +133,7 @@ public class CardColor implements Serializable
      * Gets the name of the front sensor color.
      * 
      * @return Color name (e.g., "RED", "BLUE", "NONE") or "INVALID" if no data
+      * @since 1.0.0
      */
     public String getFrontColorName() {
         if (color == null || color.length < 1) {
@@ -119,6 +146,7 @@ public class CardColor implements Serializable
      * Gets the name of the back sensor color.
      * 
      * @return Color name (e.g., "RED", "BLUE", "NONE") or "INVALID" if no data
+      * @since 1.0.0
      */
     public String getBackColorName() {
         if (color == null || color.length < 2) {

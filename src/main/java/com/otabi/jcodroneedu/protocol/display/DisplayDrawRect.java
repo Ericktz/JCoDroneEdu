@@ -60,33 +60,70 @@ public class DisplayDrawRect implements Serializable {
     }
 
     // Getters and setters
+    /**
+     * Gets the x.
+     * @since 1.0.0
+     */
     public int getX() { return x; }
+    /** @since 1.0.0 */
     public void setX(int x) { this.x = (short) x; }
     
+    /** @since 1.0.0 */
     public int getY() { return y; }
+    /**
+     * Sets the y.
+     * @since 1.0.0
+     */
     public void setY(int y) { this.y = (short) y; }
     
+    /** @since 1.0.0 */
     public int getWidth() { return width; }
+    /** @since 1.0.0 */
     public void setWidth(int width) { this.width = (short) width; }
     
+    /**
+     * Gets the height.
+     * @since 1.0.0
+     */
     public int getHeight() { return height; }
+    /** @since 1.0.0 */
     public void setHeight(int height) { this.height = (short) height; }
     
+    /** @since 1.0.0 */
     public DisplayPixel getPixel() { return pixel; }
+    /**
+     * Sets the pixel.
+     * @since 1.0.0
+     */
     public void setPixel(DisplayPixel pixel) { this.pixel = pixel; }
     
+    /** @since 1.0.0 */
     public boolean isFlagFill() { return flagFill; }
+    /** @since 1.0.0 */
     public void setFlagFill(boolean flagFill) { this.flagFill = flagFill; }
     
+    /**
+     * Gets the line.
+     * @since 1.0.0
+     */
     public DisplayLine getLine() { return line; }
+    /** @since 1.0.0 */
     public void setLine(DisplayLine line) { this.line = line; }
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize() {
         return 11;
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer) {
         buffer.putShort(x);
         buffer.putShort(y);
@@ -100,6 +137,10 @@ public class DisplayDrawRect implements Serializable {
     // Note: toArray() inherited from Serializable interface (handles LITTLE_ENDIAN)
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException {
         if (buffer.remaining() < getSize()) {
             throw new InvalidDataSizeException(getSize(), buffer.remaining());

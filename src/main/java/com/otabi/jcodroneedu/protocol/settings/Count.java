@@ -93,6 +93,7 @@ public class Count implements Serializable
      * Returns the size of this message in bytes.
      * 
      * @return Size in bytes (14)
+      * @since 1.0.0
      */
     @Override
     public byte getSize()
@@ -106,6 +107,7 @@ public class Count implements Serializable
      * 
      * @param buffer ByteBuffer containing the serialized count data
      * @throws InvalidDataSizeException if buffer doesn't contain enough data
+      * @since 1.0.0
      */
     @Override
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
@@ -122,6 +124,7 @@ public class Count implements Serializable
      * Writes 14 bytes in little-endian format.
      * 
      * @param buffer ByteBuffer to write the serialized data to
+      * @since 1.0.0
      */
     @Override
     public void pack(ByteBuffer buffer)
@@ -138,6 +141,7 @@ public class Count implements Serializable
      * This is the cumulative time the drone has been powered on since first use.
      * 
      * @return System operation time in seconds (unsigned 32-bit value)
+      * @since 1.0.0
      */
     public int getTimeSystem() { return timeSystem; }
     
@@ -146,6 +150,7 @@ public class Count implements Serializable
      * This is the cumulative time the motors have been running.
      * 
      * @return Flight time in seconds (unsigned 32-bit value)
+      * @since 1.0.0
      */
     public int getTimeFlight() { return timeFlight; }
     
@@ -153,6 +158,7 @@ public class Count implements Serializable
      * Gets the total number of takeoffs.
      * 
      * @return Number of takeoffs performed (unsigned 16-bit value)
+      * @since 1.0.0
      */
     public short getCountTakeOff() { return countTakeOff; }
     
@@ -160,6 +166,7 @@ public class Count implements Serializable
      * Gets the total number of landings.
      * 
      * @return Number of landings performed (unsigned 16-bit value)
+      * @since 1.0.0
      */
     public short getCountLanding() { return countLanding; }
     
@@ -168,6 +175,7 @@ public class Count implements Serializable
      * The drone detects accidents using accelerometer threshold detection.
      * 
      * @return Number of accidents detected (unsigned 16-bit value)
+      * @since 1.0.0
      */
     public short getCountAccident() { return countAccident; }
 }

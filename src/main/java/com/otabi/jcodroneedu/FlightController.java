@@ -68,6 +68,10 @@ public class FlightController {
             this.value = (byte) value;
         }
 
+        /**
+         * Gets the value.
+         * @since 1.0.0
+         */
         public byte getValue() {
             return value;
         }
@@ -78,6 +82,7 @@ public class FlightController {
      * 1. It repeatedly sends the takeoff command until the drone reports its state as TAKEOFF.
      * 2. It then waits until the drone reports its state as FLIGHT, indicating it's stable and ready.
      * Both stages have timeouts to prevent the program from hanging.
+      * @since 1.0.0
      */
     public void takeoff() {
         resetMoveValues();
@@ -129,6 +134,7 @@ public class FlightController {
      * 1. It repeatedly sends the landing command until the drone reports its state as LANDING.
      * 2. It then waits until the drone reports its state as READY, indicating the landing is complete.
      * Both stages have timeouts to prevent the program from hanging.
+      * @since 1.0.0
      */
     public void land() {
         resetMoveValues();
@@ -169,6 +175,7 @@ public class FlightController {
 
     /**
      * Sends a command to stop all motors immediately.
+      * @since 1.0.0
      */
     public void emergencyStop() {
         log.warn("Emergency stop triggered");
@@ -182,6 +189,7 @@ public class FlightController {
      * Based on Python CoDrone EDU flip() method.
      * 
      * @param direction The flip direction: "front", "back", "left", "right"
+      * @since 1.0.0
      */
     public void flip(String direction) {
         // Check battery level for safety
@@ -231,6 +239,7 @@ public class FlightController {
      * Commands the drone to hover in place for a specific duration by sending a single
      * command to cease all movement and then pausing the thread.
      * @param durationSeconds The duration to hover, in seconds (matching Python behavior).
+      * @since 1.0.0
      */
     public void hover(double durationSeconds) {
         sendControl(DroneSystem.FlightControlConstants.CONTROL_VALUE_NEUTRAL, 
@@ -244,6 +253,7 @@ public class FlightController {
      * Resets the values of roll, pitch, yaw, and throttle to 0 by sending
      * a hover command multiple times to ensure the drone is stable.
      * @param attempts The number of times the hover command is sent.
+      * @since 1.0.0
      */
     public void resetMoveValues(int attempts) {
         for (int i = 0; i < attempts; i++) {
@@ -253,6 +263,7 @@ public class FlightController {
 
     /**
      * Resets the drone's movement values to zero.
+      * @since 1.0.0
      */
     public void resetMoveValues() {
         resetMoveValues(DroneSystem.FlightControlConstants.RESET_MOVE_VALUES_DEFAULT_ATTEMPTS);
@@ -261,6 +272,7 @@ public class FlightController {
     /**
      * Sets the drone's responsiveness level.
      * @param speedLevel An integer from 1 (slow) to 3 (fast).
+      * @since 1.0.0
      */
     public void changeSpeed(int speedLevel) {
         byte level = (byte) Math.max(DroneSystem.FlightControlConstants.SPEED_LEVEL_MIN, 
@@ -271,6 +283,7 @@ public class FlightController {
     /**
      * Enables or disables headless mode.
      * @param enable true to enable headless mode, false to disable.
+      * @since 1.0.0
      */
     public void setHeadlessMode(boolean enable) {
         byte value = (byte) (enable ? 1 : DroneSystem.FlightControlConstants.CONTROL_VALUE_NEUTRAL);
@@ -280,6 +293,7 @@ public class FlightController {
     /**
      * Triggers a pre-programmed flight event.
      * @param event The flight event to trigger.
+      * @since 1.0.0
      */
     public void triggerFlightEvent(FlightEvent event) {
         drone.sendCommand(CommandType.FlightEvent, event.getValue());
@@ -295,6 +309,7 @@ public class FlightController {
      * @param pitch Sets the pitch variable (-100 - 100). The number represents the
      *              direction and power of the output for that flight motion variable.
      *              Negative pitch is backwards, positive pitch is forwards.
+      * @since 1.0.0
      */
     public void setPitch(int pitch) {
         control.setPitch((byte) Math.max(DroneSystem.FlightControlConstants.CONTROL_VALUE_MIN, 
@@ -311,6 +326,7 @@ public class FlightController {
      * @param roll Sets the roll variable (-100 - 100). The number represents the
      *             direction and power of the output for that flight motion variable.
      *             Negative roll is left, positive roll is right.
+      * @since 1.0.0
      */
     public void setRoll(int roll) {
         control.setRoll((byte) Math.max(DroneSystem.FlightControlConstants.CONTROL_VALUE_MIN, 
@@ -327,6 +343,7 @@ public class FlightController {
      * @param yaw Sets the yaw variable (-100 - 100). The number represents the
      *            direction and power of the output for that flight motion variable.
      *            Negative yaw is right, positive yaw is left.
+      * @since 1.0.0
      */
     public void setYaw(int yaw) {
         control.setYaw((byte) Math.max(DroneSystem.FlightControlConstants.CONTROL_VALUE_MIN, 
@@ -344,6 +361,7 @@ public class FlightController {
      *                 The number represents the direction and power of the
      *                 output for that flight motion variable.
      *                 Negative throttle is down, positive throttle is up.
+      * @since 1.0.0
      */
     public void setThrottle(int throttle) {
         control.setThrottle((byte) Math.max(DroneSystem.FlightControlConstants.CONTROL_VALUE_MIN, 
@@ -353,6 +371,7 @@ public class FlightController {
     /**
      * Used with set_roll, set_pitch, set_yaw, set_throttle commands.
      * Sends flight movement values to the drone.
+      * @since 1.0.0
      */
     public void move()
     {
@@ -364,6 +383,7 @@ public class FlightController {
      * Sends flight movement values to the drone.
      *
      * @param duration Number of seconds to perform the action
+      * @since 1.0.0
      */
     public void move(double duration)
     {
@@ -379,11 +399,17 @@ public class FlightController {
      */
     /**
      * @deprecated Use {@link #printMoveValues()} instead.
+      * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public void print_move_values() {
         printMoveValues();
     }
+    /**
+     * printMoveValues method.
+     * @since 1.0.0
+     */
     public void printMoveValues() {
         // Keep System.out for student debugging - this is educational output
         System.out.println(Arrays.toString(new byte[]{control.getRoll(), control.getPitch(), control.getYaw(), control.getThrottle()}));
@@ -396,11 +422,17 @@ public class FlightController {
      */
     /**
      * @deprecated Use {@link #getMoveValues()} instead.
+      * @since 1.0.0
      */
     @Deprecated
+    /** @since 1.0.0 */
     public byte[] get_move_values() {
         return getMoveValues();
     }
+    /**
+     * Gets the move values.
+     * @since 1.0.0
+     */
     public byte[] getMoveValues() {
         return new byte[]{control.getRoll(), control.getPitch(), control.getYaw(), control.getThrottle()};
     }
@@ -423,6 +455,7 @@ public class FlightController {
      * @param pitch    The pitch value (-100 to 100).
      * @param yaw      The yaw value (-100 to 100).
      * @param throttle The throttle value (-100 to 100).
+      * @since 1.0.0
      */
     public void sendControl(int roll, int pitch, int yaw, int throttle) {
         Quad8 controlMessage = new Quad8();
@@ -452,6 +485,7 @@ public class FlightController {
      * @param yaw      The yaw value (-100 to 100).
      * @param throttle The throttle value (-100 to 100).
      * @param timeMs   The duration to send commands for, in milliseconds.
+      * @since 1.0.0
      */
     public void sendControlWhile(int roll, int pitch, int yaw, int throttle, long timeMs) {
         if (timeMs <= 0) return;
@@ -472,6 +506,7 @@ public class FlightController {
      * @param velocity           The speed to move towards the target position in m/s.
      * @param heading            The target heading in degrees (-360 to 360).
      * @param rotationalVelocity The speed for turning in degrees/s.
+      * @since 1.0.0
      */
     public void sendControlPosition(float positionX, float positionY, float positionZ, float velocity, int heading, int rotationalVelocity) {
         Position positionMessage = new Position();
@@ -498,6 +533,7 @@ public class FlightController {
      * @param direction String direction: "forward", "backward", "left", "right", "up", "down"
      * @param power Power level from 0-100 (defaults to 50 if not specified)
      * @param duration Duration in seconds (defaults to 1 if not specified)
+      * @since 1.0.0
      */
     public void go(String direction, int power, int duration) { 
         try {
@@ -574,6 +610,7 @@ public class FlightController {
      * @param distance The distance to move forward
      * @param units The unit of measurement: "cm", "in", "ft", "m" (default: "cm")
      * @param speed The movement speed from 0.5 to 2.0 m/s (default: 0.5)
+      * @since 1.0.0
      */
     public void moveForward(double distance, String units, double speed) {
         double distanceMeters = convertToMeters(distance, units);
@@ -600,6 +637,7 @@ public class FlightController {
      * @param distance The distance to move backward
      * @param units The unit of measurement: "cm", "in", "ft", "m" (default: "cm")
      * @param speed The movement speed from 0.5 to 2.0 m/s (default: 0.5)
+      * @since 1.0.0
      */
     public void moveBackward(double distance, String units, double speed) {
         double distanceMeters = convertToMeters(distance, units);
@@ -626,6 +664,7 @@ public class FlightController {
      * @param distance The distance to move left
      * @param units The unit of measurement: "cm", "in", "ft", "m" (default: "cm")
      * @param speed The movement speed from 0.5 to 2.0 m/s (default: 0.5)
+      * @since 1.0.0
      */
     public void moveLeft(double distance, String units, double speed) {
         double distanceMeters = convertToMeters(distance, units);
@@ -652,6 +691,7 @@ public class FlightController {
      * @param distance The distance to move right
      * @param units The unit of measurement: "cm", "in", "ft", "m" (default: "cm")
      * @param speed The movement speed from 0.5 to 2.0 m/s (default: 0.5)
+      * @since 1.0.0
      */
     public void moveRight(double distance, String units, double speed) {
         double distanceMeters = convertToMeters(distance, units);
@@ -679,6 +719,7 @@ public class FlightController {
      * @param positionY The distance to move left/right in meters (+ left, - right)
      * @param positionZ The distance to move up/down in meters (+ up, - down)
      * @param velocity The movement speed from 0.5 to 2.0 m/s
+      * @since 1.0.0
      */
     public void moveDistance(double positionX, double positionY, double positionZ, double velocity) {
         // Cap the velocity to valid range (Python: 0 to 2)
@@ -707,6 +748,7 @@ public class FlightController {
      * @param velocity The movement speed from 0.5 to 2.0 m/s
      * @param heading The target heading in degrees (-360 to 360)
      * @param rotationalVelocity The rotational speed in degrees/s (10 to 360)
+      * @since 1.0.0
      */
     public void sendAbsolutePosition(double positionX, double positionY, double positionZ, 
                                    double velocity, int heading, int rotationalVelocity) {
@@ -731,10 +773,18 @@ public class FlightController {
             this.toMeters = toMeters;
         }
 
+        /**
+         * convert method.
+         * @since 1.0.0
+         */
         public double convert(double value) {
             return value * toMeters;
         }
 
+        /**
+         * fromString method.
+         * @since 1.0.0
+         */
         public static DistanceUnit fromString(String s) {
             if (s == null) return null;
             String lower = s.toLowerCase();
@@ -792,7 +842,7 @@ public class FlightController {
      * 
      * @throws IllegalArgumentException if power is outside valid range
      * 
-     * @since 1.0
+     * @since 1.0.0
      * @see #turnDegree(int)
      * 
      * @educational
@@ -853,7 +903,7 @@ public class FlightController {
      * 
      * @throws IllegalArgumentException if degree is outside valid range
      * 
-     * @since 1.0
+     * @since 1.0.0
      * @see #turn(int, Double)
      * 
      * @educational
@@ -949,7 +999,7 @@ public class FlightController {
      *                Automatically converted to positive value.
      * @param timeout Maximum time in seconds to attempt the turn (default: 3.0)
      * 
-     * @since 1.0
+     * @since 1.0.0
      * @see #turnRight(int, double)
      * @see #turnDegree(int)
      * @see #turn(int, Double)
@@ -994,7 +1044,7 @@ public class FlightController {
      *                Automatically converted to positive value.
      * @param timeout Maximum time in seconds to attempt the turn (default: 3.0)
      * 
-     * @since 1.0
+     * @since 1.0.0
      * @see #turnLeft(int, double)
      * @see #turnDegree(int)
      * @see #turn(int, Double)
@@ -1031,7 +1081,7 @@ public class FlightController {
      * 
      * @return Battery level as a percentage (0-100)
      * @apiNote Provides access to the drone's current battery status for safety monitoring
-     * @since 1.0
+     * @since 1.0.0
      */
     public int getBattery() {
         // Request fresh state data
@@ -1065,7 +1115,7 @@ public class FlightController {
      * 
      * @return Flight state string (e.g., "READY", "FLIGHT", "TAKE_OFF", "LANDING")
      * @apiNote Provides human-readable flight state for educational and debugging purposes
-     * @since 1.0
+     * @since 1.0.0
      */
     public String getFlightState() {
         // Request fresh state data
@@ -1092,7 +1142,7 @@ public class FlightController {
      * 
      * @return Movement state string (e.g., "READY", "HOVERING", "MOVING", "RETURN_HOME")
      * @apiNote Provides human-readable movement state for educational and debugging purposes
-     * @since 1.0
+     * @since 1.0.0
      */
     public String getMovementState() {
         // Request fresh state data
@@ -1120,7 +1170,7 @@ public class FlightController {
      * @param unit The unit for the measurement ("cm", "mm", "m", or "in")
      * @return Height in the specified unit
      * @apiNote Equivalent to Python's get_height() method
-     * @since 1.0
+     * @since 1.0.0
      */
     public double getHeight(String unit) {
         return telemetry.getHeight(unit);
@@ -1131,6 +1181,7 @@ public class FlightController {
      * Defaults to centimeters for educational parity with Python.
      *
      * @return Height in centimeters
+      * @since 1.0.0
      */
     public double getHeight() {
         return getHeight(DroneSystem.UnitConversion.UNIT_CENTIMETERS);
@@ -1144,7 +1195,7 @@ public class FlightController {
      * @param unit The unit for the measurement ("cm", "mm", "m", or "in")
      * @return Distance in the specified unit
      * @apiNote Equivalent to Python's get_front_range() method
-     * @since 1.0
+     * @since 1.0.0
      */
     public double getFrontRange(String unit) {
         // Use TRACE for repetitive polling (suppressed by default)
@@ -1158,6 +1209,7 @@ public class FlightController {
      * Gets the distance measured by the front range sensor, defaulting to centimeters.
      *
      * @return Distance in centimeters
+      * @since 1.0.0
      */
     public double getFrontRange() {
         return getFrontRange(DroneSystem.UnitConversion.UNIT_CENTIMETERS);
@@ -1171,7 +1223,7 @@ public class FlightController {
      * @param unit The unit for the measurement ("cm", "mm", "m", or "in")
      * @return Distance in the specified unit
      * @apiNote Equivalent to Python's get_bottom_range() method
-     * @since 1.0
+     * @since 1.0.0
      */
     public double getBottomRange(String unit) {
         // Use TRACE for repetitive polling (suppressed by default)
@@ -1185,6 +1237,7 @@ public class FlightController {
      * Gets the distance measured by the bottom range sensor, defaulting to centimeters.
      *
      * @return Distance in centimeters
+      * @since 1.1.0
      */
     public double getBottomRange() {
         return getBottomRange(DroneSystem.UnitConversion.UNIT_CENTIMETERS);
@@ -1198,7 +1251,7 @@ public class FlightController {
      * @param unit The unit for the measurement ("cm", "mm", "m", or "in")
      * @return X position in the specified unit
      * @apiNote Equivalent to Python's get_pos_x() method
-     * @since 1.0
+     * @since 1.0.0
      */
     public double getPosX(String unit) {
         // Use TRACE for repetitive polling (suppressed by default)
@@ -1212,6 +1265,7 @@ public class FlightController {
      * Gets the X position relative to takeoff point, defaulting to centimeters.
      *
      * @return X position in centimeters
+      * @since 1.0.0
      */
     public double getPosX() {
         return getPosX(DroneSystem.UnitConversion.UNIT_CENTIMETERS);
@@ -1225,7 +1279,7 @@ public class FlightController {
      * @param unit The unit for the measurement ("cm", "mm", "m", or "in")
      * @return Y position in the specified unit
      * @apiNote Equivalent to Python's get_pos_y() method
-     * @since 1.0
+     * @since 1.0.0
      */
     public double getPosY(String unit) {
         // Use TRACE for repetitive polling (suppressed by default)
@@ -1239,6 +1293,7 @@ public class FlightController {
      * Gets the Y position relative to takeoff point, defaulting to centimeters.
      *
      * @return Y position in centimeters
+      * @since 1.0.0
      */
     public double getPosY() {
         return getPosY(DroneSystem.UnitConversion.UNIT_CENTIMETERS);
@@ -1252,7 +1307,7 @@ public class FlightController {
      * @param unit The unit for the measurement ("cm", "mm", "m", or "in")
      * @return Z position in the specified unit
      * @apiNote Equivalent to Python's get_pos_z() method
-     * @since 1.0
+     * @since 1.0.0
      */
     public double getPosZ(String unit) {
         // Use TRACE for repetitive polling (suppressed by default)
@@ -1266,6 +1321,7 @@ public class FlightController {
      * Gets the Z position relative to takeoff point, defaulting to centimeters.
      *
      * @return Z position in centimeters
+      * @since 1.0.0
      */
     public double getPosZ() {
         return getPosZ(DroneSystem.UnitConversion.UNIT_CENTIMETERS);
@@ -1278,7 +1334,7 @@ public class FlightController {
      * 
      * @return X acceleration in G-force
      * @apiNote Equivalent to Python's get_accel_x() method
-     * @since 1.0
+     * @since 1.0.0
      */
     public double getAccelX() {
         double g = telemetry.getAccelX_G();
@@ -1294,7 +1350,7 @@ public class FlightController {
      * 
      * @return Y acceleration in G-force
      * @apiNote Equivalent to Python's get_accel_y() method
-     * @since 1.0
+     * @since 1.0.0
      */
     public double getAccelY() {
         double g = telemetry.getAccelY_G();
@@ -1310,7 +1366,7 @@ public class FlightController {
      * 
      * @return Z acceleration in G-force
      * @apiNote Equivalent to Python's get_accel_z() method
-     * @since 1.0
+     * @since 1.0.0
      */
     public double getAccelZ() {
         double g = telemetry.getAccelZ_G();
@@ -1326,7 +1382,7 @@ public class FlightController {
      * 
      * @return X angle in degrees
      * @apiNote Equivalent to Python's get_angle_x() method
-     * @since 1.0
+     * @since 1.0.0
      */
     public double getAngleX() {
         double deg = telemetry.getAngleX_Deg();
@@ -1342,7 +1398,7 @@ public class FlightController {
      * 
      * @return Y angle in degrees
      * @apiNote Equivalent to Python's get_angle_y() method
-     * @since 1.0
+     * @since 1.0.0
      */
     public double getAngleY() {
         double deg = telemetry.getAngleY_Deg();
@@ -1358,7 +1414,7 @@ public class FlightController {
      * 
      * @return Z angle in degrees
      * @apiNote Equivalent to Python's get_angle_z() method
-     * @since 1.0
+     * @since 1.0.0
      */
     public double getAngleZ() {
         double deg = telemetry.getAngleZ_Deg();
@@ -1386,7 +1442,7 @@ public class FlightController {
     *
     * @return int array containing [X, Y, Z] raw accelerometer protocol values
     * @apiNote Equivalent to Python's {@code drone.get_accel()} and returns raw protocol integers
-     * @since 1.0
+     * @since 1.0.0
      * @educational This demonstrates array usage and coordinate systems
      */
     public int[] getAccel() {
@@ -1409,7 +1465,7 @@ public class FlightController {
      * 
      * @return int array containing [roll, pitch, yaw] gyroscope values in degrees/second
      * @apiNote Equivalent to Python's various gyro methods, returns array for AP CSA compatibility
-     * @since 1.0
+     * @since 1.0.0
      * @educational This demonstrates array usage and rotational concepts
      */
     public int[] getGyro() {
@@ -1427,7 +1483,7 @@ public class FlightController {
      * 
      * @return int array containing [roll, pitch, yaw] angle values in degrees
      * @apiNote Equivalent to Python's various angle methods, returns array for AP CSA compatibility
-     * @since 1.0
+     * @since 1.0.0
      * @educational This demonstrates array usage and spatial orientation concepts
      */
     public int[] getAngle() {

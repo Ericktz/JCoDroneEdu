@@ -24,6 +24,10 @@ public class Quad8 implements Serializable
     private byte throttle = 0;
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         buffer.put(this.roll);
@@ -33,11 +37,19 @@ public class Quad8 implements Serializable
     }
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize() {
         return (byte) SIZE;
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         this.roll = buffer.get();
@@ -46,41 +58,73 @@ public class Quad8 implements Serializable
         this.throttle = buffer.get();
     }
 
+    /**
+     * Sets the roll.
+     * @since 1.0.0
+     */
     public void setRoll(byte roll)
     {
         this.roll = roll;
     }
 
+    /**
+     * Sets the pitch.
+     * @since 1.0.0
+     */
     public void setPitch(byte pitch)
     {
         this.pitch = pitch;
     }
 
+    /**
+     * Sets the yaw.
+     * @since 1.0.0
+     */
     public void setYaw(byte yaw)
     {
         this.yaw = yaw;
     }
 
+    /**
+     * Sets the throttle.
+     * @since 1.0.0
+     */
     public void setThrottle(byte throttle)
     {
         this.throttle = throttle;
     }
 
+    /**
+     * Gets the roll.
+     * @since 1.0.0
+     */
     public byte getRoll()
     {
         return roll;
     }
 
+    /**
+     * Gets the pitch.
+     * @since 1.0.0
+     */
     public byte getPitch()
     {
         return pitch;
     }
 
+    /**
+     * Gets the yaw.
+     * @since 1.0.0
+     */
     public byte getYaw()
     {
         return yaw;
     }
 
+    /**
+     * Gets the throttle.
+     * @since 1.0.0
+     */
     public byte getThrottle()
     {
         return throttle;

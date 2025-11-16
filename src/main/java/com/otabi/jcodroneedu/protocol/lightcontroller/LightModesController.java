@@ -35,6 +35,10 @@ public enum LightModesController implements LightModes {
         this.value = value;
     }
 
+    /**
+     * Gets the value.
+     * @since 1.0.0
+     */
     public byte getValue() {
         return value;
     }
@@ -47,10 +51,18 @@ public enum LightModesController implements LightModes {
         }
     }
 
+    /**
+     * fromValue method.
+     * @since 1.0.0
+     */
     public static LightModes fromValue(byte value) {
         return valueMap.get(value);
     }
 
+    /**
+     * Gets the mode from buffer.
+     * @since 1.0.0
+     */
     public LightModes getModeFromBuffer(ByteBuffer buffer) {
         return fromValue(buffer.get());
     }

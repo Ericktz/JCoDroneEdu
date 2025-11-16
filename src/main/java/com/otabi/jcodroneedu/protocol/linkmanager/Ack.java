@@ -19,17 +19,29 @@ public class Ack implements Serializable
     private int systemTime;
     private DataType dataType;
 
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize() {
         return ACK_SIZE;
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer) {
         buffer.putInt(systemTime)
                 .put(dataType.value());
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         this.systemTime = buffer.getInt();

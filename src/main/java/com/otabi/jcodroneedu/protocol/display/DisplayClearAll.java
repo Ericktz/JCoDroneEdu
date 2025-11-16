@@ -35,25 +35,45 @@ public class DisplayClearAll implements Serializable {
         this.pixel = pixel;
     }
 
+    /**
+     * Gets the pixel.
+     * @since 1.0.0
+     */
     public DisplayPixel getPixel() {
         return pixel;
     }
 
+    /**
+     * Sets the pixel.
+     * @since 1.0.0
+     */
     public void setPixel(DisplayPixel pixel) {
         this.pixel = pixel;
     }
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize() {
         return 1;
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer) {
         buffer.put(pixel.value());
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException {
         if (buffer.remaining() < getSize()) {
             throw new InvalidDataSizeException(getSize(), buffer.remaining());

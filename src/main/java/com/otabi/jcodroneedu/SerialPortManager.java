@@ -38,6 +38,7 @@ public class SerialPortManager {
      *
      * @param portName The specific port to connect to. If null, it will auto-detect.
      * @return true if the connection is successful, false otherwise.
+      * @since 1.0.0
      */
     public boolean open(String portName) throws DroneNotFoundException
     {
@@ -130,6 +131,7 @@ public class SerialPortManager {
 
     /**
      * Closes the serial port connection and stops the reading thread.
+      * @since 1.0.0
      */
     public void disconnect() {
         isRunning = false;
@@ -156,12 +158,17 @@ public class SerialPortManager {
      * Checks if the serial port is currently open.
      *
      * @return true if the port is open, false otherwise.
+      * @since 1.0.0
      */
     public boolean isOpen() {
         return serialPort != null && serialPort.isOpen();
     }
 
 
+    /**
+     * write method.
+     * @since 1.0.0
+     */
     public void write(byte[] data) {
         if (isOpen()) {
             serialPort.writeBytes(data, data.length);

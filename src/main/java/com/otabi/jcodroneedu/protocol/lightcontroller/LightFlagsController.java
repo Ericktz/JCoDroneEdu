@@ -24,6 +24,10 @@ public enum LightFlagsController {
         this.value = value;
     }
 
+    /**
+     * Gets the value.
+     * @since 1.0.0
+     */
     public byte getValue() {
         return value;
     }
@@ -36,6 +40,10 @@ public enum LightFlagsController {
         }
     }
 
+    /**
+     * fromValue method.
+     * @since 1.0.0
+     */
     public static LightFlagsController fromValue(byte value) {
         return valueMap.get(value);
     }

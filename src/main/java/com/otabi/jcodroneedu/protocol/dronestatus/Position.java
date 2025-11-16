@@ -33,12 +33,20 @@ public class Position implements Serializable
     }
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize()
     {
         return POSITION_SIZE;
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         this.x = buffer.getFloat();
@@ -47,6 +55,10 @@ public class Position implements Serializable
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         buffer.putFloat(x);
@@ -55,7 +67,13 @@ public class Position implements Serializable
     }
     
     // Position getters (in meters from takeoff point)
+    /**
+     * Gets the x.
+     * @since 1.0.0
+     */
     public float getX() { return x; }
+    /** @since 1.0.0 */
     public float getY() { return y; }
+    /** @since 1.0.0 */
     public float getZ() { return z; }
 }

@@ -70,12 +70,20 @@ public class Altitude implements Serializable
     }
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize()
     {
         return ALTITUDE_SIZE;
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         buffer.putFloat(temperature);
@@ -85,6 +93,10 @@ public class Altitude implements Serializable
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         this.temperature = buffer.getFloat();
@@ -99,6 +111,7 @@ public class Altitude implements Serializable
      * Gets the sensor die temperature in Celsius.
      * Note: This is typically 10-15°C cooler than ambient air temperature.
      * @return Temperature in Celsius
+      * @since 1.0.0
      */
     public float getTemperature() { return temperature; }
     
@@ -106,6 +119,7 @@ public class Altitude implements Serializable
      * Gets the atmospheric pressure in Pascals.
      * This is the most accurate sensor reading.
      * @return Pressure in Pascals (Pa). Divide by 100 for hPa, or 1000 for kPa.
+      * @since 1.0.0
      */
     public float getPressure() { return pressure; }
     
@@ -117,6 +131,7 @@ public class Altitude implements Serializable
      * or apply a calibration offset based on known elevation.
      * 
      * @return Altitude in meters (may require calibration offset)
+      * @since 1.1.0
      */
     public float getAltitude() { return altitude; }
     
@@ -124,10 +139,15 @@ public class Altitude implements Serializable
      * Gets the height from the range sensor in meters.
      * This is the distance measured by the bottom-facing range sensor (when flying).
      * @return Range height in meters
+      * @since 1.0.0
      */
     public float getRangeHeight() { return rangeHeight; }
 
     @Override
+    /**
+     * toString method.
+     * @since 1.0.0
+     */
     public String toString() {
         return "Altitude [temperature=" + temperature + ", altitude=" + altitude + ", pressure=" + pressure
                 + ", rangeHeight=" + rangeHeight + "]";

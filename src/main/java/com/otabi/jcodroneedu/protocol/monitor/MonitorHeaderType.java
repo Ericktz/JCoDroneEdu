@@ -19,10 +19,18 @@ public enum MonitorHeaderType {
         this.value = value;
     }
 
+    /**
+     * Gets the value.
+     * @since 1.0.0
+     */
     public byte getValue() {
         return value;
     }
 
+    /**
+     * fromByte method.
+     * @since 1.0.0
+     */
     public static MonitorHeaderType fromByte(byte value) {
         for (MonitorHeaderType type : MonitorHeaderType.values()) {
             if (type.value == value) {

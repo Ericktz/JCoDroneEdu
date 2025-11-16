@@ -20,11 +20,19 @@ public class LightModeColor extends LightMode {
         this.color = color;
     }
 
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize() {
         return (byte) (super.getSize() + color.getSize());
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         super.pack(buffer);
@@ -32,6 +40,10 @@ public class LightModeColor extends LightMode {
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         super.unpack(buffer);

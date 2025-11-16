@@ -28,6 +28,10 @@ public enum Trim {
         this.channel = channel;
     }
 
+    /**
+     * Gets the channel.
+     * @since 1.0.0
+     */
     public int getChannel() {
         return channel;
     }

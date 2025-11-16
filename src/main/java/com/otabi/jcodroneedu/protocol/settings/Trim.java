@@ -34,12 +34,20 @@ public class Trim implements Serializable
     }
 
     @Override
+    /**
+     * Gets the size.
+     * @since 1.0.0
+     */
     public byte getSize()
     {
         return TRIM_SIZE;
     }
 
     @Override
+    /**
+     * unpack method.
+     * @since 1.0.0
+     */
     public void unpack(ByteBuffer buffer) throws InvalidDataSizeException
     {
         this.roll = buffer.getShort();
@@ -49,6 +57,10 @@ public class Trim implements Serializable
     }
 
     @Override
+    /**
+     * pack method.
+     * @since 1.0.0
+     */
     public void pack(ByteBuffer buffer)
     {
         buffer.putShort(this.roll);
@@ -58,35 +70,67 @@ public class Trim implements Serializable
     }
 
     // Getter methods
+    /**
+     * Gets the roll.
+     * @since 1.0.0
+     */
     public short getRoll() {
         return roll;
     }
 
+    /**
+     * Gets the pitch.
+     * @since 1.0.0
+     */
     public short getPitch() {
         return pitch;
     }
 
+    /**
+     * Gets the yaw.
+     * @since 1.0.0
+     */
     public short getYaw() {
         return yaw;
     }
 
+    /**
+     * Gets the throttle.
+     * @since 1.0.0
+     */
     public short getThrottle() {
         return throttle;
     }
 
     // Setter methods
+    /**
+     * Sets the roll.
+     * @since 1.0.0
+     */
     public void setRoll(short roll) {
         this.roll = roll;
     }
 
+    /**
+     * Sets the pitch.
+     * @since 1.0.0
+     */
     public void setPitch(short pitch) {
         this.pitch = pitch;
     }
 
+    /**
+     * Sets the yaw.
+     * @since 1.0.0
+     */
     public void setYaw(short yaw) {
         this.yaw = yaw;
     }
 
+    /**
+     * Sets the throttle.
+     * @since 1.0.0
+     */
     public void setThrottle(short throttle) {
         this.throttle = throttle;
     }
