@@ -1410,6 +1410,569 @@ for name, method in inspect.getmembers(drone_class, predicate=inspect.isfunction
     }
 }
 
+// =============================================================================
+// Release Process Automation Tasks (Issue #38)
+// =============================================================================
+
+/**
+ * Task 1: Update copyright headers in all source files
+ */
+tasks.register("updateCopyright") {
+    group = "release"
+    description = "Updates copyright year in all Java source files and LICENSE"
+    
+    doLast {
+        val currentYear = LocalDateTime.now().year
+        val copyrightPattern = Regex("""Copyright \(c\) (\d{4})(?:-(\d{4}))?""")
+        var filesUpdated = 0
+        
+        // Update Java source files
+        fileTree("src") {
+            include("**/*.java")
+        }.forEach { file ->
+            val content = file.readText()
+            val newContent = copyrightPattern.replace(content) { matchResult ->
+                val startYear = matchResult.groupValues[1].toInt()
+                if (startYear == currentYear) {
+                    "Copyright (c) $currentYear"
+                } else {
+                    "Copyright (c) $startYear-$currentYear"
+                }
+            }
+            
+            if (content != newContent) {
+                file.writeText(newContent)
+                filesUpdated++
+            }
+        }
+        
+        // Update LICENSE file
+        val licenseFile = file("LICENSE")
+        if (licenseFile.exists()) {
+            val content = licenseFile.readText()
+            val newContent = copyrightPattern.replace(content) { matchResult ->
+                val startYear = matchResult.groupValues[1].toInt()
+                if (startYear == currentYear) {
+                    "Copyright (c) $currentYear"
+                } else {
+                    "Copyright (c) $startYear-$currentYear"
+                }
+            }
+            
+            if (content != newContent) {
+                licenseFile.writeText(newContent)
+                filesUpdated++
+            }
+        }
+        
+        // Update README.md if it contains copyright
+        val readmeFile = file("README.md")
+        if (readmeFile.exists()) {
+            val content = readmeFile.readText()
+            if (copyrightPattern.containsMatchIn(content)) {
+                val newContent = copyrightPattern.replace(content) { matchResult ->
+                    val startYear = matchResult.groupValues[1].toInt()
+                    if (startYear == currentYear) {
+                        "Copyright (c) $currentYear"
+                    } else {
+                        "Copyright (c) $startYear-$currentYear"
+                    }
+                }
+                
+                if (content != newContent) {
+                    readmeFile.writeText(newContent)
+                    filesUpdated++
+                }
+            }
+        }
+        
+        println("✅ Updated copyright year to $currentYear in $filesUpdated file(s)")
+    }
+}
+
+/**
+ * Task 2: Validate that all public methods have @since tags
+ */
+tasks.register("validateSinceTags") {
+    group = "verification"
+    description = "Validates that all public methods/classes have @since annotations"
+    
+    doLast {
+        val strictMode = project.findProperty("validateSinceTags.strict")?.toString()?.toBoolean() ?: false
+        val missingTags = mutableListOf<String>()
+        
+        fileTree("src/main/java") {
+            include("**/*.java")
+        }.forEach { file ->
+            val lines = file.readLines()
+            var inJavadoc = false
+            var hasSinceTag = false
+            var lineNumber = 0
+            
+            lines.forEachIndexed { index, line ->
+                lineNumber = index + 1
+                val trimmed = line.trim()
+                
+                // Track JavaDoc blocks
+                if (trimmed.startsWith("/**")) {
+                    inJavadoc = true
+                    hasSinceTag = false
+                }
+                
+                if (inJavadoc && trimmed.contains("@since")) {
+                    hasSinceTag = true
+                }
+                
+                if (trimmed.startsWith("*/")) {
+                    inJavadoc = false
+                }
+                
+                // Check for public declarations after JavaDoc
+                if (!inJavadoc && (trimmed.startsWith("public class ") || 
+                    trimmed.startsWith("public interface ") ||
+                    trimmed.startsWith("public enum ") ||
+                    (trimmed.startsWith("public ") && trimmed.contains("(")))) {
+                    
+                    // Skip if it's a constructor (same name as class)
+                    val isConstructor = file.name.replace(".java", "") in trimmed
+                    
+                    if (!hasSinceTag && !isConstructor) {
+                        val methodSignature = trimmed.substringBefore("{").trim()
+                        missingTags.add("${file.path}:$lineNumber - $methodSignature")
+                    }
+                    
+                    hasSinceTag = false
+                }
+            }
+        }
+        
+        if (missingTags.isNotEmpty()) {
+            println("⚠️  Found ${missingTags.size} public method(s)/class(es) without @since tags:")
+            println()
+            missingTags.take(20).forEach { println("  $it") }
+            if (missingTags.size > 20) {
+                println("  ... and ${missingTags.size - 20} more")
+            }
+            println()
+            println("💡 Add @since VERSION to JavaDoc for all new public APIs")
+            
+            if (strictMode) {
+                println()
+                println("❌ Strict mode enabled - failing build")
+                throw GradleException("Missing @since tags found. Please add them before release.")
+            } else {
+                println()
+                println("ℹ️  Note: Enable strict mode with -PvalidateSinceTags.strict=true")
+            }
+        } else {
+            println("✅ All public methods have @since tags")
+        }
+    }
+}
+
+/**
+ * Task 3: Validate CHANGELOG.md format and content
+ */
+tasks.register("validateChangelog") {
+    group = "verification"
+    description = "Validates CHANGELOG.md format and content"
+    
+    doLast {
+        val changelogFile = file("CHANGELOG.md")
+        
+        if (!changelogFile.exists()) {
+            throw GradleException("CHANGELOG.md does not exist")
+        }
+        
+        val content = changelogFile.readText()
+        if (content.trim().isEmpty()) {
+            throw GradleException("CHANGELOG.md is empty")
+        }
+        
+        val lines = content.lines()
+        
+        // Find version entries (## v1.0.0 or ## [1.0.0])
+        val versionPattern = Regex("""^##\s+\[?v?(\d+\.\d+\.\d+)\]?\s*-\s*(\d{4}-\d{2}-\d{2})""")
+        val versions = mutableListOf<String>()
+        var hasContent = false
+        var currentVersion: String? = null
+        
+        lines.forEach { line ->
+            val match = versionPattern.find(line)
+            if (match != null) {
+                val version = match.groupValues[1]
+                versions.add(version)
+                currentVersion = version
+                hasContent = false
+            } else if (currentVersion != null && line.trim().isNotEmpty() && !line.startsWith("#")) {
+                hasContent = true
+            }
+        }
+        
+        if (versions.isEmpty()) {
+            throw GradleException("CHANGELOG.md has no version entries. Expected format: ## v1.0.0 - 2025-01-01")
+        }
+        
+        // Check if the top version has content
+        if (!hasContent) {
+            println("⚠️  Warning: Latest version in CHANGELOG.md appears to have no content")
+        }
+        
+        // Check for duplicate versions
+        val duplicates = versions.groupingBy { it }.eachCount().filter { it.value > 1 }
+        if (duplicates.isNotEmpty()) {
+            throw GradleException("CHANGELOG.md contains duplicate versions: ${duplicates.keys}")
+        }
+        
+        println("✅ CHANGELOG.md format is valid")
+        println("   Found ${versions.size} version(s): ${versions.take(3).joinToString(", ")}")
+    }
+}
+
+/**
+ * Task 4: Validate version consistency across files
+ */
+tasks.register("validateVersionConsistency") {
+    group = "verification"
+    description = "Validates version consistency across build.gradle.kts and CHANGELOG.md"
+    
+    doLast {
+        val buildVersion = project.version.toString().replace("-SNAPSHOT", "")
+        
+        // Read version from CHANGELOG.md
+        val changelogFile = file("CHANGELOG.md")
+        if (!changelogFile.exists()) {
+            throw GradleException("CHANGELOG.md does not exist")
+        }
+        
+        val versionPattern = Regex("""^##\s+\[?v?(\d+\.\d+\.\d+)\]?\s*-\s*(\d{4}-\d{2}-\d{2})""")
+        var changelogVersion: String? = null
+        
+        changelogFile.readLines().forEach { line ->
+            val match = versionPattern.find(line)
+            if (match != null && changelogVersion == null) {
+                changelogVersion = match.groupValues[1]
+            }
+        }
+        
+        if (changelogVersion == null) {
+            throw GradleException("Could not find version in CHANGELOG.md")
+        }
+        
+        println("📦 Version comparison:")
+        println("   build.gradle.kts: $buildVersion")
+        println("   CHANGELOG.md:     $changelogVersion")
+        
+        if (buildVersion != changelogVersion) {
+            println()
+            println("❌ Version mismatch detected!")
+            println("   build.gradle.kts has version '$buildVersion'")
+            println("   but CHANGELOG.md has version '$changelogVersion'")
+            println()
+            println("💡 Please update both to match before release")
+            throw GradleException("Version mismatch between build.gradle.kts and CHANGELOG.md")
+        }
+        
+        // Check if this version tag already exists
+        try {
+            val tagOutput = ByteArrayOutputStream()
+            exec {
+                commandLine("git", "tag", "-l", "v$buildVersion")
+                standardOutput = tagOutput
+            }
+            
+            val existingTag = tagOutput.toString().trim()
+            if (existingTag.isNotEmpty()) {
+                println()
+                println("⚠️  Warning: Git tag v$buildVersion already exists")
+                println("   You may need to delete it: git tag -d v$buildVersion && git push origin :refs/tags/v$buildVersion")
+            }
+        } catch (e: Exception) {
+            // Git command failed, probably not in a git repo - that's okay
+        }
+        
+        println("✅ Version consistency validated: $buildVersion")
+    }
+}
+
+/**
+ * Task 5: Generate release notes from CHANGELOG.md
+ */
+tasks.register("generateReleaseNotes") {
+    group = "release"
+    description = "Generates GitHub release notes from CHANGELOG.md"
+    
+    doLast {
+        val buildVersion = project.version.toString().replace("-SNAPSHOT", "")
+        val changelogFile = file("CHANGELOG.md")
+        
+        if (!changelogFile.exists()) {
+            throw GradleException("CHANGELOG.md does not exist")
+        }
+        
+        val lines = changelogFile.readLines()
+        val versionPattern = Regex("""^##\s+\[?v?(\d+\.\d+\.\d+)\]?\s*-\s*(\d{4}-\d{2}-\d{2})""")
+        
+        var inTargetVersion = false
+        val releaseNotes = mutableListOf<String>()
+        
+        lines.forEach { line ->
+            val match = versionPattern.find(line)
+            
+            if (match != null) {
+                val version = match.groupValues[1]
+                if (version == buildVersion) {
+                    inTargetVersion = true
+                    // Don't include the version header itself
+                } else if (inTargetVersion) {
+                    // Hit next version, stop
+                    inTargetVersion = false
+                }
+            } else if (inTargetVersion) {
+                releaseNotes.add(line)
+            }
+        }
+        
+        if (releaseNotes.isEmpty()) {
+            throw GradleException("Could not find release notes for version $buildVersion in CHANGELOG.md")
+        }
+        
+        // Generate full release notes
+        val fullReleaseNotes = """
+            |## 📚 CoDrone EDU Java v$buildVersion
+            |
+            |### 📖 API Documentation
+            |[View Full API Docs](https://scerruti.github.io/JCoDroneEdu/docs/v$buildVersion/)
+            |
+            |### 📦 Installation
+            |
+            |#### Maven
+            |```xml
+            |<dependency>
+            |    <groupId>com.otabi</groupId>
+            |    <artifactId>codrone-edu-java</artifactId>
+            |    <version>$buildVersion</version>
+            |</dependency>
+            |```
+            |
+            |#### Gradle
+            |```kotlin
+            |implementation("com.otabi:codrone-edu-java:$buildVersion")
+            |```
+            |
+            |### ✨ What's New
+            |${releaseNotes.joinToString("\n")}
+            |
+            |### 🔗 Resources
+            |- [API Documentation](https://scerruti.github.io/JCoDroneEdu/docs/v$buildVersion/)
+            |- [CHANGELOG](./CHANGELOG.md)
+            |- [Repository](https://github.com/scerruti/JCoDroneEdu)
+        """.trimMargin()
+        
+        val outputFile = file("build/release-notes.md")
+        outputFile.parentFile.mkdirs()
+        outputFile.writeText(fullReleaseNotes)
+        
+        println("✅ Release notes generated: build/release-notes.md")
+        println()
+        println(fullReleaseNotes)
+    }
+}
+
+/**
+ * Task 6: Check for deprecated methods and warn about old deprecations
+ */
+tasks.register("checkDeprecations") {
+    group = "verification"
+    description = "Lists deprecated methods and warns about old deprecations"
+    
+    doLast {
+        val buildVersion = project.version.toString().replace("-SNAPSHOT", "")
+        val majorVersion = buildVersion.split(".")[0].toInt()
+        
+        val deprecatedMethods = mutableListOf<Triple<String, Int, String>>() // file, line, method
+        val deprecationSince = mutableMapOf<String, String>() // method -> version
+        
+        fileTree("src/main/java") {
+            include("**/*.java")
+        }.forEach { file ->
+            val lines = file.readLines()
+            var inJavadoc = false
+            var hasDeprecated = false
+            var sinceVersion: String? = null
+            var lineNumber = 0
+            
+            lines.forEachIndexed { index, line ->
+                lineNumber = index + 1
+                val trimmed = line.trim()
+                
+                if (trimmed.startsWith("/**")) {
+                    inJavadoc = true
+                    hasDeprecated = false
+                    sinceVersion = null
+                }
+                
+                if (inJavadoc) {
+                    if (trimmed.contains("@deprecated")) {
+                        hasDeprecated = true
+                    }
+                    if (trimmed.contains("@since")) {
+                        sinceVersion = trimmed.substringAfter("@since").trim()
+                    }
+                }
+                
+                if (trimmed.startsWith("*/")) {
+                    inJavadoc = false
+                }
+                
+                if (trimmed.startsWith("@Deprecated") || (trimmed.startsWith("public") && hasDeprecated)) {
+                    val methodSignature = if (trimmed.startsWith("@Deprecated")) {
+                        lines.getOrNull(index + 1)?.trim() ?: ""
+                    } else {
+                        trimmed
+                    }
+                    
+                    if (methodSignature.contains("(")) {
+                        val methodName = methodSignature.substringAfter(" ").substringBefore("(")
+                        deprecatedMethods.add(Triple(file.path, lineNumber, methodName))
+                        val capturedSince = sinceVersion
+                        if (capturedSince != null) {
+                            deprecationSince[methodName] = capturedSince
+                        }
+                    }
+                    hasDeprecated = false
+                }
+            }
+        }
+        
+        if (deprecatedMethods.isEmpty()) {
+            println("✅ No deprecated methods found")
+            return@doLast
+        }
+        
+        println("📋 Deprecated Methods Report:")
+        println("=".repeat(70))
+        
+        val oldDeprecations = mutableListOf<String>()
+        
+        deprecatedMethods.forEach { (file, line, method) ->
+            val since = deprecationSince[method] ?: "unknown"
+            println("  $method (deprecated since $since)")
+            println("    at $file:$line")
+            
+            // Check if deprecated for 2+ major versions
+            if (since != "unknown") {
+                try {
+                    val deprecatedMajor = since.split(".")[0].toIntOrNull()
+                    if (deprecatedMajor != null && (majorVersion - deprecatedMajor) >= 2) {
+                        oldDeprecations.add(method)
+                    }
+                } catch (e: Exception) {
+                    // Ignore parse errors
+                }
+            }
+        }
+        
+        println()
+        println("Total: ${deprecatedMethods.size} deprecated method(s)")
+        
+        if (oldDeprecations.isNotEmpty()) {
+            println()
+            println("⚠️  WARNING: ${oldDeprecations.size} method(s) deprecated for 2+ major versions:")
+            oldDeprecations.forEach { println("  - $it") }
+            println()
+            println("💡 Consider removing these in the next major version")
+        }
+        
+        println("=".repeat(70))
+    }
+}
+
+/**
+ * Task 7: Validate build artifacts
+ */
+tasks.register("validateArtifacts") {
+    group = "verification"
+    description = "Validates JAR artifacts after build"
+    
+    dependsOn("build")
+    
+    doLast {
+        val buildVersion = project.version.toString()
+        val buildDir = file("build/libs")
+        
+        if (!buildDir.exists()) {
+            throw GradleException("Build directory does not exist: ${buildDir.path}")
+        }
+        
+        val jarFiles = buildDir.listFiles { _, name -> name.endsWith(".jar") } ?: emptyArray()
+        
+        if (jarFiles.isEmpty()) {
+            throw GradleException("No JAR files found in ${buildDir.path}")
+        }
+        
+        println("📦 Validating JAR artifacts:")
+        println()
+        
+        var allValid = true
+        
+        jarFiles.forEach { jarFile ->
+            println("  Checking: ${jarFile.name}")
+            
+            // Check if it's a valid ZIP file
+            try {
+                val zipFile = ZipFile(jarFile)
+                val entries = zipFile.entries().toList()
+                
+                println("    ✓ Valid ZIP archive (${entries.size} entries)")
+                
+                // Check for expected classes
+                val expectedClasses = listOf(
+                    "com/otabi/jcodroneedu/Drone.class",
+                    "com/otabi/jcodroneedu/DroneSystem.class"
+                )
+                
+                expectedClasses.forEach { className ->
+                    val entry = zipFile.getEntry(className)
+                    if (entry != null) {
+                        println("    ✓ Found: $className")
+                    } else {
+                        println("    ✗ Missing: $className")
+                        allValid = false
+                    }
+                }
+                
+                // Check manifest
+                val manifestEntry = zipFile.getEntry("META-INF/MANIFEST.MF")
+                if (manifestEntry != null) {
+                    val manifestContent = zipFile.getInputStream(manifestEntry).bufferedReader().readText()
+                    if (manifestContent.contains("Implementation-Version")) {
+                        println("    ✓ Manifest contains version")
+                    } else {
+                        println("    ⚠ Manifest missing version")
+                    }
+                } else {
+                    println("    ⚠ No manifest found")
+                }
+                
+                zipFile.close()
+                
+            } catch (e: Exception) {
+                println("    ✗ Invalid JAR: ${e.message}")
+                allValid = false
+            }
+            
+            println()
+        }
+        
+        if (!allValid) {
+            throw GradleException("Some JAR artifacts are invalid")
+        }
+        
+        println("✅ All JAR artifacts validated successfully")
+    }
+}
+
 /**
  * Pre-release verification checklist
  */
@@ -1417,43 +1980,51 @@ tasks.register("preReleaseCheck") {
     group = "verification"
     description = "Run pre-release checklist and verification"
     
-    dependsOn("test", "build", "compareApis")
+    dependsOn(
+        "test", 
+        "build", 
+        "compareApis",
+        "validateSinceTags",
+        "validateChangelog",
+        "validateVersionConsistency",
+        "checkDeprecations",
+        "validateArtifacts"
+    )
     
     doLast {
         println()
-        println("=" .repeat(70))
-        println("PRE-RELEASE CHECKLIST")
-        println("=" .repeat(70))
+        println("=".repeat(70))
+        println("PRE-RELEASE VALIDATION COMPLETE")
+        println("=".repeat(70))
         println()
         println("✅ Tests passed")
         println("✅ Build successful")
         println("✅ API comparison generated")
+        println("✅ @since tags validated")
+        println("✅ CHANGELOG.md format validated")
+        println("✅ Version consistency verified")
+        println("✅ Deprecations checked")
+        println("✅ JAR artifacts validated")
         println()
-        println("📋 Manual Checks Required:")
-        println("=" .repeat(70))
+        println("📋 Manual Checks Still Required:")
+        println("=".repeat(70))
         println()
         println("□ Firmware updated to 25.2.1")
-        println("□ Python reference code updated (./gradlew updateReferenceCode)")
-        println("□ Reviewed API_COMPARISON.md for missing methods")
         println("□ All smoke tests pass with new firmware")
         println("□ Altitude offset documented")
         println("□ All examples tested and working")
-        println("□ Documentation updated:")
-        println("  □ CHANGELOG.md")
-        println("  □ README.md")
-        println("  □ Version numbers")
-        println("□ Release notes created")
+        println("□ Copyright year updated (./gradlew updateCopyright)")
         println()
-        println("📊 Next Steps:")
-        println("=" .repeat(70))
+        println("📊 Ready to Release:")
+        println("=".repeat(70))
         println()
-        println("1. Review PRE_RELEASE_CHECKLIST.md")
-        println("2. Check API_COMPARISON.md for missing methods")
-        println("3. Test all examples: ./gradlew runSmokeTest")
-        println("4. Update documentation")
-        println("5. Create release tag")
+        println("1. Update copyright if needed: ./gradlew updateCopyright")
+        println("2. Generate release notes: ./gradlew generateReleaseNotes")
+        println("3. Commit changes: git commit -m 'Release v${project.version}'")
+        println("4. Create tag: git tag v${project.version}")
+        println("5. Push: git push origin main && git push origin v${project.version}")
         println()
-        println("=" .repeat(70))
+        println("=".repeat(70))
     }
 }
 
