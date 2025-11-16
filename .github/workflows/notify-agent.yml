@@ -1,0 +1,57 @@
+name: Notify Agent to Start Work
+
+on:
+  issues:
+    types: [labeled]
+
+jobs:
+  notify-agent:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+    
+    steps:
+      - name: Check if assigned-to-agent label was added
+        id: check_label
+        if: contains(github.event.issue.labels.*.name, 'assigned-to-agent')
+        run: |
+          echo "assigned_to_agent=true" >> $GITHUB_OUTPUT
+
+      - name: Get branch info from issue comments
+        if: steps.check_label.outputs.assigned_to_agent == 'true'
+        id: get_branch
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const comments = await github.rest.issues.listComments({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number
+            });
+            
+            // Find the github-actions bot comment with branch info
+            const botComment = comments.data.find(c => c.user.login === 'github-actions[bot]' && c.body.includes('Branch Created'));
+            
+            if (botComment) {
+              // Extract branch name from the comment
+              const branchMatch = botComment.body.match(/\[(.+?)\]\(https:\/\/github\.com\/.+?\/tree\/(.+?)\)/);
+              if (branchMatch) {
+                core.setOutput('branch_name', branchMatch[2]);
+              }
+            }
+
+      - name: Post agent work assignment
+        if: steps.check_label.outputs.assigned_to_agent == 'true'
+        uses: actions/github-script@v7
+        with:
+          script: |
+            const branchName = '${{ steps.get_branch.outputs.branch_name }}';
+            
+            const agentComment = `🤖 **Agent Work Assignment**\n\nThis issue has been labeled for agent work and is ready to proceed.\n\n**Branch**: \`${branchName || 'See branch creation comment above'}\`\n\n**Next Steps**:\n1. Review the automated branch creation comment above for branch details\n2. Check out the branch with: \`git checkout --track origin/${branchName || '<branch-name>'}\`\n3. Follow [Agent Instructions](.github/AGENT_INSTRUCTIONS.md) for development workflow\n4. Implement the required changes\n5. Run validation: \`./gradlew preReleaseCheck\`\n6. Push commits and open a PR\n\n**Important**: Version has already been bumped in the branch. Do not manually update it.\n\n---\n**Supervised by**: @${context.actor}`;
+
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: agentComment
+            });
