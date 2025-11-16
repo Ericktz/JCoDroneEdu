@@ -89,6 +89,7 @@ public class BuzzerSequence {
      * Gets the name of this buzzer sequence.
      * 
      * @return The sequence name (e.g., "success", "warning", "my-melody")
+      * @since 1.0.0
      */
     public String getName() {
         return name;
@@ -98,6 +99,7 @@ public class BuzzerSequence {
      * Gets an unmodifiable list of all notes in this sequence.
      * 
      * @return Immutable list of {@link BuzzerNote} objects
+      * @since 1.0.0
      */
     public List<BuzzerNote> getNotes() {
         return notes;
@@ -108,6 +110,7 @@ public class BuzzerSequence {
      * Includes all note durations and delays.
      * 
      * @return Total sequence duration in milliseconds
+      * @since 1.0.0
      */
     public int getTotalDurationMs() {
         return notes.stream()
@@ -119,6 +122,7 @@ public class BuzzerSequence {
      * Gets the number of notes in this sequence.
      * 
      * @return Number of notes (pauses count as notes with 0 Hz frequency)
+      * @since 1.0.0
      */
     public int getNoteCount() {
         return notes.size();
@@ -213,6 +217,7 @@ public class BuzzerSequence {
          * @param durationMs The duration in milliseconds (1-10000)
          * @return This builder for method chaining
          * @throws IllegalArgumentException if parameters are out of range
+          * @since 1.0.0
          */
         public Builder addNote(int frequency, int durationMs) {
             return addNote(frequency, durationMs, 0);
@@ -226,6 +231,7 @@ public class BuzzerSequence {
          * @param delayAfterMs The delay after the note in milliseconds (0-10000)
          * @return This builder for method chaining
          * @throws IllegalArgumentException if parameters are out of range
+          * @since 1.0.0
          */
         public Builder addNote(int frequency, int durationMs, int delayAfterMs) {
             if (frequency < 0 || frequency > 10000) {
@@ -253,6 +259,7 @@ public class BuzzerSequence {
          * @param pauseMs The duration of silence in milliseconds (1-10000)
          * @return This builder for method chaining
          * @throws IllegalArgumentException if pauseMs is out of range
+          * @since 1.0.0
          */
         public Builder addPause(int pauseMs) {
             if (pauseMs < 1 || pauseMs > 10000) {
@@ -269,6 +276,7 @@ public class BuzzerSequence {
          * @param name The name for this sequence
          * @return A new immutable BuzzerSequence
          * @throws IllegalArgumentException if name is null/empty or no notes added
+          * @since 1.0.0
          */
         public BuzzerSequence build(String name) {
             if (name == null || name.trim().isEmpty()) {
@@ -292,6 +300,7 @@ public class BuzzerSequence {
      * Two ascending tones: 1600 Hz → 2200 Hz
      * 
      * @return The success sequence
+      * @since 1.0.0
      */
     public static BuzzerSequence createSuccessSequence() {
         return new Builder()
@@ -305,6 +314,7 @@ public class BuzzerSequence {
      * Three 800 Hz beeps with pauses between them.
      * 
      * @return The warning sequence
+      * @since 1.0.0
      */
     public static BuzzerSequence createWarningSequence() {
         return new Builder()
@@ -319,6 +329,7 @@ public class BuzzerSequence {
      * Three short 150 Hz beeps (low, urgent tone).
      * 
      * @return The error sequence
+      * @since 1.0.0
      */
     public static BuzzerSequence createErrorSequence() {
         return new Builder()

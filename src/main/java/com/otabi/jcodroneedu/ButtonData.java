@@ -77,6 +77,7 @@ public class ButtonData {
      * Gets the timestamp when this button data was captured.
      * 
      * @return Timestamp in seconds
+      * @since 1.0.0
      */
     public double getTimestamp() {
         return timestamp;
@@ -86,6 +87,7 @@ public class ButtonData {
      * Gets the button flags indicating which button(s) are active.
      * 
      * @return Button flags (1=L1, 2=L2, 4=R1, 8=R2, 0=none)
+      * @since 1.0.0
      */
     public int getButtonFlags() {
         return buttonFlags;
@@ -95,6 +97,7 @@ public class ButtonData {
      * Gets the event name for this button data.
      * 
      * @return Event name ("Press", "Down", "Up", or "None_")
+      * @since 1.0.0
      */
     public String getEventName() {
         return eventName;
@@ -104,6 +107,7 @@ public class ButtonData {
      * Returns a string representation of this button data.
      * 
      * @return String representation
+      * @since 1.0.0
      */
     @Override
     public String toString() {

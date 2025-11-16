@@ -102,6 +102,7 @@ public class ControllerMonitor {
      * This is optional - students can just close the window manually.
      * 
      * @educational You can call this when done, or just close the window with the X button.
+      * @since 1.0.0
      */
     public void close() {
         if (isOpen) {
@@ -122,6 +123,7 @@ public class ControllerMonitor {
      * Checks if the monitor window is still open.
      * 
      * @return true if the window is open, false if closed
+      * @since 1.0.0
      */
     public boolean isOpen() {
         return isOpen && frame.isVisible();

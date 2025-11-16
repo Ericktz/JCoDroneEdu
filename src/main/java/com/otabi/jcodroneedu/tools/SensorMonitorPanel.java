@@ -207,6 +207,7 @@ public class SensorMonitorPanel extends JPanel {
     /**
      * Starts monitoring the drone sensors at 5 Hz (every 200ms).
      * Call this after the drone is connected.
+      * @since 1.0.0
      */
     public void startMonitoring() {
         if (executor != null) {
@@ -218,6 +219,7 @@ public class SensorMonitorPanel extends JPanel {
 
     /**
      * Stops monitoring the drone sensors and releases resources.
+      * @since 1.0.0
      */
     public void stopMonitoring() {
         if (executor != null) {

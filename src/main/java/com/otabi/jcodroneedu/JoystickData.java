@@ -82,6 +82,7 @@ public class JoystickData {
      * Gets the timestamp when this joystick data was captured.
      * 
      * @return Timestamp in seconds
+      * @since 1.0.0
      */
     public int getTimestamp() {
         return timestamp;
@@ -91,6 +92,7 @@ public class JoystickData {
      * Gets the left joystick X (horizontal) value.
      * 
      * @return X value from -100 to 100 (0 is neutral)
+      * @since 1.0.0
      */
     public int getLeftX() {
         return leftX;
@@ -100,6 +102,7 @@ public class JoystickData {
      * Gets the left joystick Y (vertical) value.
      * 
      * @return Y value from -100 to 100 (0 is neutral)
+      * @since 1.0.0
      */
     public int getLeftY() {
         return leftY;
@@ -109,6 +112,7 @@ public class JoystickData {
      * Gets the left joystick direction value.
      * 
      * @return Direction value
+      * @since 1.0.0
      */
     public int getLeftDirection() {
         return leftDirection;
@@ -118,6 +122,7 @@ public class JoystickData {
      * Gets the left joystick event value.
      * 
      * @return Event value
+      * @since 1.0.0
      */
     public int getLeftEvent() {
         return leftEvent;
@@ -127,6 +132,7 @@ public class JoystickData {
      * Gets the right joystick X (horizontal) value.
      * 
      * @return X value from -100 to 100 (0 is neutral)
+      * @since 1.0.0
      */
     public int getRightX() {
         return rightX;
@@ -136,6 +142,7 @@ public class JoystickData {
      * Gets the right joystick Y (vertical) value.
      * 
      * @return Y value from -100 to 100 (0 is neutral)
+      * @since 1.0.0
      */
     public int getRightY() {
         return rightY;
@@ -145,6 +152,7 @@ public class JoystickData {
      * Gets the right joystick direction value.
      * 
      * @return Direction value
+      * @since 1.0.0
      */
     public int getRightDirection() {
         return rightDirection;
@@ -154,6 +162,7 @@ public class JoystickData {
      * Gets the right joystick event value.
      * 
      * @return Event value
+      * @since 1.0.0
      */
     public int getRightEvent() {
         return rightEvent;
@@ -163,6 +172,7 @@ public class JoystickData {
      * Returns a string representation of this joystick data.
      * 
      * @return String representation
+      * @since 1.0.0
      */
     @Override
     public String toString() {

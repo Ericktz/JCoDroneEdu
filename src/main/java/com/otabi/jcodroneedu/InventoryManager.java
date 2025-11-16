@@ -61,6 +61,7 @@ public class InventoryManager {
      * Updates count data when received from the drone.
      * 
      * @param count The count protocol data
+      * @since 1.0.0
      */
     public void updateCount(Count count) {
         if (count != null) {
@@ -76,6 +77,7 @@ public class InventoryManager {
      * Updates information data when received from drone or controller.
      * 
      * @param information The information protocol data
+      * @since 1.0.0
      */
     public void updateInformation(Information information) {
         if (information != null) {
@@ -100,6 +102,7 @@ public class InventoryManager {
      * 
      * @param cpuId The CPU ID as base64 string
      * @param deviceType Whether this is from Drone or Controller
+      * @since 1.0.0
      */
     public void updateCpuId(String cpuId, DeviceType deviceType) {
         if (cpuId != null) {
@@ -118,6 +121,7 @@ public class InventoryManager {
      * 
      * @param address The address protocol data
      * @param deviceType Whether this is from Drone or Controller
+      * @since 1.0.0
      */
     public void updateAddress(Address address, DeviceType deviceType) {
         if (address != null) {
@@ -139,6 +143,7 @@ public class InventoryManager {
      * [timestamp, flight_time, takeoff_count, landing_count, accident_count]
      * 
      * @return Object array with count data
+      * @since 1.0.0
      */
     public Object[] getCountDataArray() {
         return new Object[] {
@@ -155,6 +160,7 @@ public class InventoryManager {
      * [timestamp, drone_model, drone_firmware, controller_model, controller_firmware]
      * 
      * @return Object array with information data
+      * @since 1.0.0
      */
     public Object[] getInformationDataArray() {
         return new Object[] {
@@ -171,6 +177,7 @@ public class InventoryManager {
      * [timestamp, drone_cpu_id, controller_cpu_id]
      * 
      * @return Object array with CPU ID data
+      * @since 1.0.0
      */
     public Object[] getCpuIdDataArray() {
         return new Object[] {
@@ -185,6 +192,7 @@ public class InventoryManager {
      * [timestamp, drone_address, controller_address]
      * 
      * @return Object array with address data
+      * @since 1.0.0
      */
     public Object[] getAddressDataArray() {
         return new Object[] {
@@ -200,6 +208,7 @@ public class InventoryManager {
      * Gets count data as a type-safe Java object.
      * 
      * @return CountData object with flight statistics
+      * @since 1.0.0
      */
     public CountData getCountDataObject() {
         return new CountData(countTimestamp, flightTime, takeoffCount, landingCount, accidentCount);
@@ -209,6 +218,7 @@ public class InventoryManager {
      * Gets information data as a type-safe Java object.
      * 
      * @return InformationData object with device information
+      * @since 1.0.0
      */
     public InformationData getInformationDataObject() {
         return new InformationData(informationTimestamp, droneModel, droneFirmware, 
@@ -219,6 +229,7 @@ public class InventoryManager {
      * Gets CPU ID data as a type-safe Java object.
      * 
      * @return CpuIdData object with CPU IDs
+      * @since 1.0.0
      */
     public CpuIdData getCpuIdDataObject() {
         return new CpuIdData(cpuIdTimestamp, droneCpuId, controllerCpuId);
@@ -228,6 +239,7 @@ public class InventoryManager {
      * Gets address data as a type-safe Java object.
      * 
      * @return AddressData object with Bluetooth addresses
+      * @since 1.0.0
      */
     public AddressData getAddressDataObject() {
         return new AddressData(addressTimestamp, droneAddress, controllerAddress);

@@ -61,6 +61,7 @@ public class InformationData {
      * Gets the timestamp when this data was retrieved.
      * 
      * @return Timestamp in seconds since program start
+      * @since 1.0.0
      */
     public double getTimestamp() {
         return timestamp;
@@ -70,6 +71,7 @@ public class InformationData {
      * Gets the drone's model number.
      * 
      * @return Drone model number enum
+      * @since 1.0.0
      */
     public DroneSystem.ModelNumber getDroneModel() {
         return droneModel;
@@ -79,6 +81,7 @@ public class InformationData {
      * Gets the drone's firmware version.
      * 
      * @return Firmware version string (format: "major.minor.build")
+      * @since 1.0.0
      */
     public String getDroneFirmware() {
         return droneFirmware;
@@ -88,6 +91,7 @@ public class InformationData {
      * Gets the controller's model number.
      * 
      * @return Controller model number enum
+      * @since 1.0.0
      */
     public DroneSystem.ModelNumber getControllerModel() {
         return controllerModel;
@@ -97,6 +101,7 @@ public class InformationData {
      * Gets the controller's firmware version.
      * 
      * @return Firmware version string (format: "major.minor.build")
+      * @since 1.0.0
      */
     public String getControllerFirmware() {
         return controllerFirmware;
@@ -106,6 +111,7 @@ public class InformationData {
      * Returns a string representation of the information data.
      * 
      * @return Human-readable string with device information
+      * @since 1.0.0
      */
     @Override
     public String toString() {

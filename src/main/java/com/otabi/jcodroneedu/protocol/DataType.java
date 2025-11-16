@@ -133,6 +133,7 @@ public enum DataType {
     /**
      * Creates an empty message object using the assigned factory.
      * @return A new, empty Serializable message object, or null if no factory is defined.
+      * @since 1.0.0
      */
     public Serializable createInstance() {
         if (factory != null) {

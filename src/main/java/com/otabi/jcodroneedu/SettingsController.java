@@ -28,6 +28,7 @@ public class SettingsController {
     /**
      * Resets the drone's internal gyroscope sensor bias. This can help correct
      * for drift during flight. Note that this also resets the flight trim.
+      * @since 1.0.0
      */
     public void clearBias() {
         drone.sendCommand(CommandType.ClearBias, (byte) 0);
@@ -35,6 +36,7 @@ public class SettingsController {
 
     /**
      * Resets the flight trim values to their defaults.
+      * @since 1.0.0
      */
     public void clearTrim() {
         drone.sendCommand(CommandType.ClearTrim, (byte) 0);
@@ -47,6 +49,7 @@ public class SettingsController {
      * @param pitch Pitch trim value (-100 to 100) 
      * @param yaw Yaw trim value (-100 to 100)
      * @param throttle Throttle trim value (-100 to 100)
+      * @since 1.0.0
      */
     public void sendTrim(short roll, short pitch, short yaw, short throttle) {
         Trim trim = new Trim(roll, pitch, yaw, throttle);
@@ -62,6 +65,7 @@ public class SettingsController {
 
     /**
      * Resets all drone settings to their factory defaults.
+      * @since 1.0.0
      */
     public void setDefault() {
         drone.sendCommand(CommandType.SetDefault, (byte) 0);
@@ -70,6 +74,7 @@ public class SettingsController {
     /**
      * Clears internal counters, such as total flight time.
      * Note: This may require administrator privileges on the drone.
+      * @since 1.0.0
      */
     public void clearCounter() {
         drone.sendCommand(CommandType.ClearCounter, (byte) 0);

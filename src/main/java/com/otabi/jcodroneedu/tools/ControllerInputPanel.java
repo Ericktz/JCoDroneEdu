@@ -305,6 +305,7 @@ public class ControllerInputPanel extends JPanel {
      * 
      * @educational Call this method after your GUI is visible to start seeing
      *              controller input updates.
+      * @since 1.0.0
      */
     public void startMonitoring() {
         if (monitoring) {
@@ -329,6 +330,7 @@ public class ControllerInputPanel extends JPanel {
      * 
      * @educational Always call this method to properly clean up when you're done
      *              monitoring the controller.
+      * @since 1.0.0
      */
     public void stopMonitoring() {
         monitoring = false;
@@ -509,6 +511,7 @@ public class ControllerInputPanel extends JPanel {
          * 
          * @param x horizontal position (-100 to 100)
          * @param y vertical position (-100 to 100)
+          * @since 1.0.0
          */
         public void setPosition(int x, int y) {
             this.x = x;

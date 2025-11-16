@@ -70,6 +70,7 @@ public class CountData {
      * Gets the timestamp when this data was retrieved.
      * 
      * @return Timestamp in seconds since program start
+      * @since 1.0.0
      */
     public double getTimestamp() {
         return timestamp;
@@ -80,6 +81,7 @@ public class CountData {
      * This is the cumulative time the motors have been running.
      * 
      * @return Flight time in seconds
+      * @since 1.0.0
      */
     public int getFlightTime() {
         return flightTime;
@@ -89,6 +91,7 @@ public class CountData {
      * Gets the total number of takeoffs.
      * 
      * @return Number of takeoffs performed
+      * @since 1.0.0
      */
     public int getTakeoffCount() {
         return takeoffCount;
@@ -98,6 +101,7 @@ public class CountData {
      * Gets the total number of landings.
      * 
      * @return Number of landings performed
+      * @since 1.0.0
      */
     public int getLandingCount() {
         return landingCount;
@@ -108,6 +112,7 @@ public class CountData {
      * The drone detects accidents using accelerometer threshold detection.
      * 
      * @return Number of accidents detected
+      * @since 1.0.0
      */
     public int getAccidentCount() {
         return accidentCount;
@@ -117,6 +122,7 @@ public class CountData {
      * Returns a string representation of the count data.
      * 
      * @return Human-readable string with all count statistics
+      * @since 1.0.0
      */
     @Override
     public String toString() {

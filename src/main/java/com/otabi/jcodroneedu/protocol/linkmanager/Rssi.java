@@ -31,6 +31,7 @@ public class Rssi implements Serializable
     /**
      * Returns the RSSI value in dBm as a signed byte mapped to int.
      * Typical BLE values are negative (e.g., -40 strong, -90 weak).
+      * @since 1.0.0
      */
     public int getRssi() {
         return (int) rssi;

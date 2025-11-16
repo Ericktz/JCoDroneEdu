@@ -88,6 +88,7 @@ public class CardColor implements Serializable
      * Format: "Front: [COLOR_NAME], Back: [COLOR_NAME]"
      * 
      * @return String describing front and back sensor colors, or "No color data" if unavailable
+      * @since 1.0.0
      */
     @Override
     public String toString() {
@@ -107,6 +108,7 @@ public class CardColor implements Serializable
      * Gets the name of the front sensor color.
      * 
      * @return Color name (e.g., "RED", "BLUE", "NONE") or "INVALID" if no data
+      * @since 1.0.0
      */
     public String getFrontColorName() {
         if (color == null || color.length < 1) {
@@ -119,6 +121,7 @@ public class CardColor implements Serializable
      * Gets the name of the back sensor color.
      * 
      * @return Color name (e.g., "RED", "BLUE", "NONE") or "INVALID" if no data
+      * @since 1.0.0
      */
     public String getBackColorName() {
         if (color == null || color.length < 2) {

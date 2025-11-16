@@ -79,6 +79,7 @@ public class BuzzerSequenceRegistry {
      * Gets the singleton instance of the registry.
      * 
      * @return The global BuzzerSequenceRegistry instance
+      * @since 1.0.0
      */
     public static BuzzerSequenceRegistry getInstance() {
         return INSTANCE;
@@ -106,6 +107,7 @@ public class BuzzerSequenceRegistry {
      * @param name The name to register the sequence under
      * @param sequence The buzzer sequence to register
      * @throws IllegalArgumentException if name is null/empty or sequence is null
+      * @since 1.0.0
      */
     public void register(String name, BuzzerSequence sequence) {
         if (name == null || name.trim().isEmpty()) {
@@ -123,6 +125,7 @@ public class BuzzerSequenceRegistry {
      * 
      * @param name The name of the sequence to retrieve
      * @return The buzzer sequence, or null if not found
+      * @since 1.0.0
      */
     public BuzzerSequence get(String name) {
         return sequences.get(name);
@@ -133,6 +136,7 @@ public class BuzzerSequenceRegistry {
      * 
      * @param name The sequence name to check
      * @return true if the sequence exists, false otherwise
+      * @since 1.0.0
      */
     public boolean has(String name) {
         return sequences.containsKey(name);
@@ -146,6 +150,7 @@ public class BuzzerSequenceRegistry {
      * 
      * @param name The name of the sequence to remove
      * @return true if a sequence was removed, false if it didn't exist
+      * @since 1.0.0
      */
     public boolean unregister(String name) {
         return sequences.remove(name) != null;
@@ -155,6 +160,7 @@ public class BuzzerSequenceRegistry {
      * Lists all registered sequence names in alphabetical order.
      * 
      * @return Sorted list of sequence names
+      * @since 1.0.0
      */
     public List<String> list() {
         List<String> names = new ArrayList<>(sequences.keySet());
@@ -166,6 +172,7 @@ public class BuzzerSequenceRegistry {
      * Gets the number of registered sequences.
      * 
      * @return The count of sequences in the registry
+      * @since 1.0.0
      */
     public int count() {
         return sequences.size();
@@ -177,6 +184,7 @@ public class BuzzerSequenceRegistry {
      * <p><strong>⚠️ Caution:</strong> This removes all sequences, including
      * the built-in "success", "warning", and "error" sequences. Call
      * {@link #registerBuiltInSequences()} to restore them.</p>
+      * @since 1.0.0
      */
     public void clear() {
         sequences.clear();
@@ -185,6 +193,7 @@ public class BuzzerSequenceRegistry {
     /**
      * Restores the built-in sequences to the registry.
      * Useful after calling {@link #clear()}.
+      * @since 1.0.0
      */
     public void restoreBuiltIns() {
         registerBuiltInSequences();
@@ -197,6 +206,7 @@ public class BuzzerSequenceRegistry {
      * showing all available sequences and their properties.</p>
      * 
      * @return Markdown-formatted documentation string
+      * @since 1.0.0
      */
     public String generateDocumentation() {
         StringBuilder doc = new StringBuilder();

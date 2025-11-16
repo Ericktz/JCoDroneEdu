@@ -368,6 +368,7 @@ public class TelemetryService {
     /**
      * Returns the age in milliseconds of the last update for the given DataType,
      * or -1 if no update has been received.
+      * @since 1.0.0
      */
     public long getLastUpdateAgeMillis(DataType type) {
         Long last = lastUpdateMillis.get(type);

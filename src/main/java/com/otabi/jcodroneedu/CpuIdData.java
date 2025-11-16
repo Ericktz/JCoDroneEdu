@@ -54,6 +54,7 @@ public class CpuIdData {
      * Gets the timestamp when this data was retrieved.
      * 
      * @return Timestamp in seconds since program start
+      * @since 1.0.0
      */
     public double getTimestamp() {
         return timestamp;
@@ -63,6 +64,7 @@ public class CpuIdData {
      * Gets the drone's unique CPU ID.
      * 
      * @return CPU ID as hexadecimal string
+      * @since 1.0.0
      */
     public String getDroneCpuId() {
         return droneCpuId;
@@ -72,6 +74,7 @@ public class CpuIdData {
      * Gets the controller's unique CPU ID.
      * 
      * @return CPU ID as hexadecimal string
+      * @since 1.0.0
      */
     public String getControllerCpuId() {
         return controllerCpuId;
@@ -81,6 +84,7 @@ public class CpuIdData {
      * Returns a string representation of the CPU ID data.
      * 
      * @return Human-readable string with CPU IDs
+      * @since 1.0.0
      */
     @Override
     public String toString() {

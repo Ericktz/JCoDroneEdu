@@ -69,6 +69,7 @@ public enum Note {
      * Get the integer value of this note
      * 
      * @return The integer value
+      * @since 1.0.0
      */
     public int getValue() {
         return value;
@@ -80,6 +81,7 @@ public enum Note {
      * @param value The integer value
      * @return The corresponding Note
      * @throws IllegalArgumentException if value doesn't match any note
+      * @since 1.0.0
      */
     public static Note fromValue(int value) {
         for (Note note : values()) {
@@ -95,6 +97,7 @@ public enum Note {
      * Based on standard tuning where A4 = 440 Hz
      * 
      * @return The frequency in Hz, or 0 for special notes (MUTE, FIN, END_OF_TYPE)
+      * @since 1.0.0
      */
     public double getFrequency() {
         // Special notes return 0
@@ -113,6 +116,7 @@ public enum Note {
      * Check if this note represents an actual musical note (not a control value)
      * 
      * @return true if this is a playable musical note
+      * @since 1.0.0
      */
     public boolean isMusicalNote() {
         return this.value >= C1.value && this.value <= B8.value;

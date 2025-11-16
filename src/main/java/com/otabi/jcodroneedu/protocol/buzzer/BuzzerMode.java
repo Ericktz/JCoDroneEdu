@@ -62,6 +62,7 @@ public enum BuzzerMode {
      * Get the integer value of this mode
      * 
      * @return The integer value
+      * @since 1.0.0
      */
     public int getValue() {
         return value;
@@ -73,6 +74,7 @@ public enum BuzzerMode {
      * @param value The integer value
      * @return The corresponding BuzzerMode
      * @throws IllegalArgumentException if value doesn't match any mode
+      * @since 1.0.0
      */
     public static BuzzerMode fromValue(int value) {
         for (BuzzerMode mode : values()) {

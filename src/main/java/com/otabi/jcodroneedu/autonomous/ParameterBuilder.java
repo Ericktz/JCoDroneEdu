@@ -60,6 +60,7 @@ public class ParameterBuilder {
      * Creates a new parameter builder.
      * 
      * @return A new ParameterBuilder instance
+      * @since 1.0.0
      */
     public static ParameterBuilder create() {
         return new ParameterBuilder();
@@ -71,6 +72,7 @@ public class ParameterBuilder {
      * @param name The parameter name
      * @param value The parameter value
      * @return This builder for method chaining
+      * @since 1.0.0
      */
     public ParameterBuilder set(String name, int value) {
         parameters.put(name, value);
@@ -82,6 +84,7 @@ public class ParameterBuilder {
      * 
      * @param speed Speed percentage (typically 10-100)
      * @return This builder for method chaining
+      * @since 1.0.0
      */
     public ParameterBuilder speed(int speed) {
         return set("speed", speed);
@@ -92,6 +95,7 @@ public class ParameterBuilder {
      * 
      * @param radius Radius in centimeters (typically 20-200)
      * @return This builder for method chaining
+      * @since 1.0.0
      */
     public ParameterBuilder radius(int radius) {
         return set("radius", radius);
@@ -102,6 +106,7 @@ public class ParameterBuilder {
      * 
      * @param direction Direction (typically 1 for clockwise, -1 for counterclockwise)
      * @return This builder for method chaining
+      * @since 1.0.0
      */
     public ParameterBuilder direction(int direction) {
         return set("direction", direction);
@@ -112,6 +117,7 @@ public class ParameterBuilder {
      * 
      * @param segments Number of segments (typically 3-20)
      * @return This builder for method chaining
+      * @since 1.0.0
      */
     public ParameterBuilder segments(int segments) {
         return set("segments", segments);
@@ -122,6 +128,7 @@ public class ParameterBuilder {
      * 
      * @param seconds Duration in seconds (typically 1-30)
      * @return This builder for method chaining
+      * @since 1.0.0
      */
     public ParameterBuilder duration(int seconds) {
         return set("seconds", seconds);
@@ -132,6 +139,7 @@ public class ParameterBuilder {
      * 
      * @param size Size in centimeters (typically 30-300)
      * @return This builder for method chaining
+      * @since 1.0.0
      */
     public ParameterBuilder size(int size) {
         return set("size", size);
@@ -151,6 +159,7 @@ public class ParameterBuilder {
      * Useful for debugging parameter sets.
      * 
      * @return The number of parameters currently set
+      * @since 1.0.0
      */
     public int size() {
         return parameters.size();
@@ -161,6 +170,7 @@ public class ParameterBuilder {
      * 
      * @param name The parameter name to check
      * @return true if the parameter is set, false otherwise
+      * @since 1.0.0
      */
     public boolean hasParameter(String name) {
         return parameters.containsKey(name);
@@ -171,6 +181,7 @@ public class ParameterBuilder {
      * 
      * @param name The parameter name
      * @return The parameter value, or null if not set
+      * @since 1.0.0
      */
     public Integer getParameter(String name) {
         return parameters.get(name);
@@ -180,6 +191,7 @@ public class ParameterBuilder {
      * Clears all parameters.
      * 
      * @return This builder for method chaining
+      * @since 1.0.0
      */
     public ParameterBuilder clear() {
         parameters.clear();
@@ -190,6 +202,7 @@ public class ParameterBuilder {
      * Creates a copy of this builder with the same parameters.
      * 
      * @return A new ParameterBuilder with copied parameters
+      * @since 1.0.0
      */
     public ParameterBuilder copy() {
         ParameterBuilder copy = new ParameterBuilder();

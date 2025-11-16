@@ -53,6 +53,7 @@ public class DisplayService {
      * </ul>
      * 
      * @param canvas the canvas to render on the display
+      * @since 1.0.0
      */
     public void draw(DisplayController canvas) {
         byte[] imageData = canvas.toByteArray();
