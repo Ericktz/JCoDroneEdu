@@ -8,7 +8,7 @@ on:
         required: true
         default: '1.0.14-test'
       dry_run:
-        description: 'If true, publish to mavenLocal only (safe). If false, publish to OSSRH.'
+        description: 'If true, publish to mavenLocal only (safe). If false, publish to Central Portal.'
         required: true
         type: choice
         options:
@@ -75,18 +75,13 @@ jobs:
         if: ${{ inputs.dry_run == 'true' }}
         run: |
           echo "Dry-run selected — publishing to mavenLocal only"
-          ./gradlew -Pversion=${{ inputs.version }} publishStudentPublicationToMavenLocal
+          ./gradlew -Pversion=${{ inputs.version }} publishToMavenLocal
 
-      - name: Real publish to OSSRH
+      - name: Real publish to Central Portal
         if: ${{ inputs.dry_run == 'false' }}
         env:
-          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
-          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+          CENTRAL_PORTAL_USERNAME: ${{ secrets.CENTRAL_PORTAL_USERNAME }}
+          CENTRAL_PORTAL_PASSWORD: ${{ secrets.CENTRAL_PORTAL_PASSWORD }}
         run: |
-          echo "Publishing to OSSRH (real publish) for version: ${{ inputs.version }}"
-          ./gradlew publishStudentPublicationToOSSRHRepository \
-            -Pversion=${{ inputs.version }} \
-            -PossrhUsername=${{ secrets.OSSRH_USERNAME }} \
-            -PossrhPassword=${{ secrets.OSSRH_PASSWORD }}
+          echo "Publishing to Central Portal (real publish) for version: ${{ inputs.version }}"
+          ./gradlew -Pversion=${{ inputs.version }} nmcpPublish

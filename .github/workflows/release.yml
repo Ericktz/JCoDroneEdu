@@ -268,20 +268,10 @@ jobs:
           
           echo "✅ Version bumped to ${NEXT_VERSION}"
 
-      - name: Publish to Maven Central
+      - name: Publish to Central Portal
         if: ${{ !contains(steps.get_version.outputs.VERSION, 'SNAPSHOT') }}
         env:
-          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
-          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
+          CENTRAL_PORTAL_USERNAME: ${{ secrets.CENTRAL_PORTAL_USERNAME }}
+          CENTRAL_PORTAL_PASSWORD: ${{ secrets.CENTRAL_PORTAL_PASSWORD }}
         run: |
-          if [ -z "$OSSRH_USERNAME" ]; then
-            echo "⚠️  Maven Central credentials not configured, skipping publication"
-            exit 0
-          fi
-          
-          ./gradlew publishStudentPublicationToOSSRHRepository \
-            -Pversion=${{ steps.get_version.outputs.VERSION }} \
-            -PossrhUsername="$OSSRH_USERNAME" \
-            -PossrhPassword="$OSSRH_PASSWORD"
+          ./gradlew -Pversion=${{ steps.get_version.outputs.VERSION }} nmcpPublish

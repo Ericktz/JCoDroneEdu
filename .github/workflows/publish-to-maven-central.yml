@@ -8,7 +8,7 @@ on:
         required: true
         default: '1.0.15'
       dry_run:
-        description: 'If true, publish to mavenLocal only (safe). If false, publish to OSSRH.'
+        description: 'If true, publish to mavenLocal only (safe). If false, publish to Central Portal.'
         required: true
         type: choice
         options:
@@ -72,29 +72,13 @@ jobs:
         if: ${{ inputs.dry_run == 'true' }}
         run: |
           echo "Dry-run selected — publishing to mavenLocal only"
-          ./gradlew -Pversion=${{ inputs.version }} publishStudentPublicationToMavenLocal --no-daemon
+          ./gradlew -Pversion=${{ inputs.version }} publishToMavenLocal --no-daemon
 
-      - name: Real publish to OSSRH
+      - name: Real publish to Central Portal
         if: ${{ inputs.dry_run == 'false' }}
         env:
-          OSSRH_USERNAME: ${{ secrets.OSSRH_USERNAME }}
-          OSSRH_PASSWORD: ${{ secrets.OSSRH_PASSWORD }}
-          SIGNING_KEY: ${{ secrets.SIGNING_KEY }}
-          SIGNING_PASSWORD: ${{ secrets.SIGNING_PASSWORD }}
-          SONATYPE_PORTAL_TOKEN: ${{ secrets.SONATYPE_PORTAL_TOKEN }}
+          CENTRAL_PORTAL_USERNAME: ${{ secrets.CENTRAL_PORTAL_USERNAME }}
+          CENTRAL_PORTAL_PASSWORD: ${{ secrets.CENTRAL_PORTAL_PASSWORD }}
         run: |
-          # Prefer the Sonatype portal token when available
-          if [ -n "${SONATYPE_PORTAL_TOKEN}" ]; then
-            echo "Using SONATYPE_PORTAL_TOKEN for OSSRH authentication"
-            UP_USER=token
-            UP_PASS="${SONATYPE_PORTAL_TOKEN}"
-          else
-            echo "Using OSSRH_USERNAME/OSSRH_PASSWORD for OSSRH authentication"
-            UP_USER="${OSSRH_USERNAME}"
-            UP_PASS="${OSSRH_PASSWORD}"
-          fi
-
-          ./gradlew publishStudentPublicationToOSSRHRepository \
-            -Pversion=${{ inputs.version }} \
-            -PossrhUsername="$UP_USER" \
-            -PossrhPassword="$UP_PASS" --no-daemon
+          echo "Publishing to Central Portal (real publish) for version: ${{ inputs.version }}"
+          ./gradlew -Pversion=${{ inputs.version }} nmcpPublish --no-daemon
