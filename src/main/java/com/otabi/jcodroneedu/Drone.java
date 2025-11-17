@@ -6710,6 +6710,116 @@ public class Drone implements AutoCloseable {
     }
 
 
+    /**
+     * Draws an arc on the specified canvas.
+     * @param x1 Starting X coordinate of bounding box
+     * @param y1 Starting Y coordinate of bounding box
+     * @param x2 Ending X coordinate of bounding box
+     * @param y2 Ending Y coordinate of bounding box
+     * @param startAngle Start angle in degrees
+     * @param endAngle End angle in degrees
+     * @param canvas The canvas to draw on
+     * @educational
+    * @pythonEquivalent controller_draw_arc
+    * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#controller_draw_arc
+     * @since 1.0.0
+     */
+    public void controllerDrawArc(int x1, int y1, int x2, int y2, int startAngle, int endAngle, DisplayController canvas) {
+        controllerService.drawArc(x1, y1, x2, y2, startAngle, endAngle, canvas);
+    }
+
+    /**
+     * Draws a chord on the specified canvas.
+     * @param x1 Starting X coordinate of bounding box
+     * @param y1 Starting Y coordinate of bounding box
+     * @param x2 Ending X coordinate of bounding box
+     * @param y2 Ending Y coordinate of bounding box
+     * @param startAngle Start angle in degrees
+     * @param endAngle End angle in degrees
+     * @param canvas The canvas to draw on
+     * @educational
+    * @pythonEquivalent controller_draw_chord
+    * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#controller_draw_chord
+     * @since 1.0.0
+     */
+    public void controllerDrawChord(int x1, int y1, int x2, int y2, int startAngle, int endAngle, DisplayController canvas) {
+        controllerService.drawChord(x1, y1, x2, y2, startAngle, endAngle, canvas);
+    }
+
+    /**
+     * Draws an ellipse on the specified canvas.
+     * @param x1 Starting X coordinate of bounding box
+     * @param y1 Starting Y coordinate of bounding box
+     * @param x2 Ending X coordinate of bounding box
+     * @param y2 Ending Y coordinate of bounding box
+     * @param canvas The canvas to draw on
+     * @educational
+    * @pythonEquivalent controller_draw_ellipse
+    * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#controller_draw_ellipse
+     * @since 1.0.0
+     */
+    public void controllerDrawEllipse(int x1, int y1, int x2, int y2, DisplayController canvas) {
+        controllerService.drawEllipse(x1, y1, x2, y2, canvas);
+    }
+
+    /**
+     * Draws a polygon on the specified canvas.
+     * @param points Array of [x, y] pairs
+     * @param canvas The canvas to draw on
+     * @educational
+    * @pythonEquivalent controller_draw_polygon
+    * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#controller_draw_polygon
+     * @since 1.0.0
+     */
+    public void controllerDrawPolygon(int[][] points, DisplayController canvas) {
+        controllerService.drawPolygon(points, canvas);
+    }
+
+    /**
+     * Draws a square on the specified canvas.
+     * @param x X coordinate of top-left corner
+     * @param y Y coordinate of top-left corner
+     * @param width Width of the square
+     * @param canvas The canvas to draw on
+     * @educational
+    * @pythonEquivalent controller_draw_square
+    * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#controller_draw_square
+     * @since 1.0.0
+     */
+    public void controllerDrawSquare(int x, int y, int width, DisplayController canvas) {
+        controllerService.drawSquare(x, y, width, canvas);
+    }
+
+    /**
+     * Draws aligned text on the specified canvas.
+     * @param xStart Start X coordinate
+     * @param xEnd End X coordinate
+     * @param y Y coordinate
+     * @param text The text to draw
+     * @param alignment Alignment (e.g., "left", "center", "right")
+     * @param canvas The canvas to draw on
+     * @educational
+    * @pythonEquivalent controller_draw_string_align
+    * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#controller_draw_string_align
+     * @since 1.0.0
+     */
+    public void controllerDrawStringAlign(int xStart, int xEnd, int y, String text, String alignment, DisplayController canvas) {
+        controllerService.drawStringAlign(xStart, xEnd, y, text, alignment, canvas);
+    }
+
+    /**
+     * Previews the canvas on the controller display (does not commit changes).
+     * @param canvas The canvas to preview
+     * @educational
+    * @pythonEquivalent controller_preview_canvas
+    * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#controller_preview_canvas
+     * @since 1.0.0
+     */
+    public void controllerPreviewCanvas(DisplayController canvas) {
+        controllerService.previewCanvas(canvas);
+    }
+
+
     // ========================================
     // Controller Input Methods
     // ========================================

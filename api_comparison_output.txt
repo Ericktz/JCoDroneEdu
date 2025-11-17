@@ -18,12 +18,12 @@ Requirement already satisfied: Pillow in ./reference/python-venv/lib/python3.12/
 ✅ Installed codrone-edu==2.6.0
 📊 Documented Python methods loaded: 127 public API methods
 📊 Python Methods: 127
-📊 Java Methods: 188
+📊 Java Methods: 199
 
-⚠️  Missing in Java: 34
+⚠️  Missing in Java: 13
 
 ✅ Report saved to: API_COMPARISON.md
 ============================================================
 
-BUILD SUCCESSFUL in 2s
+BUILD SUCCESSFUL in 1s
 1 actionable task: 1 executed

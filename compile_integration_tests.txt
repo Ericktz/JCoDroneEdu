@@ -1,0 +1,15 @@
+
+> Configure project :
+Project version set to: 1.4.0-SNAPSHOT
+
+> Task :compileJava UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+> Task :compileTestJava UP-TO-DATE
+> Task :flight-patterns:compileJava UP-TO-DATE
+> Task :flight-patterns:processResources NO-SOURCE
+> Task :flight-patterns:classes UP-TO-DATE
+> Task :flight-patterns:compileTestJava UP-TO-DATE
+
+BUILD SUCCESSFUL in 475ms
+5 actionable tasks: 5 up-to-date

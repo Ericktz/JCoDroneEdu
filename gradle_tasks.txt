@@ -1,0 +1,209 @@
+
+> Configure project :
+Project version set to: 1.4.0-SNAPSHOT
+
+> Task :tasks
+
+------------------------------------------------------------
+Tasks runnable from root project 'JCoDroneEdu'
+------------------------------------------------------------
+
+Application tasks
+-----------------
+runL0103TurningNavigation - Runs the L0103 Turning Navigation example to test position-based movement commands.
+
+Build tasks
+-----------
+assemble - Assembles the outputs of this project.
+flight-patterns:assemble - Assembles the outputs of this project.
+build - Assembles and tests this project.
+flight-patterns:build - Assembles and tests this project.
+buildDependents - Assembles and tests this project and all projects that depend on it.
+flight-patterns:buildDependents - Assembles and tests this project and all projects that depend on it.
+buildNeeded - Assembles and tests this project and all projects it depends on.
+flight-patterns:buildNeeded - Assembles and tests this project and all projects it depends on.
+classes - Assembles main classes.
+flight-patterns:classes - Assembles main classes.
+clean - Deletes the build directory.
+flight-patterns:clean - Deletes the build directory.
+jar - Assembles a jar archive containing the classes of the 'main' feature.
+flight-patterns:jar - Assembles a jar archive containing the classes of the 'main' feature.
+flight-patterns:javadocJar - Assembles a jar archive containing the main javadoc.
+flight-patterns:sourcesJar - Assembles a jar archive containing the main sources.
+testClasses - Assembles test classes.
+flight-patterns:testClasses - Assembles test classes.
+
+Build Setup tasks
+-----------------
+init - Initializes a new Gradle build.
+updateDaemonJvm - Generates or updates the Gradle Daemon JVM criteria.
+wrapper - Generates Gradle wrapper files.
+
+Documentation tasks
+-------------------
+javadoc - Generates Javadoc API documentation for the 'main' feature.
+flight-patterns:javadoc - Generates Javadoc API documentation for the 'main' feature.
+
+Help tasks
+----------
+buildEnvironment - Displays all buildscript dependencies declared in root project 'JCoDroneEdu'.
+flight-patterns:buildEnvironment - Displays all buildscript dependencies declared in project ':flight-patterns'.
+dependencies - Displays all dependencies declared in root project 'JCoDroneEdu'.
+flight-patterns:dependencies - Displays all dependencies declared in project ':flight-patterns'.
+dependencyInsight - Displays the insight into a specific dependency in root project 'JCoDroneEdu'.
+flight-patterns:dependencyInsight - Displays the insight into a specific dependency in project ':flight-patterns'.
+help - Displays a help message.
+flight-patterns:help - Displays a help message.
+javaToolchains - Displays the detected java toolchains.
+flight-patterns:javaToolchains - Displays the detected java toolchains.
+kotlinDslAccessorsReport - Prints the Kotlin code for accessing the currently available project extensions and conventions.
+flight-patterns:kotlinDslAccessorsReport - Prints the Kotlin code for accessing the currently available project extensions and conventions.
+outgoingVariants - Displays the outgoing variants of root project 'JCoDroneEdu'.
+flight-patterns:outgoingVariants - Displays the outgoing variants of project ':flight-patterns'.
+projects - Displays the sub-projects of root project 'JCoDroneEdu'.
+flight-patterns:projects - Displays the sub-projects of project ':flight-patterns'.
+properties - Displays the properties of root project 'JCoDroneEdu'.
+flight-patterns:properties - Displays the properties of project ':flight-patterns'.
+resolvableConfigurations - Displays the configurations that can be resolved in root project 'JCoDroneEdu'.
+flight-patterns:resolvableConfigurations - Displays the configurations that can be resolved in project ':flight-patterns'.
+tasks - Displays the tasks runnable from root project 'JCoDroneEdu' (some of the displayed tasks may belong to subprojects).
+flight-patterns:tasks - Displays the tasks runnable from project ':flight-patterns'.
+
+Publishing tasks
+----------------
+generateMetadataFileForMavenJavaPublication - Generates the Gradle metadata file for publication 'mavenJava'.
+flight-patterns:generateMetadataFileForMavenPublication - Generates the Gradle metadata file for publication 'maven'.
+generatePomFileForMavenJavaPublication - Generates the Maven POM file for publication 'mavenJava'.
+flight-patterns:generatePomFileForMavenPublication - Generates the Maven POM file for publication 'maven'.
+publish - Publishes all publications produced by this project.
+flight-patterns:publish - Publishes all publications produced by this project.
+publishAllPublicationsToOSSRHRepository - Publishes all Maven publications produced by this project to the OSSRH repository.
+flight-patterns:publishAllPublicationsToOSSRHRepository - Publishes all Maven publications produced by this project to the OSSRH repository.
+publishMavenJavaPublicationToMavenLocal - Publishes Maven publication 'mavenJava' to the local Maven repository.
+publishMavenJavaPublicationToOSSRHRepository - Publishes Maven publication 'mavenJava' to Maven repository 'OSSRH'.
+flight-patterns:publishMavenPublicationToMavenLocal - Publishes Maven publication 'maven' to the local Maven repository.
+flight-patterns:publishMavenPublicationToOSSRHRepository - Publishes Maven publication 'maven' to Maven repository 'OSSRH'.
+publishToMavenLocal - Publishes all Maven publications produced by this project to the local Maven cache.
+flight-patterns:publishToMavenLocal - Publishes all Maven publications produced by this project to the local Maven cache.
+
+Python tasks
+------------
+checkChangelog - Quick check for recent changelog updates without full library update
+checkCodroneVersion - Checks if local reference code matches latest PyPI version and detects changelog updates
+createPythonVenv - Creates a Python virtual environment with CoDrone EDU library
+updateChangelog - Fetches latest changelog from Robolink docs and updates tracking document
+updateCodroneDocs - Complete workflow: update library, reference code, and documentation
+updateCodroneEdu - Updates CoDrone EDU library to latest version
+updateReferenceCode - Copies CoDrone EDU library code to reference directory
+
+Release tasks
+-------------
+generateReleaseNotes - Generates GitHub release notes from CHANGELOG.md
+updateCopyright - Updates copyright year in all Java source files and LICENSE
+
+Research tasks
+--------------
+runTemperatureCalibrationExperiment - Runs a systematic temperature calibration experiment collecting data about warm-up and flight effects. Outputs CSV data for analysis.
+
+Verification tasks
+------------------
+check - Runs all checks.
+flight-patterns:check - Runs all checks.
+checkDeprecations - Lists deprecated methods and warns about old deprecations
+compareApis - Compare Python and Java APIs and generate report. Use -PapiVersion=VERSION or -PcompareLatest to test compatibility
+preReleaseCheck - Run pre-release checklist and verification
+runAccelTest - Runs the command-line AccelTest (prints accelerometer and angle data).
+runAltitudePressureTest - Displays altitude, pressure, and height sensor data with calculations.
+runAutomaticElevationDemo - Demonstrates automatic location detection and pressure calibration with fallback strategy.
+runAutonomousPingTest - Comprehensive test for autonomous flight (avoidWall, keepDistance) and ping feature.
+runBlockSizeTest - Runs BlockSizeTest - test different block sizes with 0x88
+runBothMonitors - Runs both sensor and controller monitors with L1 hold takeoff test. Requires drone + controller.
+runBuzzerResponseTest - Runs BuzzerResponseTest - checks if buzzer commands get echo responses
+runBuzzerTest - Tests drone and controller buzzers with notes and frequencies.
+runCalibratedElevationDemo - Demonstrates weather-calibrated elevation using real-time pressure data.
+runCanvasColorDebugTest - Runs CanvasColorDebugTest - debug what colors are actually drawn on canvas
+runCanvasToProtocolTest - Runs CanvasToProtocolTest - sends canvas as chunked 0x88 messages
+runCanvasVsManualTest - Runs CanvasVsManualTest - compare canvas bytes vs manual 0xFF
+runCheckerboardTest - Runs CheckerboardTest using individual controllerDrawPoint commands
+runChunkPositioningDebugTest - Runs ChunkPositioningDebugTest - debug why chunked 0x88 doesn't work
+runCleanCanvasTest - Runs CleanCanvasTest - sends canvas as 5 properly-sized 0x88 messages
+runColorSensorDebug - Runs the ColorSensorDebug tool to show detailed color sensor data including HSVL values.
+runCommandEchoComparisonTest - Runs CommandEchoComparisonTest - compares echo responses for controller vs drone commands
+runConservativeFlight - Runs the ConservativeFlight example (requires --allow-flight to actually fly).
+runControllerDisplayCanvasExample - Runs the ControllerDisplayCanvasExample to demonstrate canvas-based controller display with batching.
+runControllerDisplayExample - Runs the ControllerDisplayExample to demonstrate controller display drawing capabilities.
+runControllerInputDebug - Debug tool to see raw controller input data.
+runControllerInputGui - Interactive GUI for testing controller joysticks and buttons. Requires controller connection.
+runDebugYCoordinateTest - Runs DebugYCoordinateTest - tests y-coordinate positioning with 0x88
+runDisplayCommandStructureTest - Runs DisplayCommandStructureTest - analyzes response packets for different display commands
+runDisplayLineTest - Runs DisplayLineTest to diagnose display byte-packing format
+runDisplayStagedTest - Runs DisplayStagedTest with clear visual progression
+runDisplayWhiteTest - Runs DisplayWhiteTest to test white/blank display
+runDroneCommandResponseTest - Runs DroneCommandResponseTest - checks if drone commands get echo responses
+runEchoTimingTest - Runs EchoTimingTest - analyzes timing of echo responses to determine if from controller or drone
+runElevationApiDemo - Demonstrates the elevation API (getUncorrectedElevation, getCorrectedElevation, getElevation).
+runErrorMonitoringConnect - Runs the ErrorMonitoringExample with drone connection (reads real error data, no flight).
+runErrorMonitoringDemo - Runs the ErrorMonitoringExample in demo mode (no hardware required).
+runErrorMonitoringFly - Runs the ErrorMonitoringExample with ACTUAL FLIGHT operations (CAUTION!).
+runExampleMenu - Runs the Integration Test Menu - interactive interface for all hardware integration tests.
+runFlightSmokeTest - Runs the guarded FlightSmokeTest (requires --allow-flight and --confirm=YES to actually fly).
+runFormatComparisonTest - Runs FormatComparisonTest - compare different byte patterns with 0x88
+runFullCanvasTest - Runs FullCanvasTest - test sending full 1024-byte canvas at once
+runFullDataWithYOffsetTest - Runs FullDataWithYOffsetTest - test full data at different y positions
+runIntegrationTestMenu - Runs the Integration Test Menu - interactive interface for all hardware integration tests.
+runMelodyPlayer - Plays musical melodies using the drone buzzer.
+runMotionDump - Dumps raw Motion short values and scaled accel/angle for 5s.
+runMultiSensorTest - Runs the MultiSensorTest example to snapshot range, optical flow, temperature, and color sensors.
+runPacketRateTest - Runs PacketRateTest - monitors packet rate without sending display commands
+runPowerCycleTest - Runs PowerCycleTest - power cycles drone to clear display state
+runQuickLEDTest - Runs the QuickLEDTest example to verify drone and controller LED functionality.
+runRelativeHeightDemo - Demonstrates relative height measurement using pressure reference (Python compatibility).
+runRobotEmojiTest - Runs RobotEmojiTest - displays robot emoji from PNG on controller
+runRobotImageTest - Runs RobotImageTest - displays robot face on controller
+runSensorDisplayGui - Runs the Swing-based SensorDisplay GUI (non-flying telemetry monitor). Requires drone connection.
+runSimple0x88Test - Runs Simple0x88Test - basic 0x88 functionality test
+runSimpleLinesTest - Runs SimpleLinesTest - draws a few horizontal lines for quick diagnostics
+runSingleMessageTest - Runs SingleMessageTest - sends a single 0x88 DisplayDrawImage message
+runSingleNoteTest - Plays a single note (G4) repeatedly to test buzzer audio.
+runSmokeTest - Runs the SmokeTest example to verify controller connection (no flight commands).
+runTemperatureCalibrationDemo - Demonstrates temperature sensor calibration and the difference between raw sensor and calibrated ambient temperature.
+runTestHarness - Runs the interactive TestHarness example for manual testing.
+runTwoLinesPersistenceTest - Runs TwoLinesPersistenceTest - verify two 0x88 commands accumulate
+runWeatherServiceTest - Tests weather API connectivity and data retrieval (no drone required).
+runY0AfterOtherCommandTest - Runs Y0AfterOtherCommandTest - test y=0 after other 0x88 commands
+runYZeroDebugTest - Runs YZeroDebugTest - debug y=0 positioning issue
+test - Runs the test suite.
+flight-patterns:test - Runs the test suite.
+validateArtifacts - Validates JAR artifacts after build
+validateChangelog - Validates CHANGELOG.md format and content
+validateSinceTags - Validates that all public methods/classes have @since annotations
+validateVersionConsistency - Validates version consistency across build.gradle.kts and CHANGELOG.md
+
+Other tasks
+-----------
+compileJava - Compiles main Java source.
+flight-patterns:compileJava - Compiles main Java source.
+compileTestJava - Compiles test Java source.
+flight-patterns:compileTestJava - Compiles test Java source.
+components - Displays the components produced by root project 'JCoDroneEdu'. [deprecated]
+flight-patterns:components - Displays the components produced by project ':flight-patterns'. [deprecated]
+dependentComponents - Displays the dependent components of components in root project 'JCoDroneEdu'. [deprecated]
+flight-patterns:dependentComponents - Displays the dependent components of components in project ':flight-patterns'. [deprecated]
+javadocJar
+model - Displays the configuration model of root project 'JCoDroneEdu'. [deprecated]
+flight-patterns:model - Displays the configuration model of project ':flight-patterns'. [deprecated]
+prepareKotlinBuildScriptModel
+processResources - Processes main resources.
+flight-patterns:processResources - Processes main resources.
+processTestResources - Processes test resources.
+flight-patterns:processTestResources - Processes test resources.
+flight-patterns:signMavenPublication - Signs all artifacts in the 'maven' publication.
+sourcesJar
+
+Rules
+-----
+Pattern: clean<TaskName>: Cleans the output files of a task.
+Pattern: build<ConfigurationName>: Assembles the artifacts of a configuration.
+
+BUILD SUCCESSFUL in 646ms
+1 actionable task: 1 executed

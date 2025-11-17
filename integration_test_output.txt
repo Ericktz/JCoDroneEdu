@@ -1,0 +1,23 @@
+
+> Configure project :
+Project version set to: 1.4.0-SNAPSHOT
+
+> Task :compileJava UP-TO-DATE
+> Task :processResources UP-TO-DATE
+> Task :classes UP-TO-DATE
+> Task :compileTestJava UP-TO-DATE
+> Task :processTestResources UP-TO-DATE
+> Task :testClasses UP-TO-DATE
+
+> Task :runTestHarness
+--- CoDrone EDU Test Harness ---
+1) Auto-detect & connect
+2) Connect to specific port
+3) Show battery
+4) Show model/info
+5) Read sensors once (state/joystick)
+6) Hover (safe) — will run a short hover
+7) Conservative flight (requires explicit confirm)
+8) Disconnect
+9) Quit
+Select> 
