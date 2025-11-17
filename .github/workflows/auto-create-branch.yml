@@ -50,47 +50,64 @@ jobs:
       - name: Determine version bump
         id: version
         run: |
-          # Get current version from build.gradle.kts
-          CURRENT_VERSION=$(grep "else -> \"" build.gradle.kts | grep -oE '[0-9]+\.[0-9]+\.[0-9]+' | head -1)
+          # Get latest release version from git tags
+          LATEST_RELEASE=$(git tag -l "v*" | sort -V | tail -1 | sed 's/^v//')
           
-          # Parse version components
-          MAJOR=$(echo $CURRENT_VERSION | cut -d. -f1)
-          MINOR=$(echo $CURRENT_VERSION | cut -d. -f2)
-          PATCH=$(echo $CURRENT_VERSION | cut -d. -f3)
+          # Parse latest release version components
+          MAJOR=$(echo $LATEST_RELEASE | cut -d. -f1)
+          MINOR=$(echo $LATEST_RELEASE | cut -d. -f2)
+          PATCH=$(echo $LATEST_RELEASE | cut -d. -f3)
           
-          # Determine next version based on branch type
+          # Only bugfix branches get version bumps
+          # Feature branches keep main's development version
+          NEXT_VERSION=""
           if [[ "${{ steps.create_branch.outputs.branch_type }}" == "bugfix" ]]; then
             NEXT_PATCH=$((PATCH + 1))
             NEXT_VERSION="${MAJOR}.${MINOR}.${NEXT_PATCH}-SNAPSHOT"
-          else
-            NEXT_MINOR=$((MINOR + 1))
-            NEXT_VERSION="${MAJOR}.${NEXT_MINOR}.0-SNAPSHOT"
           fi
           
-          echo "current_version=${CURRENT_VERSION}" >> $GITHUB_OUTPUT
+          echo "latest_release=${LATEST_RELEASE}" >> $GITHUB_OUTPUT
           echo "next_version=${NEXT_VERSION}" >> $GITHUB_OUTPUT
 
-      - name: Update version in branch
+      - name: Update version in bugfix branch
         env:
           BRANCH_NAME: ${{ steps.create_branch.outputs.branch_name }}
+          BRANCH_TYPE: ${{ steps.create_branch.outputs.branch_type }}
+          LATEST_RELEASE: ${{ steps.version.outputs.latest_release }}
           NEXT_VERSION: ${{ steps.version.outputs.next_version }}
         run: |
+          # Only update version for bugfix branches
+          if [[ "$BRANCH_TYPE" != "bugfix" ]]; then
+            echo "ℹ️  Feature branch detected - skipping version bump"
+            echo "Main development version will be used"
+            exit 0
+          fi
+          
           # Switch to the new branch
           git fetch origin "$BRANCH_NAME"
           git checkout "$BRANCH_NAME"
           
-          # Update build.gradle.kts with new version
-          CURRENT_VERSION="${{ steps.version.outputs.current_version }}"
-          sed -i "s/else -> \"${CURRENT_VERSION}\"/else -> \"${NEXT_VERSION}\"/" build.gradle.kts
+          # Find current version string in build.gradle.kts
+          CURRENT_VERSION_STRING=$(grep "else -> \"" build.gradle.kts | grep -oE '[0-9]+\.[0-9]+\.[0-9]+([-\w]+)?')
+          
+          # Update build.gradle.kts with bugfix version (latest release + 1 patch)
+          sed -i "s/else -> \"${CURRENT_VERSION_STRING}\"/else -> \"${NEXT_VERSION}\"/" build.gradle.kts
+          
+          # Check if file was modified
+          if git diff --quiet build.gradle.kts; then
+            echo "⚠️  Warning: No changes detected in build.gradle.kts"
+            echo "Pattern: else -> \"${CURRENT_VERSION_STRING}\""
+            exit 1
+          fi
           
           # Commit version bump
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
           git add build.gradle.kts
-          git commit -m "Bump version to ${NEXT_VERSION} for development"
+          git commit -m "Bump version to ${NEXT_VERSION} for bugfix (latest release: ${LATEST_RELEASE})"
           git push origin "$BRANCH_NAME"
           
-          echo "✅ Version bumped to ${NEXT_VERSION}"
+          echo "✅ Bugfix version bumped to ${NEXT_VERSION} (from latest release ${LATEST_RELEASE})"
 
       - name: Post comment on issue
         uses: actions/github-script@v7
@@ -105,7 +122,14 @@ jobs:
             const typeEmoji = branchType === 'bugfix' ? '🐛' : '✨';
             const typeLabel = branchType === 'bugfix' ? 'Bug Fix' : 'Feature';
             
-            const instructions = `${typeEmoji} **${typeLabel} Branch Created**\n\n🌿 **Branch**: [${branchName}](${branchUrl})\n\n📦 **Version**: \`${nextVersion}\`\n\n**Quick Start**:\n1. Fetch and checkout the branch:\n   \`\`\`bash\n   git fetch origin ${branchName}\n   git checkout ${branchName}\n   \`\`\`\n\n2. Or use one command:\n   \`\`\`bash\n   git checkout --track origin/${branchName}\n   \`\`\`\n\n3. See [Agent Instructions](.github/AGENT_INSTRUCTIONS.md) for full development workflow\n\n4. When ready, push commits and open a PR\n\n**Important Notes**:\n- Version already bumped to \`${nextVersion}\` - do not change it\n- Check out the branch before making any commits\n- This branch is ready for work - all automation complete`;
+            let versionNote = '';
+            if (branchType === 'bugfix' && nextVersion) {
+              versionNote = `\n📦 **Version**: \`${nextVersion}\` (bumped from main development version)`;
+            } else if (branchType === 'feature') {
+              versionNote = `\n📦 **Version**: Uses main development version (no bump for features)`;
+            }
+            
+            const instructions = `${typeEmoji} **${typeLabel} Branch Created**\n\n🌿 **Branch**: [${branchName}](${branchUrl})${versionNote}\n\n**Quick Start**:\n1. Fetch and checkout the branch:\n   \`\`\`bash\n   git fetch origin ${branchName}\n   git checkout ${branchName}\n   \`\`\`\n\n2. Or use one command:\n   \`\`\`bash\n   git checkout --track origin/${branchName}\n   \`\`\`\n\n3. See [Agent Instructions](.github/AGENT_INSTRUCTIONS.md) for full development workflow\n\n4. When ready, push commits and open a PR\n\n**Important Notes**:\n- ${branchType === 'bugfix' ? 'Version already bumped to `' + nextVersion + '` - do not change it' : 'Version remains unchanged - using main development version'}\n- Check out the branch before making any commits\n- This branch is ready for work - all automation complete`;
 
             github.rest.issues.createComment({
               issue_number: context.issue.number,

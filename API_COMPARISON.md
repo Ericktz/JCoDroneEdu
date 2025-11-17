@@ -1,5 +1,6 @@
 # API Comparison Report
 
+**Generated:** 2025-11-16T18:59:13.534590
 **Java Version:** 1.4.0-SNAPSHOT
 **Python API Version:** 2.6.0
 
@@ -7,11 +8,11 @@
 
 - **Python Methods:** 127
 - **Java Methods:** 189
-- **Matched Methods:** 112
-  - Documented (@pythonEquivalent): 70
+- **Matched Methods:** 113
+  - Documented (@pythonEquivalent): 71
   - Inferred (by name): 42
-- **In Python, Not Java:** 24
-- **In Java, Not Python:** 77
+- **In Python, Not Java:** 23
+- **In Java, Not Python:** 76
 
 **Note:** Java methods use @pythonEquivalent annotations to document their Python API mapping.
 
@@ -20,7 +21,6 @@
 ⚠️ Consider implementing these methods:
 
 - `append_color_data()`
-- `controller_LED_off()`
 - `controller_draw_arc()`
 - `controller_draw_chord()`
 - `controller_draw_ellipse()`
@@ -59,7 +59,6 @@
 - `controllerClearArea()`
 - `controllerDrawCircle()`
 - `controllerInvertArea()`
-- `controllerLEDOff()`
 - `droneBuzzerSequence()`
 - `getAccel()`
 - `getAccidentCount()`
