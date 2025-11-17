@@ -10,6 +10,8 @@ package com.otabi.jcodroneedu;
 import com.otabi.jcodroneedu.protocol.DeviceType;
 import com.otabi.jcodroneedu.protocol.lightcontroller.LightDefault;
 import com.otabi.jcodroneedu.protocol.lightcontroller.Color;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * Service for rendering images on the controller display.
@@ -20,6 +22,7 @@ import com.otabi.jcodroneedu.protocol.lightcontroller.Color;
  */
 public class ControllerService {
     
+    private static final Logger log = LogManager.getLogger(ControllerService.class);
     private final Drone drone;
     
     /**
@@ -29,6 +32,7 @@ public class ControllerService {
      */
     public ControllerService(Drone drone) {
         this.drone = drone;
+        log.debug("ControllerService initialized for drone communication");
     }
     
     /**
@@ -41,6 +45,7 @@ public class ControllerService {
      * @since 1.4.0
      */
     public void drawSquare(int x, int y, int width, DisplayController canvas) {
+        log.trace("Drawing square at ({}, {}) with width {}", x, y, width);
         canvas.drawRectangle(x, y, width, width);
     }
 
@@ -53,8 +58,10 @@ public class ControllerService {
      */
     public void drawPolygon(int[][] points, DisplayController canvas) {
         if (points == null || points.length < 2) {
+            log.warn("drawPolygon called with invalid points: {}", points == null ? "null" : points.length + " points");
             return;
         }
+        log.trace("Drawing polygon with {} vertices", points.length);
         for (int i = 0; i < points.length; i++) {
             int nextIdx = (i + 1) % points.length;
             canvas.drawLine(points[i][0], points[i][1], points[nextIdx][0], points[nextIdx][1]);
@@ -72,6 +79,7 @@ public class ControllerService {
      * @since 1.4.0
      */
     public void drawEllipse(int x1, int y1, int x2, int y2, DisplayController canvas) {
+        log.trace("Drawing ellipse with bounds ({},{}) to ({},{})", x1, y1, x2, y2);
         // Approximate ellipse using circle drawing algorithm
         int centerX = (x1 + x2) / 2;
         int centerY = (y1 + y2) / 2;
@@ -105,6 +113,7 @@ public class ControllerService {
      * @since 1.4.0
      */
     public void drawArc(int x1, int y1, int x2, int y2, int startAngle, int endAngle, DisplayController canvas) {
+        log.trace("Drawing arc from {}° to {}° in bounds ({},{}) to ({},{})", startAngle, endAngle, x1, y1, x2, y2);
         int centerX = (x1 + x2) / 2;
         int centerY = (y1 + y2) / 2;
         int radiusX = (x2 - x1) / 2;
@@ -137,6 +146,7 @@ public class ControllerService {
      * @since 1.4.0
      */
     public void drawChord(int x1, int y1, int x2, int y2, int startAngle, int endAngle, DisplayController canvas) {
+        log.trace("Drawing chord from {}° to {}° in bounds ({},{}) to ({},{})", startAngle, endAngle, x1, y1, x2, y2);
         int centerX = (x1 + x2) / 2;
         int centerY = (y1 + y2) / 2;
         int radiusX = (x2 - x1) / 2;
@@ -181,6 +191,7 @@ public class ControllerService {
      * @since 1.4.0
      */
     public void drawStringAlign(int xStart, int xEnd, int y, String text, String alignment, DisplayController canvas) {
+        log.trace("Drawing text '{}' at y={} with alignment={}", text, y, alignment);
         int x = xStart;
         if ("center".equalsIgnoreCase(alignment)) {
             x = xStart + (xEnd - xStart) / 2 - (text.length() * 3) / 2;
@@ -197,6 +208,7 @@ public class ControllerService {
      * @since 1.4.0
      */
     public void previewCanvas(DisplayController canvas) {
+        log.trace("Canvas preview requested (no-op on Java)");
         // In Java, the canvas object itself serves as the preview mechanism
         // No additional action needed
     }
@@ -227,13 +239,17 @@ public class ControllerService {
      * @since 1.0.0
      */
     public void draw(DisplayController canvas) {
+        log.debug("Drawing canvas to controller display (127x63 monochrome)");
         byte[] imageData = canvas.toByteArray();
+        log.trace("Canvas converted to byte array: {} bytes", imageData.length);
         
         // Clear the screen first to ensure clean state
+        log.debug("Clearing controller screen");
         drone.controllerClearScreen();
         try {
             Thread.sleep(50);
         } catch (InterruptedException e) {
+            log.warn("Interrupted during clear screen delay");
             Thread.currentThread().interrupt();
         }
         
@@ -243,21 +259,26 @@ public class ControllerService {
             int byteOffset = rowGroup * 128;
             System.arraycopy(imageData, byteOffset, chunks[rowGroup], 0, 128);
         }
+        log.trace("Image split into 8 chunks of 128 bytes each");
         
         // Send all chunks 5 times, interleaved (1-2-3-4-5-6-7-8, repeat 5x)
         final int MAX_ATTEMPTS = 5;
         for (int attempt = 1; attempt <= MAX_ATTEMPTS; attempt++) {
+            log.trace("Transmission pass {}/{}", attempt, MAX_ATTEMPTS);
             for (int rowGroup = 0; rowGroup < 8; rowGroup++) {
                 int yPosition = rowGroup * 8;
                 try {
+                    log.trace("Sending chunk {} at y={}", rowGroup, yPosition);
                     drone.controllerDrawImage(0, yPosition, 128, 8, chunks[rowGroup]);
                     // Delay between sends to allow controller to process
                     Thread.sleep(15);
                 } catch (InterruptedException e) {
+                    log.warn("Interrupted during transmission pass {} chunk {}", attempt, rowGroup);
                     Thread.currentThread().interrupt();
                 }
             }
         }
+        log.debug("Canvas transmission complete (40 total chunks sent)");
     }
 
     /**
@@ -270,6 +291,7 @@ public class ControllerService {
      * @since 1.0.0
      */
     public void invertArea(int x, int y, int width, int height) {
+        log.debug("Inverting display area: x={}, y={}, width={}, height={}", x, y, width, height);
         com.otabi.jcodroneedu.protocol.display.DisplayInvert invertCommand = 
             new com.otabi.jcodroneedu.protocol.display.DisplayInvert(x, y, width, height);
         
@@ -280,6 +302,89 @@ public class ControllerService {
         header.setTo(com.otabi.jcodroneedu.protocol.DeviceType.Controller);
 
         drone.transfer(header, invertCommand);
+    }
+
+    /**
+     * Loads image data from a file and converts it to controller display format.
+     * 
+     * <p>This method loads an image file from the filesystem and converts it to a format
+     * suitable for displaying on the drone's controller screen (127x63 pixels). The image
+     * is automatically scaled to fit the controller display dimensions and converted to
+     * monochrome (black and white) bitmap format.</p>
+     * 
+     * <p><strong>Supported Formats:</strong> PNG, JPG, GIF, and other formats supported by
+     * Java's ImageIO.</p>
+     * 
+     * <p><strong>Display Format:</strong> The returned data is a byte array representing a
+     * monochrome (black and white) bitmap format used by the controller display. Each byte
+     * represents 8 vertical pixels, column by column.</p>
+     * 
+     * @param imageFileName The path to the image file including extension
+     *                       (e.g., "/tmp/robot.png" or "images/logo.jpg")
+     * @return A byte array representing the monochrome image data formatted for the
+     *         controller display, or an empty array if the image cannot be loaded or processed
+     * @since 1.4.0
+     */
+    public byte[] getImageData(String imageFileName) {
+        log.debug("Loading image data from: {}", imageFileName);
+        try {
+            // Load image file
+            java.io.File imageFile = new java.io.File(imageFileName);
+            if (!imageFile.exists()) {
+                log.warn("Image file not found: {}", imageFileName);
+                return new byte[0];
+            }
+            log.trace("Image file exists: {} bytes", imageFile.length());
+            
+            // Read image with ImageIO
+            java.awt.image.BufferedImage originalImage = javax.imageio.ImageIO.read(imageFile);
+            if (originalImage == null) {
+                log.warn("Failed to read/decode image file: {}", imageFileName);
+                return new byte[0];
+            }
+            log.trace("Image loaded: {}x{}px", originalImage.getWidth(), originalImage.getHeight());
+            
+            // Scale to controller display size (128x64)
+            final int CONTROLLER_WIDTH = 128;
+            final int CONTROLLER_HEIGHT = 64;
+            log.trace("Scaling image from {}x{} to {}x{} pixels", originalImage.getWidth(), originalImage.getHeight(), CONTROLLER_WIDTH, CONTROLLER_HEIGHT);
+            java.awt.Image scaledImage = originalImage.getScaledInstance(CONTROLLER_WIDTH, CONTROLLER_HEIGHT, 
+                java.awt.Image.SCALE_SMOOTH);
+            
+            // Convert to binary
+            log.trace("Converting to monochrome (black and white) format");
+            java.awt.image.BufferedImage binaryImage = new java.awt.image.BufferedImage(
+                CONTROLLER_WIDTH, CONTROLLER_HEIGHT, java.awt.image.BufferedImage.TYPE_BYTE_BINARY);
+            
+            // Render and pack to bytes using DisplayController algorithm
+            java.awt.Graphics2D graphics = binaryImage.createGraphics();
+            graphics.drawImage(scaledImage, 0, 0, null);
+            graphics.dispose();
+            
+            byte[] imageData = new byte[(CONTROLLER_WIDTH * CONTROLLER_HEIGHT) / 8];
+            int dataIndex = 0;
+            for (int y = 0; y < CONTROLLER_HEIGHT; y += 8) {
+                for (int x = 0; x < CONTROLLER_WIDTH; x++) {
+                    byte pixelByte = 0;
+                    for (int bit = 0; bit < 8 && (y + bit) < CONTROLLER_HEIGHT; bit++) {
+                        int rgb = binaryImage.getRGB(x, y + bit);
+                        if (rgb == 0xFF000000 || rgb == -16777216) {
+                            pixelByte |= (1 << bit);
+                        }
+                    }
+                    imageData[dataIndex++] = pixelByte;
+                }
+            }
+            
+            log.debug("Successfully loaded and converted image: {} to {} bytes for controller display", imageFileName, imageData.length);
+            return imageData;
+        } catch (java.io.IOException e) {
+            log.error("IOException while loading image file: {}", imageFileName, e);
+            return new byte[0];
+        } catch (Exception e) {
+            log.error("Unexpected error processing image file: {}", imageFileName, e);
+            return new byte[0];
+        }
     }
 
     /**
@@ -300,6 +405,7 @@ public class ControllerService {
      * @since 1.0.0
      */
     public void drawImage(int x, int y, int width, int height, byte[] imageData) {
+        log.trace("Drawing image region at ({},{}) size {}x{}px with {} bytes", x, y, width, height, imageData == null ? "null" : imageData.length);
         com.otabi.jcodroneedu.protocol.display.DisplayDrawImage imageCommand = 
             new com.otabi.jcodroneedu.protocol.display.DisplayDrawImage(x, y, width, height, imageData);
         
@@ -336,20 +442,25 @@ public class ControllerService {
      * @educational
      */
     public void setControllerLED(int red, int green, int blue, int brightness) {
+        log.debug("Setting controller LED to RGB({}, {}, {}) brightness={}", red, green, blue, brightness);
         // Validate input parameters
         if (red < DroneSystem.ColorConstants.RGB_MIN || red > DroneSystem.ColorConstants.RGB_MAX) {
+            log.error("Invalid red component: {}", red);
             throw new IllegalArgumentException("Red must be between " + DroneSystem.ColorConstants.RGB_MIN + 
                 " and " + DroneSystem.ColorConstants.RGB_MAX + ", got: " + red);
         }
         if (green < DroneSystem.ColorConstants.RGB_MIN || green > DroneSystem.ColorConstants.RGB_MAX) {
+            log.error("Invalid green component: {}", green);
             throw new IllegalArgumentException("Green must be between " + DroneSystem.ColorConstants.RGB_MIN + 
                 " and " + DroneSystem.ColorConstants.RGB_MAX + ", got: " + green);
         }
         if (blue < DroneSystem.ColorConstants.RGB_MIN || blue > DroneSystem.ColorConstants.RGB_MAX) {
+            log.error("Invalid blue component: {}", blue);
             throw new IllegalArgumentException("Blue must be between " + DroneSystem.ColorConstants.RGB_MIN + 
                 " and " + DroneSystem.ColorConstants.RGB_MAX + ", got: " + blue);
         }
         if (brightness < DroneSystem.ColorConstants.RGB_MIN || brightness > DroneSystem.ColorConstants.RGB_MAX) {
+            log.error("Invalid brightness: {}", brightness);
             throw new IllegalArgumentException("Brightness must be between " + DroneSystem.ColorConstants.RGB_MIN + 
                 " and " + DroneSystem.ColorConstants.RGB_MAX + ", got: " + brightness);
         }
@@ -361,12 +472,14 @@ public class ControllerService {
             color, 
             (short) brightness
         );
+        log.trace("Sending LED command to controller");
         drone.sendMessage(lightDefault, DeviceType.Base, DeviceType.Controller);
         
         // Small delay for command processing
         try {
             Thread.sleep(DroneSystem.CommunicationConstants.LED_COMMAND_DELAY_MS);
         } catch (InterruptedException e) {
+            log.warn("Interrupted during LED command delay");
             Thread.currentThread().interrupt();
         }
     }
@@ -381,18 +494,21 @@ public class ControllerService {
      * @educational
      */
     public void controllerLEDOff() {
+        log.debug("Turning off controller LED");
         Color color = Color.fromRGB(0, 0, 0);
         LightDefault lightDefault = new LightDefault(
             com.otabi.jcodroneedu.protocol.lightcontroller.LightModesController.BodyHold, 
             color, 
             (short) 0
         );
+        log.trace("Sending LED off command to controller");
         drone.sendMessage(lightDefault, DeviceType.Base, DeviceType.Controller);
         
         // Small delay for command processing
         try {
             Thread.sleep(5);
         } catch (InterruptedException e) {
+            log.warn("Interrupted during LED off delay");
             Thread.currentThread().interrupt();
         }
     }
@@ -437,20 +553,26 @@ public class ControllerService {
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#set_controller_led_mode
      */
     public void setControllerLEDMode(int red, int green, int blue, String mode, int speed) {
+        log.debug("Setting controller LED mode: RGB({}, {}, {}) mode={} speed={}", red, green, blue, mode, speed);
         // Validate input parameters
         if (red < 0 || red > 255) {
+            log.error("Invalid red component: {}", red);
             throw new IllegalArgumentException("Red must be between 0 and 255, got: " + red);
         }
         if (green < 0 || green > 255) {
+            log.error("Invalid green component: {}", green);
             throw new IllegalArgumentException("Green must be between 0 and 255, got: " + green);
         }
         if (blue < 0 || blue > 255) {
+            log.error("Invalid blue component: {}", blue);
             throw new IllegalArgumentException("Blue must be between 0 and 255, got: " + blue);
         }
         if (speed < 1 || speed > 10) {
+            log.error("Invalid speed: {}", speed);
             throw new IllegalArgumentException("Speed must be between 1 and 10, got: " + speed);
         }
         if (mode == null) {
+            log.error("LED mode cannot be null");
             throw new IllegalArgumentException("Mode cannot be null");
         }
 
@@ -488,6 +610,7 @@ public class ControllerService {
                 interval = (short) ((11 - speed) * 7); // interval ranges [7,70]
                 break;
             default:
+                log.error("Invalid LED mode: {}", mode);
                 throw new IllegalArgumentException("Invalid LED mode: " + mode + 
                     ". Valid modes are: solid, dimming, fade_in, fade_out, blink, double_blink, rainbow");
         }
@@ -495,12 +618,14 @@ public class ControllerService {
         // Create color and send to controller
         Color color = Color.fromRGB(red, green, blue);
         LightDefault lightDefault = new LightDefault(lightMode, color, interval);
+        log.trace("Sending LED mode command to controller: mode={} interval={}", mode, interval);
         drone.sendMessage(lightDefault, DeviceType.Base, DeviceType.Controller);
         
         // Small delay for command processing
         try {
             Thread.sleep(5);
         } catch (InterruptedException e) {
+            log.warn("Interrupted during LED mode command delay");
             Thread.currentThread().interrupt();
         }
     }

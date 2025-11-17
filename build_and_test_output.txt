@@ -1,0 +1,94 @@
+
+> Configure project :
+Project version set to: 1.4.0-SNAPSHOT
+
+> Task :compileJava
+> Task :processResources UP-TO-DATE
+> Task :classes
+> Task :jar
+> Task :assemble
+
+> Task :compileTestJava
+/Users/scerruti/JCoDroneEdu/src/test/java/com/otabi/jcodroneedu/ResetAndTrimTest.java:42: warning: [removal] setTrim(int,int) in Drone has been deprecated and marked for removal
+                drone.setTrim(0, 0);      // Neutral trim
+                     ^
+/Users/scerruti/JCoDroneEdu/src/test/java/com/otabi/jcodroneedu/ResetAndTrimTest.java:43: warning: [removal] setTrim(int,int) in Drone has been deprecated and marked for removal
+                drone.setTrim(10, -5);    // Positive roll, negative pitch
+                     ^
+/Users/scerruti/JCoDroneEdu/src/test/java/com/otabi/jcodroneedu/ResetAndTrimTest.java:44: warning: [removal] setTrim(int,int) in Drone has been deprecated and marked for removal
+                drone.setTrim(-50, 25);   // Negative roll, positive pitch
+                     ^
+/Users/scerruti/JCoDroneEdu/src/test/java/com/otabi/jcodroneedu/ResetAndTrimTest.java:45: warning: [removal] setTrim(int,int) in Drone has been deprecated and marked for removal
+                drone.setTrim(100, -100); // Maximum values
+                     ^
+/Users/scerruti/JCoDroneEdu/src/test/java/com/otabi/jcodroneedu/ResetAndTrimTest.java:52: warning: [removal] setTrim(int,int) in Drone has been deprecated and marked for removal
+                drone.setTrim(101, 0); // Roll too high
+                     ^
+/Users/scerruti/JCoDroneEdu/src/test/java/com/otabi/jcodroneedu/ResetAndTrimTest.java:57: warning: [removal] setTrim(int,int) in Drone has been deprecated and marked for removal
+                drone.setTrim(0, -101); // Pitch too low
+                     ^
+/Users/scerruti/JCoDroneEdu/src/test/java/com/otabi/jcodroneedu/ResetAndTrimTest.java:62: warning: [removal] setTrim(int,int) in Drone has been deprecated and marked for removal
+                drone.setTrim(-150, 0); // Roll too low
+                     ^
+/Users/scerruti/JCoDroneEdu/src/test/java/com/otabi/jcodroneedu/ResetAndTrimTest.java:128: warning: [removal] setTrim(int,int) in Drone has been deprecated and marked for removal
+                drone.setTrim(-100, -100); // Minimum values
+                     ^
+/Users/scerruti/JCoDroneEdu/src/test/java/com/otabi/jcodroneedu/ResetAndTrimTest.java:129: warning: [removal] setTrim(int,int) in Drone has been deprecated and marked for removal
+                drone.setTrim(100, 100);   // Maximum values
+                     ^
+/Users/scerruti/JCoDroneEdu/src/test/java/com/otabi/jcodroneedu/ResetAndTrimTest.java:130: warning: [removal] setTrim(int,int) in Drone has been deprecated and marked for removal
+                drone.setTrim(0, 0);       // Neutral values
+                     ^
+/Users/scerruti/JCoDroneEdu/src/test/java/com/otabi/jcodroneedu/ResetAndTrimTest.java:135: warning: [removal] setTrim(int,int) in Drone has been deprecated and marked for removal
+        assertThrows(IllegalArgumentException.class, () -> { try (Drone drone = new Drone()) { drone.setTrim(-101, 0); } });
+                                                                                                    ^
+/Users/scerruti/JCoDroneEdu/src/test/java/com/otabi/jcodroneedu/ResetAndTrimTest.java:136: warning: [removal] setTrim(int,int) in Drone has been deprecated and marked for removal
+        assertThrows(IllegalArgumentException.class, () -> { try (Drone drone = new Drone()) { drone.setTrim(101, 0); } });
+                                                                                                    ^
+/Users/scerruti/JCoDroneEdu/src/test/java/com/otabi/jcodroneedu/ResetAndTrimTest.java:137: warning: [removal] setTrim(int,int) in Drone has been deprecated and marked for removal
+        assertThrows(IllegalArgumentException.class, () -> { try (Drone drone = new Drone()) { drone.setTrim(0, -101); } });
+                                                                                                    ^
+/Users/scerruti/JCoDroneEdu/src/test/java/com/otabi/jcodroneedu/ResetAndTrimTest.java:138: warning: [removal] setTrim(int,int) in Drone has been deprecated and marked for removal
+        assertThrows(IllegalArgumentException.class, () -> { try (Drone drone = new Drone()) { drone.setTrim(0, 101); } });
+                                                                                                    ^
+14 warnings
+
+> Task :processTestResources UP-TO-DATE
+> Task :testClasses
+OpenJDK 64-Bit Server VM warning: Sharing is only supported for boot loader classes because bootstrap classpath has been appended
+> Task :test
+> Task :check
+> Task :build
+
+> Task :flight-patterns:compileJava
+Note: Some input files use or override a deprecated API.
+Note: Recompile with -Xlint:deprecation for details.
+
+> Task :flight-patterns:processResources NO-SOURCE
+> Task :flight-patterns:classes
+> Task :flight-patterns:jar UP-TO-DATE
+
+> Task :flight-patterns:javadoc
+/Users/scerruti/JCoDroneEdu/flight-patterns/src/main/java/com/otabi/jcodroneedu/patterns/ExamplePrograms.java:18: warning: invalid input: '&'
+ * NOTE ON LOGGING & OUTPUT:
+                   ^
+1 warning
+
+> Task :flight-patterns:javadocJar
+> Task :flight-patterns:sourcesJar UP-TO-DATE
+> Task :flight-patterns:assemble
+> Task :flight-patterns:compileTestJava UP-TO-DATE
+> Task :flight-patterns:processTestResources NO-SOURCE
+> Task :flight-patterns:testClasses UP-TO-DATE
+> Task :flight-patterns:test NO-SOURCE
+> Task :flight-patterns:check UP-TO-DATE
+> Task :flight-patterns:build
+
+Deprecated Gradle features were used in this build, making it incompatible with Gradle 9.0.
+
+You can use '--warning-mode all' to show the individual deprecation warnings and determine if they come from your own scripts or plugins.
+
+For more on this, please refer to https://docs.gradle.org/8.8/userguide/command_line_interface.html#sec:command_line_warnings in the Gradle documentation.
+
+BUILD SUCCESSFUL in 19s
+12 actionable tasks: 7 executed, 5 up-to-date

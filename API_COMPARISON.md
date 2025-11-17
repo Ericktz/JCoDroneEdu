@@ -6,11 +6,19 @@
 ## Summary
 
 - **Python Methods:** 127
+<<<<<<< HEAD
 - **Java Methods:** 199
 - **Matched Methods:** 123
   - Documented (@pythonEquivalent): 81
   - Inferred (by name): 42
 - **In Python, Not Java:** 13
+=======
+- **Java Methods:** 191
+- **Matched Methods:** 115
+  - Documented (@pythonEquivalent): 73
+  - Inferred (by name): 42
+- **In Python, Not Java:** 21
+>>>>>>> feature/issue-62-add-image-and-sensor-reset-methods
 - **In Java, Not Python:** 76
 
 **Note:** Java methods use @pythonEquivalent annotations to document their Python API mapping.
@@ -27,7 +35,19 @@
 - `controller_draw_square()`
 - `controller_draw_string_align()`
 - `controller_preview_canvas()`
+<<<<<<< HEAD
 - `get_image_data()`
+=======
+- `get_angular_speed_x()`
+- `get_angular_speed_y()`
+- `get_angular_speed_z()`
+- `get_x_accel()`
+- `get_x_angle()`
+- `get_y_accel()`
+- `get_y_angle()`
+- `get_z_accel()`
+- `get_z_angle()`
+>>>>>>> feature/issue-62-add-image-and-sensor-reset-methods
 - `load_classifier()`
 - `load_color_data()`
 - `new_color_data()`

@@ -497,11 +497,11 @@ tasks.register<JavaExec>("runRobotImageTest") {
     mainClass.set("com.otabi.jcodroneedu.examples.RobotImageTest")
 }
 
-tasks.register<JavaExec>("runRobotEmojiTest") {
+tasks.register<JavaExec>("runDroneImageDisplayTest") {
     group = "verification"
-    description = "Runs RobotEmojiTest - displays robot emoji from PNG on controller"
+    description = "Runs DroneImageDisplayTest - displays drone image from PNG on controller"
     classpath = sourceSets.getByName("test").runtimeClasspath
-    mainClass.set("com.otabi.jcodroneedu.examples.RobotEmojiTest")
+    mainClass.set("com.otabi.jcodroneedu.examples.DroneImageDisplayTest")
 }
 
 tasks.register<JavaExec>("runPacketRateTest") {

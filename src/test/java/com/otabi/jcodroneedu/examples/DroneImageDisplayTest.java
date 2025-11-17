@@ -24,7 +24,7 @@ import com.otabi.jcodroneedu.Drone;
  *   <li>Packed into the byte array format required by the controller</li>
  * </ul>
  */
-public class RobotEmojiTest {
+public class DroneImageDisplayTest {
     public static void main(String[] args) throws Exception {
         try (Drone drone = new Drone()) {
             drone.pair();
