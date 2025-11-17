@@ -1,6 +1,5 @@
 # API Comparison Report
 
-**Generated:** 2025-11-16T15:25:42.776032
 **Java Version:** 1.4.0-SNAPSHOT
 **Python API Version:** 2.6.0
 
