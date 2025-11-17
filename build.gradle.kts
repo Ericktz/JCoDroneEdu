@@ -11,7 +11,7 @@ plugins {
     id("java-library")
     id("maven-publish")
     id("signing")
-    id("com.gradleup.nmcp") version "1.2.1"
+    id("com.gradleup.nmcp.aggregation") version "1.2.1"
 }
 
 // Ensure a consistent Java toolchain for local and CI builds. This makes Gradle
@@ -672,9 +672,9 @@ tasks.named<org.gradle.api.tasks.javadoc.Javadoc>("javadoc") {
     // Do not fail the build on Javadoc errors in CI
     // Use setter to avoid accessing a private property from Kotlin
     this.setFailOnError(false)
-    // Disable strict doclint introduced in newer JDKs by passing -Xdoclint:none
+    // Disable strict doclint introduced in newer JDKs by passing Xdoclint:none (no leading dash)
     val stdOptions = options as org.gradle.external.javadoc.StandardJavadocDocletOptions
-    stdOptions.addStringOption("-Xdoclint:none", "")
+    stdOptions.addStringOption("Xdoclint:none", "")
 }
 
 // --------------------------
@@ -743,39 +743,57 @@ publishing {
             artifactId = "codrone-edu-java"
             groupId = project.group.toString()
             version = project.version.toString()
+            pom {
+                name.set("CoDrone EDU Java library")
+                description.set("Java library for controlling Robolink CoDrone EDU drones, with educational and research features.")
+                url.set("https://github.com/scerruti/JCoDroneEdu")
+                licenses {
+                    license {
+                        name.set("MIT License")
+                        url.set("https://opensource.org/licenses/MIT")
+                    }
+                }
+                developers {
+                    developer {
+                        id.set("scerruti")
+                        name.set("Stefano Cerruti")
+                        email.set("stefano@otabi.com")
+                    }
+                }
+                scm {
+                    connection.set("scm:git:git://github.com/scerruti/JCoDroneEdu.git")
+                    developerConnection.set("scm:git:ssh://github.com/scerruti/JCoDroneEdu.git")
+                    url.set("https://github.com/scerruti/JCoDroneEdu")
+                }
+            }
         }
     }
     // No explicit repositories block needed; nmcp handles publishing
 }
 
-// Configure the nmcp plugin for Central Portal publishing
-nmcp {
-    // Example configuration (customize as needed):
-    // projectUrl.set("https://github.com/your/repo")
-    // license.set("MIT")
-    // description.set("CoDrone EDU Java library")
-    // developers.set(listOf("Your Name <your@email.com>"))
+
+// Configure the nmcpAggregation plugin for Central Portal publishing
+nmcpAggregation {
+    centralPortal {
+        username = findProperty("CENTRAL_PORTAL_USERNAME") as String? ?: System.getenv("CENTRAL_PORTAL_USERNAME") ?: ""
+        password = findProperty("CENTRAL_PORTAL_PASSWORD") as String? ?: System.getenv("CENTRAL_PORTAL_PASSWORD") ?: ""
+    }
+    publishAllProjectsProbablyBreakingProjectIsolation()
 }
 
-// --- Disabled: In-memory signing block using Java classes (Base64) ---
-// val signingKeyEnv = System.getenv("SIGNING_KEY")
-// val signingPasswordEnv = System.getenv("SIGNING_PASSWORD")
-// if (!signingKeyEnv.isNullOrBlank()) {
-//     val signingKeyText = try {
-//         if (!signingKeyEnv.contains("-----BEGIN PGP PRIVATE KEY BLOCK-----") && !signingKeyEnv.contains("\n")) {
-//             String(java.util.Base64.getDecoder().decode(signingKeyEnv))
-//         } else signingKeyEnv
-//     } catch (e: Exception) {
-//         signingKeyEnv
-//     }
-//     try {
-//         val signingExt = extensions.getByName("signing") as org.gradle.plugins.signing.SigningExtension
-//         signingExt.useInMemoryPgpKeys(signingKeyText, signingPasswordEnv)
-//         signingExt.sign(publishing.publications["mavenJava"])
-//     } catch (e: Exception) {
-//         logger.warn("Could not configure in-memory signing: ${e.message}")
-//     }
-// }
+
+signing {
+    val signingKey: String? = System.getenv("SIGNING_KEY") ?: findProperty("signingKey") as String?
+    val signingPassword: String? = System.getenv("SIGNING_PASSWORD") ?: findProperty("signingPassword") as String?
+    if (!signingKey.isNullOrBlank() && !signingPassword.isNullOrBlank()) {
+        useInMemoryPgpKeys(signingKey, signingPassword)
+        logger.lifecycle("Using in-memory PGP keys for signing (CI/CD mode)")
+    } else {
+        useGpgCmd()
+        logger.lifecycle("Using local GPG keyring for signing (local mode, GPG command)")
+    }
+    sign(publishing.publications["mavenJava"])
+}
 
 // =============================================================================
 // Python CoDrone EDU Library Management Tasks
