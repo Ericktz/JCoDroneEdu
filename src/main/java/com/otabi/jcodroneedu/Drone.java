@@ -1238,6 +1238,34 @@ public class Drone implements AutoCloseable {
     }
 
     /**
+     * Resets the gyroscope sensor by clearing the accumulated angles for roll, pitch, and yaw.
+     * <p>
+     * This is a deprecated method that serves as a wrapper around {@link #resetGyro()}.
+     * The method resets the drone's gyroscope angles back to zero, which can be useful
+     * when you want to establish a new reference point for rotation measurements.
+     * </p>
+     * <p>
+     * <strong>Deprecation Note:</strong><br>
+     * This method is deprecated in favor of {@link #resetGyro()}. Use {@code resetGyro()}
+     * for new code. This method exists primarily to maintain compatibility with
+     * the Python API where {@code reset_sensor()} is the deprecated name for what is now
+     * {@code reset_gyro()}.
+     * </p>
+     *
+     * @deprecated Use {@link #resetGyro()} instead. Deprecated in Python API.
+     * @throws RuntimeException if calibration times out or fails
+     * @apiNote Equivalent to Python's {@code drone.reset_sensor()}, which is deprecated in favor of {@code drone.reset_gyro()}
+     * @educational
+     * @pythonEquivalent reset_sensor
+     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#reset_sensor
+     * @since 1.0.0
+     */
+    @Deprecated(since = "1.0", forRemoval = true)
+    public void resetSensor() {
+        resetGyro();
+    }
+
+    /**
      * Sets the drone's trim values for roll and pitch to compensate for
      * minor balance issues or manufacturing variations.
      * <p>
@@ -4472,6 +4500,43 @@ public class Drone implements AutoCloseable {
         sensorData[16] = getDroneTemperature();
         
         return sensorData;
+    }
+
+    /**
+     * Retrieves image data from a file (PNG or JPG) and resizes it to fit the controller display.
+     * <p>
+     * This method loads an image file from the filesystem and converts it to a format suitable
+     * for displaying on the drone's controller screen (128x64 pixels). The image is automatically
+     * scaled to fit the controller display dimensions.
+     * </p>
+     * <p>
+     * <strong>Supported Formats:</strong> PNG, JPG, GIF, and other formats supported by Java's ImageIO.
+     * </p>
+     * <p>
+     * <strong>Display Format:</strong> The returned data is a byte array representing a
+     * monochrome (black and white) bitmap format used by the controller display. Each byte
+     * represents 8 vertical pixels, column by column.
+     * </p>
+     * <p>
+     * <strong>Usage Example:</strong>
+     * <pre>{@code
+     * // Load and display an image
+     * byte[] imageData = drone.getImageData("robot_emoji.png");
+     * drone.controllerDrawImage(0, 0, 128, 64, imageData);
+     * }</pre>
+     * </p>
+     *
+     * @param imageFileName The path to the image file including extension (e.g., "/tmp/robot.png" or "images/logo.jpg")
+     * @return A byte array representing the monochrome image data formatted for the controller display,
+     *         or an empty array if the image cannot be loaded or processed
+     * @apiNote Equivalent to Python's {@code drone.get_image_data(image_file_name)}
+     * @educational
+     * @pythonEquivalent get_image_data
+     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_image_data
+     * @since 1.4.0
+     */
+    public byte[] getImageData(String imageFileName) {
+        return controllerService.getImageData(imageFileName);
     }
 
     // =============================================================================
