@@ -620,7 +620,7 @@ val explicitVersionEnv = System.getenv("RELEASE_VERSION")
 val resolvedVersion = when {
     explicitVersionFromProp != null && explicitVersionFromProp.isNotBlank() && explicitVersionFromProp != "unspecified" -> explicitVersionFromProp
     explicitVersionEnv != null && explicitVersionEnv.isNotBlank() -> explicitVersionEnv
-    else -> "1.4.2"
+    else -> "1.5.0-SNAPSHOT"
 }
 
 version = resolvedVersion
