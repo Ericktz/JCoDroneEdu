@@ -1,6 +1,30 @@
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
+
+## v1.4.0 - 2025-11-16
+
+### Added
+- Image data retrieval: `getImageData(String imageFileName)` method for saving images from the drone camera
+- Sensor reset: `resetSensor()` method for resetting all sensors to initial state
+- Individual sensor axis accessor methods for full Python API compatibility:
+  - `getAngularSpeedX()`, `getAngularSpeedY()`, `getAngularSpeedZ()`
+  - `getAccelX()`, `getAccelY()`, `getAccelZ()`
+  - `getAngleX()`, `getAngleY()`, `getAngleZ()`
+  - `getGyroX()`, `getGyroY()`, `getGyroZ()` (deprecated)
+- API comparison tooling improvements and documentation updates
+
+### Changed
+- Deprecated legacy sensor axis methods in favor of new accessors
+- Improved API documentation and Python compatibility annotations
+
+### Fixed
+- Resolved merge conflicts and ensured all tests pass after major API changes
+
+### Documentation
+- Updated API documentation for new and deprecated methods
+- Updated API comparison and compatibility reports
 
 ## v1.3.0 - 2025-11-16
 

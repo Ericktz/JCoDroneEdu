@@ -6,19 +6,11 @@
 ## Summary
 
 - **Python Methods:** 127
-<<<<<<< HEAD
-- **Java Methods:** 199
-- **Matched Methods:** 123
-  - Documented (@pythonEquivalent): 81
+- **Java Methods:** 207
+- **Matched Methods:** 131
+  - Documented (@pythonEquivalent): 89
   - Inferred (by name): 42
-- **In Python, Not Java:** 13
-=======
-- **Java Methods:** 191
-- **Matched Methods:** 115
-  - Documented (@pythonEquivalent): 73
-  - Inferred (by name): 42
-- **In Python, Not Java:** 21
->>>>>>> feature/issue-62-add-image-and-sensor-reset-methods
+- **In Python, Not Java:** 5
 - **In Java, Not Python:** 76
 
 **Note:** Java methods use @pythonEquivalent annotations to document their Python API mapping.
@@ -28,26 +20,6 @@
 ⚠️ Consider implementing these methods:
 
 - `append_color_data()`
-- `controller_draw_arc()`
-- `controller_draw_chord()`
-- `controller_draw_ellipse()`
-- `controller_draw_polygon()`
-- `controller_draw_square()`
-- `controller_draw_string_align()`
-- `controller_preview_canvas()`
-<<<<<<< HEAD
-- `get_image_data()`
-=======
-- `get_angular_speed_x()`
-- `get_angular_speed_y()`
-- `get_angular_speed_z()`
-- `get_x_accel()`
-- `get_x_angle()`
-- `get_y_accel()`
-- `get_y_angle()`
-- `get_z_accel()`
-- `get_z_angle()`
->>>>>>> feature/issue-62-add-image-and-sensor-reset-methods
 - `load_classifier()`
 - `load_color_data()`
 - `new_color_data()`
