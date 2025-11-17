@@ -274,4 +274,4 @@ jobs:
           CENTRAL_PORTAL_USERNAME: ${{ secrets.CENTRAL_PORTAL_USERNAME }}
           CENTRAL_PORTAL_PASSWORD: ${{ secrets.CENTRAL_PORTAL_PASSWORD }}
         run: |
-          ./gradlew -Pversion=${{ steps.get_version.outputs.VERSION }} nmcpPublish
+          ./gradlew -Pversion=${{ steps.get_version.outputs.VERSION }} publishAllPublicationsToNmcpRepository

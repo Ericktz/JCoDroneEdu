@@ -52,7 +52,7 @@ jobs:
       - name: Build artifacts
         run: |
           echo "Building artifacts for version: ${{ inputs.version }}"
-          ./gradlew -Pversion=${{ inputs.version }} studentJar javadocJar sourcesJar teacherJar --no-daemon
+          ./gradlew -Pversion=${{ inputs.version }} jar javadocJar sourcesJar --no-daemon
 
       - name: Debug signing key (safe metadata)
         if: ${{ inputs.debug_signing == 'true' }}
@@ -84,4 +84,4 @@ jobs:
           CENTRAL_PORTAL_PASSWORD: ${{ secrets.CENTRAL_PORTAL_PASSWORD }}
         run: |
           echo "Publishing to Central Portal (real publish) for version: ${{ inputs.version }}"
-          ./gradlew -Pversion=${{ inputs.version }} nmcpPublish
+          ./gradlew -Pversion=${{ inputs.version }} publishAllPublicationsToNmcpRepository
