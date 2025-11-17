@@ -1394,7 +1394,6 @@ public class Drone implements AutoCloseable {
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#reset_sensor
      * @since 1.0.0
      */
-    @Deprecated(since = "1.0", forRemoval = true)
 
     /**
      * Sets the drone's trim values for roll and pitch to compensate for
@@ -1413,7 +1412,7 @@ public class Drone implements AutoCloseable {
      * @educational
      * @pythonEquivalent set_trim
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#set_trim
-      * @since 1.0.0
+     * @since 1.0.0
      */
     public void setTrim(int roll, int pitch) {
         // Validate input parameters
