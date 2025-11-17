@@ -927,14 +927,14 @@ public class FlightController {
         degree = Math.max(-180, Math.min(180, degree));
         
         // Get initial yaw angle
-        double initialYaw = getAngleZ();
+        double initialYaw = telemetry.getAngleZ();
         double targetYaw = normalizeAngle(initialYaw + degree);
         long startTime = System.currentTimeMillis();
         long timeoutMs = (long) (timeout * 1000);
         
         // Proportional control loop
         while (true) {
-            double currentYaw = getAngleZ();
+            double currentYaw = telemetry.getAngleZ();
             double error = shortestAngleDiff(targetYaw, currentYaw);
             
             // Stop if within 2 degrees or timeout
@@ -1329,169 +1329,6 @@ public class FlightController {
 
 
 
-    /**
-     * Gets the X-axis acceleration in G-force units.
-     * 
-     * @return X acceleration in G-force
-     * @apiNote Equivalent to Python's get_accel_x() method
-     * @since 1.0.0
-     */
-    public double getAccelX() {
-        double g = telemetry.getAccelX_G();
-        // Use TRACE for repetitive polling (suppressed by default)
-        if (log.isTraceEnabled()) {
-            log.trace("X acceleration: {} G", g);
-        }
-        return g;
-    }
-
-    /**
-     * Gets the Y-axis acceleration in G-force units.
-     * 
-     * @return Y acceleration in G-force
-     * @apiNote Equivalent to Python's get_accel_y() method
-     * @since 1.0.0
-     */
-    public double getAccelY() {
-        double g = telemetry.getAccelY_G();
-        // Use TRACE for repetitive polling (suppressed by default)
-        if (log.isTraceEnabled()) {
-            log.trace("Y acceleration: {} G", g);
-        }
-        return g;
-    }
-
-    /**
-     * Gets the Z-axis acceleration in G-force units.
-     * 
-     * @return Z acceleration in G-force
-     * @apiNote Equivalent to Python's get_accel_z() method
-     * @since 1.0.0
-     */
-    public double getAccelZ() {
-        double g = telemetry.getAccelZ_G();
-        // Use TRACE for repetitive polling (suppressed by default)
-        if (log.isTraceEnabled()) {
-            log.trace("Z acceleration: {} G", g);
-        }
-        return g;
-    }
-
-    /**
-     * Gets the X-axis angle (roll) in degrees.
-     * 
-     * @return X angle in degrees
-     * @apiNote Equivalent to Python's get_angle_x() method
-     * @since 1.0.0
-     */
-    public double getAngleX() {
-        double deg = telemetry.getAngleX_Deg();
-        // Use TRACE for repetitive polling (suppressed by default)
-        if (log.isTraceEnabled()) {
-            log.trace("X angle (roll): {} degrees", deg);
-        }
-        return deg;
-    }
-
-    /**
-     * Gets the Y-axis angle (pitch) in degrees.
-     * 
-     * @return Y angle in degrees
-     * @apiNote Equivalent to Python's get_angle_y() method
-     * @since 1.0.0
-     */
-    public double getAngleY() {
-        double deg = telemetry.getAngleY_Deg();
-        // Use TRACE for repetitive polling (suppressed by default)
-        if (log.isTraceEnabled()) {
-            log.trace("Y angle (pitch): {} degrees", deg);
-        }
-        return deg;
-    }
-
-    /**
-     * Gets the Z-axis angle (yaw) in degrees.
-     * 
-     * @return Z angle in degrees
-     * @apiNote Equivalent to Python's get_angle_z() method
-     * @since 1.0.0
-     */
-    public double getAngleZ() {
-        double deg = telemetry.getAngleZ_Deg();
-        // Use TRACE for repetitive polling (suppressed by default)
-        if (log.isTraceEnabled()) {
-            log.trace("Z angle (yaw): {} degrees", deg);
-        }
-        return deg;
-    }
-
-    // =============================================================================
-    // Array-based sensor methods for AP CSA compatibility
-    // =============================================================================
-
-    /**
-    * Gets accelerometer data as an array.
-    * 
-    * <p>Returns the raw accelerometer values from the protocol for all three axes.
-    * The protocol encodes accelerometer samples as signed 16-bit integers where the
-    * raw unit equals m/s^2 * 10 (i.e., multiply raw by {@code DroneSystem.SensorScales.ACCEL_RAW_TO_MS2}
-    * to obtain m/s^2). This method is provided for AP CSA compatibility and educational
-    * examples that expect integer arrays. For human-friendly values, use {@link #getAccelX()},
-    * {@link #getAccelY()}, and {@link #getAccelZ()} which return acceleration in G (approx).
-    * </p>
-    *
-    * @return int array containing [X, Y, Z] raw accelerometer protocol values
-    * @apiNote Equivalent to Python's {@code drone.get_accel()} and returns raw protocol integers
-     * @since 1.0.0
-     * @educational This demonstrates array usage and coordinate systems
-     */
-    public int[] getAccel() {
-        int[] accelArray = telemetry.getAccelRaw();
-        // Use TRACE for repetitive polling (suppressed by default)
-        if (log.isTraceEnabled()) {
-            double ax_ms2 = accelArray[0] * DroneSystem.SensorScales.ACCEL_RAW_TO_MS2;
-            double ay_ms2 = accelArray[1] * DroneSystem.SensorScales.ACCEL_RAW_TO_MS2;
-            double az_ms2 = accelArray[2] * DroneSystem.SensorScales.ACCEL_RAW_TO_MS2;
-            log.trace("Acceleration array (raw): [{}, {}, {}] -> (m/s^2): [{}, {}, {}]", accelArray[0], accelArray[1], accelArray[2], ax_ms2, ay_ms2, az_ms2);
-        }
-        return accelArray;
-    }
-
-    /**
-     * Gets gyroscope data as an array.
-     * 
-     * <p>Returns rotational velocity data for all three axes in a convenient array format.
-     * This is useful for AP CSA students learning about arrays and rotational motion.</p>
-     * 
-     * @return int array containing [roll, pitch, yaw] gyroscope values in degrees/second
-     * @apiNote Equivalent to Python's various gyro methods, returns array for AP CSA compatibility
-     * @since 1.0.0
-     * @educational This demonstrates array usage and rotational concepts
-     */
-    public int[] getGyro() {
-        log.debug("Getting gyroscope array data");
-        int[] gyroArray = telemetry.getGyroRaw();
-        log.debug("Gyroscope array: [{}, {}, {}]", gyroArray[0], gyroArray[1], gyroArray[2]);
-        return gyroArray;
-    }
-
-    /**
-     * Gets angle data as an array.
-     * 
-     * <p>Returns current orientation angles for all three axes in a convenient array format.
-     * This is useful for AP CSA students learning about arrays and spatial orientation.</p>
-     * 
-     * @return int array containing [roll, pitch, yaw] angle values in degrees
-     * @apiNote Equivalent to Python's various angle methods, returns array for AP CSA compatibility
-     * @since 1.0.0
-     * @educational This demonstrates array usage and spatial orientation concepts
-     */
-    public int[] getAngle() {
-        log.debug("Getting angle array data");
-        int[] angleArray = telemetry.getAngleRaw();
-        log.debug("Angle array: [{}, {}, {}]", angleArray[0], angleArray[1], angleArray[2]);
-        return angleArray;
-    }
 
     /**
      * Helper method to convert millimeter measurements to other units.

@@ -2923,7 +2923,7 @@ public class Drone implements AutoCloseable {
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_accel_x
      */
     public double getAccelX() {
-        return flightController.getAccelX();
+        return telemetryService.getAccelX();
     }
 
     /**
@@ -2938,7 +2938,7 @@ public class Drone implements AutoCloseable {
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_accel_y
      */
     public double getAccelY() {
-        return flightController.getAccelY();
+        return telemetryService.getAccelY();
     }
 
     /**
@@ -2953,7 +2953,7 @@ public class Drone implements AutoCloseable {
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_accel_z
      */
     public double getAccelZ() {
-        return flightController.getAccelZ();
+        return telemetryService.getAccelZ();
     }
 
     /**
@@ -2976,7 +2976,7 @@ public class Drone implements AutoCloseable {
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_angle_x
      */
     public double getAngleX() {
-        return flightController.getAngleX();
+        return telemetryService.getAngleX();
     }
 
     /**
@@ -2992,7 +2992,7 @@ public class Drone implements AutoCloseable {
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_angle_y
      */
     public double getAngleY() {
-        return flightController.getAngleY();
+        return telemetryService.getAngleY();
     }
 
     /**
@@ -3008,7 +3008,7 @@ public class Drone implements AutoCloseable {
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_angle_z
      */
     public double getAngleZ() {
-        return flightController.getAngleZ();
+        return telemetryService.getAngleZ();
     }
 
     /**
@@ -3024,8 +3024,7 @@ public class Drone implements AutoCloseable {
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#get_angular_speed_x
      */
     public int getAngularSpeedX() {
-        int[] gyro = getGyro();
-        return gyro[0];
+        return telemetryService.getAngularSpeedX();
     }
 
     /**
@@ -3040,8 +3039,7 @@ public class Drone implements AutoCloseable {
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#get_angular_speed_y
      */
     public int getAngularSpeedY() {
-        int[] gyro = getGyro();
-        return gyro[1];
+        return telemetryService.getAngularSpeedY();
     }
 
     /**
@@ -3056,8 +3054,7 @@ public class Drone implements AutoCloseable {
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#get_angular_speed_z
      */
     public int getAngularSpeedZ() {
-        int[] gyro = getGyro();
-        return gyro[2];
+        return telemetryService.getAngularSpeedZ();
     }
 
     /**
@@ -3076,8 +3073,7 @@ public class Drone implements AutoCloseable {
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#get_x_gyro
      */
     public int getGyroX() {
-        int[] gyro = getGyro();
-        return gyro[0];
+        return telemetryService.getGyroX();
     }
 
     /**
@@ -3095,8 +3091,7 @@ public class Drone implements AutoCloseable {
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#get_y_gyro
      */
     public int getGyroY() {
-        int[] gyro = getGyro();
-        return gyro[1];
+        return telemetryService.getGyroY();
     }
 
     /**
@@ -3114,8 +3109,7 @@ public class Drone implements AutoCloseable {
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#get_z_gyro
      */
     public int getGyroZ() {
-        int[] gyro = getGyro();
-        return gyro[2];
+        return telemetryService.getGyroZ();
     }
 
     // Array-based sensor methods for Python compatibility
@@ -3148,7 +3142,7 @@ public class Drone implements AutoCloseable {
      * @educational
      */
     public int[] getAccel() {
-        return flightController.getAccel();
+        return telemetryService.getAccel();
     }
 
     /**
@@ -3179,7 +3173,7 @@ public class Drone implements AutoCloseable {
      * @educational
      */
     public int[] getGyro() {
-        return flightController.getGyro();
+        return telemetryService.getGyro();
     }
 
     /**
@@ -3210,7 +3204,7 @@ public class Drone implements AutoCloseable {
      * @educational
      */
     public int[] getAngle() {
-        return flightController.getAngle();
+        return telemetryService.getAngle();
     }
 
     /**

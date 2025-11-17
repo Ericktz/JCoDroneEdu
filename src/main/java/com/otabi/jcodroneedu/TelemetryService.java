@@ -333,6 +333,230 @@ public class TelemetryService {
         return m.getAngleYaw() * DroneSystem.SensorScales.ANGLE_RAW_TO_DEG;
     }
 
+    // =============================================================================
+    // Public API Methods for Sensor Data Access
+    // =============================================================================
+
+    /**
+     * Gets the X-axis acceleration in G-force units.
+     * 
+     * @return X acceleration in G-force
+     * @apiNote Equivalent to Python's get_accel_x() method
+     * @since 1.0.0
+     */
+    public double getAccelX() {
+        return getAccelX_G();
+    }
+
+    /**
+     * Gets the Y-axis acceleration in G-force units.
+     * 
+     * @return Y acceleration in G-force
+     * @apiNote Equivalent to Python's get_accel_y() method
+     * @since 1.0.0
+     */
+    public double getAccelY() {
+        return getAccelY_G();
+    }
+
+    /**
+     * Gets the Z-axis acceleration in G-force units.
+     * 
+     * @return Z acceleration in G-force
+     * @apiNote Equivalent to Python's get_accel_z() method
+     * @since 1.0.0
+     */
+    public double getAccelZ() {
+        return getAccelZ_G();
+    }
+
+    /**
+     * Gets the X-axis angle (roll) in degrees.
+     * 
+     * @return X angle in degrees
+     * @apiNote Equivalent to Python's get_angle_x() method
+     * @since 1.0.0
+     */
+    public double getAngleX() {
+        return getAngleX_Deg();
+    }
+
+    /**
+     * Gets the Y-axis angle (pitch) in degrees.
+     * 
+     * @return Y angle in degrees
+     * @apiNote Equivalent to Python's get_angle_y() method
+     * @since 1.0.0
+     */
+    public double getAngleY() {
+        return getAngleY_Deg();
+    }
+
+    /**
+     * Gets the Z-axis angle (yaw) in degrees.
+     * 
+     * @return Z angle in degrees
+     * @apiNote Equivalent to Python's get_angle_z() method
+     * @since 1.0.0
+     */
+    public double getAngleZ() {
+        return getAngleZ_Deg();
+    }
+
+    /**
+     * Gets accelerometer data as an array.
+     * 
+     * <p>Returns the raw accelerometer values from the protocol for all three axes.
+     * The protocol encodes accelerometer samples as signed 16-bit integers where the
+     * raw unit equals m/s^2 * 10. This method is provided for AP CSA compatibility
+     * and educational examples that expect integer arrays.</p>
+     * 
+     * @return int array containing [x, y, z] accelerometer values
+     * @apiNote Equivalent to Python's get_accel() method, returns array for AP CSA compatibility
+     * @since 1.0.0
+     * @educational This demonstrates array usage and acceleration concepts
+     */
+    public int[] getAccel() {
+        return getAccelRaw();
+    }
+
+    /**
+     * Gets gyroscope data as an array.
+     * 
+     * <p>Returns rotational velocity data for all three axes in a convenient array format.
+     * This is useful for AP CSA students learning about arrays and rotational motion.</p>
+     * 
+     * @return int array containing [roll, pitch, yaw] gyroscope values in degrees/second
+     * @apiNote Equivalent to Python's various gyro methods, returns array for AP CSA compatibility
+     * @since 1.0.0
+     * @educational This demonstrates array usage and rotational concepts
+     */
+    public int[] getGyro() {
+        return getGyroRaw();
+    }
+
+    /**
+     * Gets angle data as an array.
+     * 
+     * <p>Returns current orientation angles for all three axes in a convenient array format.
+     * This is useful for AP CSA students learning about arrays and spatial orientation.</p>
+     * 
+     * @return int array containing [roll, pitch, yaw] angle values in degrees
+     * @apiNote Equivalent to Python's various angle methods, returns array for AP CSA compatibility
+     * @since 1.0.0
+     * @educational This demonstrates array usage and spatial orientation concepts
+     */
+    public int[] getAngle() {
+        return getAngleRaw();
+    }
+
+    /**
+     * Gets the angular speed (gyroscope) data for the X axis.
+     * 
+     * <p>Returns the rotational velocity around the X axis in degrees per second.
+     * This method provides Python API compatibility for accessing individual axis
+     * gyro data. Equivalent to {@code getGyro()[0]}.</p>
+     * 
+     * @return X-axis angular velocity in degrees per second
+     * @since 1.4.0
+     * @pythonEquivalent get_angular_speed_x
+     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#get_angular_speed_x
+     */
+    public int getAngularSpeedX() {
+        int[] gyro = getGyro();
+        return gyro[0];
+    }
+
+    /**
+     * Gets the angular speed (gyroscope) data for the Y axis.
+     * 
+     * <p>Returns the rotational velocity around the Y axis in degrees per second.
+     * Equivalent to {@code getGyro()[1]}.</p>
+     * 
+     * @return Y-axis angular velocity in degrees per second
+     * @since 1.4.0
+     * @pythonEquivalent get_angular_speed_y
+     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#get_angular_speed_y
+     */
+    public int getAngularSpeedY() {
+        int[] gyro = getGyro();
+        return gyro[1];
+    }
+
+    /**
+     * Gets the angular speed (gyroscope) data for the Z axis.
+     * 
+     * <p>Returns the rotational velocity around the Z axis in degrees per second.
+     * Equivalent to {@code getGyro()[2]}.</p>
+     * 
+     * @return Z-axis angular velocity in degrees per second
+     * @since 1.4.0
+     * @pythonEquivalent get_angular_speed_z
+     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#get_angular_speed_z
+     */
+    public int getAngularSpeedZ() {
+        int[] gyro = getGyro();
+        return gyro[2];
+    }
+
+    /**
+     * Gets the gyroscope data for the X axis.
+     * 
+     * <p>Returns the rotational velocity around the X axis in degrees per second.
+     * This method provides compatibility with older Python API. Equivalent to
+     * {@code getGyro()[0]}.</p>
+     * 
+     * <p><strong>Note:</strong> This method is deprecated in Python in favor of
+     * {@link #getAngularSpeedX()}.</p>
+     * 
+     * @return X-axis angular velocity in degrees per second
+     * @since 1.4.0
+     * @pythonEquivalent get_x_gyro
+     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#get_x_gyro
+     */
+    public int getGyroX() {
+        int[] gyro = getGyro();
+        return gyro[0];
+    }
+
+    /**
+     * Gets the gyroscope data for the Y axis.
+     * 
+     * <p>Returns the rotational velocity around the Y axis in degrees per second.
+     * Equivalent to {@code getGyro()[1]}.</p>
+     * 
+     * <p><strong>Note:</strong> This method is deprecated in Python in favor of
+     * {@link #getAngularSpeedY()}.</p>
+     * 
+     * @return Y-axis angular velocity in degrees per second
+     * @since 1.4.0
+     * @pythonEquivalent get_y_gyro
+     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#get_y_gyro
+     */
+    public int getGyroY() {
+        int[] gyro = getGyro();
+        return gyro[1];
+    }
+
+    /**
+     * Gets the gyroscope data for the Z axis.
+     * 
+     * <p>Returns the rotational velocity around the Z axis in degrees per second.
+     * Equivalent to {@code getGyro()[2]}.</p>
+     * 
+     * <p><strong>Note:</strong> This method is deprecated in Python in favor of
+     * {@link #getAngularSpeedZ()}.</p>
+     * 
+     * @return Z-axis angular velocity in degrees per second
+     * @since 1.4.0
+     * @pythonEquivalent get_z_gyro
+     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#get_z_gyro
+     */
+    public int getGyroZ() {
+        int[] gyro = getGyro();
+        return gyro[2];
+    }
+
     // ---------------- Other snapshots (for future expansion) ----------------
 
     /**

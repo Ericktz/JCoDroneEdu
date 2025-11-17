@@ -29,7 +29,7 @@ import static org.mockito.Mockito.*;
 @DisplayName("Sensor Axis Accessor Tests")
 public class SensorAxisAccessorTest {
 
-    private FlightController flightController;
+    private TelemetryService telemetryService;
     private Drone mockDrone;
     private DroneStatus mockStatus;
     private Motion mockMotion;
@@ -44,8 +44,8 @@ public class SensorAxisAccessorTest {
         // Configure mocks
         when(mockDrone.getDroneStatus()).thenReturn(mockStatus);
         
-        // Create real FlightController with mocked drone
-        flightController = new FlightController(mockDrone);
+        // Create real TelemetryService with mocked drone
+        telemetryService = new TelemetryService(mockDrone);
     }
 
     @Nested
@@ -57,14 +57,12 @@ public class SensorAxisAccessorTest {
         void testGetAngularSpeedX() {
             // Arrange
             when(mockStatus.getMotion()).thenReturn(mockMotion);
-            when(mockMotion.getGyroRoll()).thenReturn((short) 150);   // X
-            when(mockMotion.getGyroPitch()).thenReturn((short) 200);  // Y
-            when(mockMotion.getGyroYaw()).thenReturn((short) 100);    // Z
+            when(mockMotion.getGyroRoll()).thenReturn((short) 150);
+            when(mockMotion.getGyroPitch()).thenReturn((short) 200);
+            when(mockMotion.getGyroYaw()).thenReturn((short) 100);
 
-            // Act - Create a real Drone instance to test delegation
-            Drone realDrone = spy(new Drone());
-            when(realDrone.getGyro()).thenReturn(new int[]{150, 200, 100});
-            int angularSpeedX = realDrone.getAngularSpeedX();
+            // Act
+            int angularSpeedX = telemetryService.getAngularSpeedX();
 
             // Assert
             assertEquals(150, angularSpeedX, "Angular speed X should match gyro[0]");
@@ -73,10 +71,14 @@ public class SensorAxisAccessorTest {
         @Test
         @DisplayName("getAngularSpeedY() returns Y-axis gyro value")
         void testGetAngularSpeedY() {
-            // Arrange & Act
-            Drone realDrone = spy(new Drone());
-            when(realDrone.getGyro()).thenReturn(new int[]{150, 200, 100});
-            int angularSpeedY = realDrone.getAngularSpeedY();
+            // Arrange
+            when(mockStatus.getMotion()).thenReturn(mockMotion);
+            when(mockMotion.getGyroRoll()).thenReturn((short) 150);
+            when(mockMotion.getGyroPitch()).thenReturn((short) 200);
+            when(mockMotion.getGyroYaw()).thenReturn((short) 100);
+
+            // Act
+            int angularSpeedY = telemetryService.getAngularSpeedY();
 
             // Assert
             assertEquals(200, angularSpeedY, "Angular speed Y should match gyro[1]");
@@ -85,10 +87,14 @@ public class SensorAxisAccessorTest {
         @Test
         @DisplayName("getAngularSpeedZ() returns Z-axis gyro value")
         void testGetAngularSpeedZ() {
-            // Arrange & Act
-            Drone realDrone = spy(new Drone());
-            when(realDrone.getGyro()).thenReturn(new int[]{150, 200, 100});
-            int angularSpeedZ = realDrone.getAngularSpeedZ();
+            // Arrange
+            when(mockStatus.getMotion()).thenReturn(mockMotion);
+            when(mockMotion.getGyroRoll()).thenReturn((short) 150);
+            when(mockMotion.getGyroPitch()).thenReturn((short) 200);
+            when(mockMotion.getGyroYaw()).thenReturn((short) 100);
+
+            // Act
+            int angularSpeedZ = telemetryService.getAngularSpeedZ();
 
             // Assert
             assertEquals(100, angularSpeedZ, "Angular speed Z should match gyro[2]");
@@ -97,27 +103,31 @@ public class SensorAxisAccessorTest {
         @Test
         @DisplayName("Angular speed accessors handle negative values correctly")
         void testAngularSpeedNegativeValues() {
-            // Arrange & Act
-            Drone realDrone = spy(new Drone());
-            when(realDrone.getGyro()).thenReturn(new int[]{-50, -100, -25});
+            // Arrange
+            when(mockStatus.getMotion()).thenReturn(mockMotion);
+            when(mockMotion.getGyroRoll()).thenReturn((short) -50);
+            when(mockMotion.getGyroPitch()).thenReturn((short) -100);
+            when(mockMotion.getGyroYaw()).thenReturn((short) -25);
             
-            // Assert
-            assertEquals(-50, realDrone.getAngularSpeedX(), "Should handle negative X value");
-            assertEquals(-100, realDrone.getAngularSpeedY(), "Should handle negative Y value");
-            assertEquals(-25, realDrone.getAngularSpeedZ(), "Should handle negative Z value");
+            // Act & Assert
+            assertEquals(-50, telemetryService.getAngularSpeedX(), "Should handle negative X value");
+            assertEquals(-100, telemetryService.getAngularSpeedY(), "Should handle negative Y value");
+            assertEquals(-25, telemetryService.getAngularSpeedZ(), "Should handle negative Z value");
         }
 
         @Test
         @DisplayName("Angular speed accessors work with zero values")
         void testAngularSpeedZeroValues() {
-            // Arrange & Act
-            Drone realDrone = spy(new Drone());
-            when(realDrone.getGyro()).thenReturn(new int[]{0, 0, 0});
+            // Arrange
+            when(mockStatus.getMotion()).thenReturn(mockMotion);
+            when(mockMotion.getGyroRoll()).thenReturn((short) 0);
+            when(mockMotion.getGyroPitch()).thenReturn((short) 0);
+            when(mockMotion.getGyroYaw()).thenReturn((short) 0);
             
-            // Assert
-            assertEquals(0, realDrone.getAngularSpeedX(), "Should handle zero X value");
-            assertEquals(0, realDrone.getAngularSpeedY(), "Should handle zero Y value");
-            assertEquals(0, realDrone.getAngularSpeedZ(), "Should handle zero Z value");
+            // Act & Assert
+            assertEquals(0, telemetryService.getAngularSpeedX(), "Should handle zero X value");
+            assertEquals(0, telemetryService.getAngularSpeedY(), "Should handle zero Y value");
+            assertEquals(0, telemetryService.getAngularSpeedZ(), "Should handle zero Z value");
         }
     }
 
@@ -128,10 +138,14 @@ public class SensorAxisAccessorTest {
         @Test
         @DisplayName("getGyroX() returns X-axis gyro value")
         void testGetGyroX() {
-            // Arrange & Act
-            Drone realDrone = spy(new Drone());
-            when(realDrone.getGyro()).thenReturn(new int[]{150, 200, 100});
-            int gyroX = realDrone.getGyroX();
+            // Arrange
+            when(mockStatus.getMotion()).thenReturn(mockMotion);
+            when(mockMotion.getGyroRoll()).thenReturn((short) 150);
+            when(mockMotion.getGyroPitch()).thenReturn((short) 200);
+            when(mockMotion.getGyroYaw()).thenReturn((short) 100);
+
+            // Act
+            int gyroX = telemetryService.getGyroX();
 
             // Assert
             assertEquals(150, gyroX, "Gyro X should match gyro[0]");
@@ -140,10 +154,14 @@ public class SensorAxisAccessorTest {
         @Test
         @DisplayName("getGyroY() returns Y-axis gyro value")
         void testGetGyroY() {
-            // Arrange & Act
-            Drone realDrone = spy(new Drone());
-            when(realDrone.getGyro()).thenReturn(new int[]{150, 200, 100});
-            int gyroY = realDrone.getGyroY();
+            // Arrange
+            when(mockStatus.getMotion()).thenReturn(mockMotion);
+            when(mockMotion.getGyroRoll()).thenReturn((short) 150);
+            when(mockMotion.getGyroPitch()).thenReturn((short) 200);
+            when(mockMotion.getGyroYaw()).thenReturn((short) 100);
+
+            // Act
+            int gyroY = telemetryService.getGyroY();
 
             // Assert
             assertEquals(200, gyroY, "Gyro Y should match gyro[1]");
@@ -152,10 +170,14 @@ public class SensorAxisAccessorTest {
         @Test
         @DisplayName("getGyroZ() returns Z-axis gyro value")
         void testGetGyroZ() {
-            // Arrange & Act
-            Drone realDrone = spy(new Drone());
-            when(realDrone.getGyro()).thenReturn(new int[]{150, 200, 100});
-            int gyroZ = realDrone.getGyroZ();
+            // Arrange
+            when(mockStatus.getMotion()).thenReturn(mockMotion);
+            when(mockMotion.getGyroRoll()).thenReturn((short) 150);
+            when(mockMotion.getGyroPitch()).thenReturn((short) 200);
+            when(mockMotion.getGyroYaw()).thenReturn((short) 100);
+
+            // Act
+            int gyroZ = telemetryService.getGyroZ();
 
             // Assert
             assertEquals(100, gyroZ, "Gyro Z should match gyro[2]");
@@ -164,14 +186,16 @@ public class SensorAxisAccessorTest {
         @Test
         @DisplayName("Gyro accessors handle negative values correctly")
         void testGyroNegativeValues() {
-            // Arrange & Act
-            Drone realDrone = spy(new Drone());
-            when(realDrone.getGyro()).thenReturn(new int[]{-50, -100, -25});
+            // Arrange
+            when(mockStatus.getMotion()).thenReturn(mockMotion);
+            when(mockMotion.getGyroRoll()).thenReturn((short) -50);
+            when(mockMotion.getGyroPitch()).thenReturn((short) -100);
+            when(mockMotion.getGyroYaw()).thenReturn((short) -25);
             
-            // Assert
-            assertEquals(-50, realDrone.getGyroX(), "Should handle negative X value");
-            assertEquals(-100, realDrone.getGyroY(), "Should handle negative Y value");
-            assertEquals(-25, realDrone.getGyroZ(), "Should handle negative Z value");
+            // Act & Assert
+            assertEquals(-50, telemetryService.getGyroX(), "Should handle negative X value");
+            assertEquals(-100, telemetryService.getGyroY(), "Should handle negative Y value");
+            assertEquals(-25, telemetryService.getGyroZ(), "Should handle negative Z value");
         }
     }
 
@@ -182,54 +206,64 @@ public class SensorAxisAccessorTest {
         @Test
         @DisplayName("getAngularSpeedX() equals getGyroX()")
         void testAngularSpeedXEqualsGyroX() {
-            // Arrange & Act
-            Drone realDrone = spy(new Drone());
-            when(realDrone.getGyro()).thenReturn(new int[]{150, 200, 100});
+            // Arrange
+            when(mockStatus.getMotion()).thenReturn(mockMotion);
+            when(mockMotion.getGyroRoll()).thenReturn((short) 150);
+            when(mockMotion.getGyroPitch()).thenReturn((short) 200);
+            when(mockMotion.getGyroYaw()).thenReturn((short) 100);
 
-            // Assert
-            assertEquals(realDrone.getGyroX(), realDrone.getAngularSpeedX(),
+            // Act & Assert
+            assertEquals(telemetryService.getGyroX(), telemetryService.getAngularSpeedX(),
                 "getAngularSpeedX() should return the same value as getGyroX()");
         }
 
         @Test
         @DisplayName("getAngularSpeedY() equals getGyroY()")
         void testAngularSpeedYEqualsGyroY() {
-            // Arrange & Act
-            Drone realDrone = spy(new Drone());
-            when(realDrone.getGyro()).thenReturn(new int[]{150, 200, 100});
+            // Arrange
+            when(mockStatus.getMotion()).thenReturn(mockMotion);
+            when(mockMotion.getGyroRoll()).thenReturn((short) 150);
+            when(mockMotion.getGyroPitch()).thenReturn((short) 200);
+            when(mockMotion.getGyroYaw()).thenReturn((short) 100);
 
-            // Assert
-            assertEquals(realDrone.getGyroY(), realDrone.getAngularSpeedY(),
+            // Act & Assert
+            assertEquals(telemetryService.getGyroY(), telemetryService.getAngularSpeedY(),
                 "getAngularSpeedY() should return the same value as getGyroY()");
         }
 
         @Test
         @DisplayName("getAngularSpeedZ() equals getGyroZ()")
         void testAngularSpeedZEqualsGyroZ() {
-            // Arrange & Act
-            Drone realDrone = spy(new Drone());
-            when(realDrone.getGyro()).thenReturn(new int[]{150, 200, 100});
+            // Arrange
+            when(mockStatus.getMotion()).thenReturn(mockMotion);
+            when(mockMotion.getGyroRoll()).thenReturn((short) 150);
+            when(mockMotion.getGyroPitch()).thenReturn((short) 200);
+            when(mockMotion.getGyroYaw()).thenReturn((short) 100);
 
-            // Assert
-            assertEquals(realDrone.getGyroZ(), realDrone.getAngularSpeedZ(),
+            // Act & Assert
+            assertEquals(telemetryService.getGyroZ(), telemetryService.getAngularSpeedZ(),
                 "getAngularSpeedZ() should return the same value as getGyroZ()");
         }
 
         @Test
         @DisplayName("Axis accessors match array-based access")
         void testAxisAccessorsMatchArrayAccess() {
-            // Arrange & Act
-            Drone realDrone = spy(new Drone());
-            int[] gyroData = new int[]{150, 200, 100};
-            when(realDrone.getGyro()).thenReturn(gyroData);
+            // Arrange
+            when(mockStatus.getMotion()).thenReturn(mockMotion);
+            when(mockMotion.getGyroRoll()).thenReturn((short) 150);
+            when(mockMotion.getGyroPitch()).thenReturn((short) 200);
+            when(mockMotion.getGyroYaw()).thenReturn((short) 100);
+
+            // Act
+            int[] gyroData = telemetryService.getGyro();
 
             // Assert
-            assertEquals(gyroData[0], realDrone.getAngularSpeedX(), "getAngularSpeedX() should equal getGyro()[0]");
-            assertEquals(gyroData[1], realDrone.getAngularSpeedY(), "getAngularSpeedY() should equal getGyro()[1]");
-            assertEquals(gyroData[2], realDrone.getAngularSpeedZ(), "getAngularSpeedZ() should equal getGyro()[2]");
-            assertEquals(gyroData[0], realDrone.getGyroX(), "getGyroX() should equal getGyro()[0]");
-            assertEquals(gyroData[1], realDrone.getGyroY(), "getGyroY() should equal getGyro()[1]");
-            assertEquals(gyroData[2], realDrone.getGyroZ(), "getGyroZ() should equal getGyro()[2]");
+            assertEquals(gyroData[0], telemetryService.getAngularSpeedX(), "getAngularSpeedX() should equal getGyro()[0]");
+            assertEquals(gyroData[1], telemetryService.getAngularSpeedY(), "getAngularSpeedY() should equal getGyro()[1]");
+            assertEquals(gyroData[2], telemetryService.getAngularSpeedZ(), "getAngularSpeedZ() should equal getGyro()[2]");
+            assertEquals(gyroData[0], telemetryService.getGyroX(), "getGyroX() should equal getGyro()[0]");
+            assertEquals(gyroData[1], telemetryService.getGyroY(), "getGyroY() should equal getGyro()[1]");
+            assertEquals(gyroData[2], telemetryService.getGyroZ(), "getGyroZ() should equal getGyro()[2]");
         }
     }
 
@@ -241,16 +275,18 @@ public class SensorAxisAccessorTest {
         @DisplayName("Methods provide Python API compatibility")
         void testPythonApiCompatibility() {
             // Arrange
-            Drone realDrone = spy(new Drone());
-            when(realDrone.getGyro()).thenReturn(new int[]{150, 200, 100});
+            when(mockStatus.getMotion()).thenReturn(mockMotion);
+            when(mockMotion.getGyroRoll()).thenReturn((short) 150);
+            when(mockMotion.getGyroPitch()).thenReturn((short) 200);
+            when(mockMotion.getGyroYaw()).thenReturn((short) 100);
 
             // Act - Verify all methods work as expected for Python parity
-            int angularSpeedX = realDrone.getAngularSpeedX();  // Python: get_angular_speed_x()
-            int angularSpeedY = realDrone.getAngularSpeedY();  // Python: get_angular_speed_y()
-            int angularSpeedZ = realDrone.getAngularSpeedZ();  // Python: get_angular_speed_z()
-            int gyroX = realDrone.getGyroX();                  // Python: get_x_gyro()
-            int gyroY = realDrone.getGyroY();                  // Python: get_y_gyro()
-            int gyroZ = realDrone.getGyroZ();                  // Python: get_z_gyro()
+            int angularSpeedX = telemetryService.getAngularSpeedX();  // Python: get_angular_speed_x()
+            int angularSpeedY = telemetryService.getAngularSpeedY();  // Python: get_angular_speed_y()
+            int angularSpeedZ = telemetryService.getAngularSpeedZ();  // Python: get_angular_speed_z()
+            int gyroX = telemetryService.getGyroX();                  // Python: get_x_gyro()
+            int gyroY = telemetryService.getGyroY();                  // Python: get_y_gyro()
+            int gyroZ = telemetryService.getGyroZ();                  // Python: get_z_gyro()
 
             // Assert
             assertEquals(150, angularSpeedX, "Angular speed X should match Python behavior");
@@ -269,40 +305,48 @@ public class SensorAxisAccessorTest {
         @Test
         @DisplayName("L0106 Conditionals - Rotation detection example")
         void testRotationDetectionConditional() {
-            // Arrange
-            Drone realDrone = spy(new Drone());
+            // Arrange & Test rapid rotation scenario
+            when(mockStatus.getMotion()).thenReturn(mockMotion);
+            when(mockMotion.getGyroRoll()).thenReturn((short) 200);
+            when(mockMotion.getGyroPitch()).thenReturn((short) 150);
+            when(mockMotion.getGyroYaw()).thenReturn((short) 300);
             
-            // Test rapid rotation scenario
-            when(realDrone.getGyro()).thenReturn(new int[]{200, 150, 300});
-            boolean rapidRotation = Math.abs(realDrone.getAngularSpeedZ()) > 250;
+            boolean rapidRotation = Math.abs(telemetryService.getAngularSpeedZ()) > 250;
             assertTrue(rapidRotation, "Should detect rapid rotation when gyro Z > 250");
             
             // Test stable scenario
-            when(realDrone.getGyro()).thenReturn(new int[]{10, 5, 15});
-            boolean stable = Math.abs(realDrone.getAngularSpeedX()) < 50 &&
-                           Math.abs(realDrone.getAngularSpeedY()) < 50 &&
-                           Math.abs(realDrone.getAngularSpeedZ()) < 50;
+            when(mockMotion.getGyroRoll()).thenReturn((short) 10);
+            when(mockMotion.getGyroPitch()).thenReturn((short) 5);
+            when(mockMotion.getGyroYaw()).thenReturn((short) 15);
+            
+            boolean stable = Math.abs(telemetryService.getAngularSpeedX()) < 50 &&
+                           Math.abs(telemetryService.getAngularSpeedY()) < 50 &&
+                           Math.abs(telemetryService.getAngularSpeedZ()) < 50;
             assertTrue(stable, "Should detect stable state when all gyro values are small");
         }
 
         @Test
         @DisplayName("L0106 Conditionals - Motion pattern detection")
         void testMotionPatternDetection() {
-            // Arrange
-            Drone realDrone = spy(new Drone());
-            
             // Test spinning pattern (high yaw rotation)
-            when(realDrone.getGyro()).thenReturn(new int[]{5, 10, 200});
-            boolean isSpinning = Math.abs(realDrone.getGyroZ()) > 100 &&
-                               Math.abs(realDrone.getGyroX()) < 50 &&
-                               Math.abs(realDrone.getGyroY()) < 50;
+            when(mockStatus.getMotion()).thenReturn(mockMotion);
+            when(mockMotion.getGyroRoll()).thenReturn((short) 5);
+            when(mockMotion.getGyroPitch()).thenReturn((short) 10);
+            when(mockMotion.getGyroYaw()).thenReturn((short) 200);
+            
+            boolean isSpinning = Math.abs(telemetryService.getGyroZ()) > 100 &&
+                               Math.abs(telemetryService.getGyroX()) < 50 &&
+                               Math.abs(telemetryService.getGyroY()) < 50;
             assertTrue(isSpinning, "Should detect spinning when only Z-axis has high rotation");
             
             // Test tumbling pattern (all axes rotating)
-            when(realDrone.getGyro()).thenReturn(new int[]{150, 180, 200});
-            boolean isTumbling = Math.abs(realDrone.getAngularSpeedX()) > 100 &&
-                                Math.abs(realDrone.getAngularSpeedY()) > 100 &&
-                                Math.abs(realDrone.getAngularSpeedZ()) > 100;
+            when(mockMotion.getGyroRoll()).thenReturn((short) 150);
+            when(mockMotion.getGyroPitch()).thenReturn((short) 180);
+            when(mockMotion.getGyroYaw()).thenReturn((short) 200);
+            
+            boolean isTumbling = Math.abs(telemetryService.getAngularSpeedX()) > 100 &&
+                                Math.abs(telemetryService.getAngularSpeedY()) > 100 &&
+                                Math.abs(telemetryService.getAngularSpeedZ()) > 100;
             assertTrue(isTumbling, "Should detect tumbling when all axes have high rotation");
         }
     }
