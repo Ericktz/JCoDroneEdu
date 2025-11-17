@@ -7,7 +7,7 @@ plugins {
     id("java-library")
     id("maven-publish")
     id("signing")
-    id("io.github.gradleup.nmcp") version "1.1.0"
+    id("com.gradleup.nmcp") version "1.2.1"
 }
 
 // Ensure a consistent Java toolchain for local and CI builds. This makes Gradle
