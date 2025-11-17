@@ -7,6 +7,7 @@ plugins {
     id("java-library")
     id("maven-publish")
     id("signing")
+    id("io.github.gradleup.nmcp") version "latest"
 }
 
 // Ensure a consistent Java toolchain for local and CI builds. This makes Gradle
@@ -727,6 +728,7 @@ tasks.named<org.gradle.api.tasks.javadoc.Javadoc>("javadoc") {
     }
 }
 
+
 // Maven publication: main JAR + sources + javadoc
 publishing {
     publications {
@@ -739,18 +741,16 @@ publishing {
             version = project.version.toString()
         }
     }
+    // No explicit repositories block needed; nmcp handles publishing
+}
 
-    // Configure OSSRH repository at root so root publish tasks are created
-    repositories {
-        maven {
-            name = "OSSRH"
-            url = uri("https://central.sonatype.com/api/v1/publish")
-            credentials {
-                username = project.findProperty("ossrhUsername") as String? ?: ""
-                password = project.findProperty("ossrhPassword") as String? ?: ""
-            }
-        }
-    }
+// Configure the nmcp plugin for Central Portal publishing
+nmcp {
+    // Example configuration (customize as needed):
+    // projectUrl.set("https://github.com/your/repo")
+    // license.set("MIT")
+    // description.set("CoDrone EDU Java library")
+    // developers.set(listOf("Your Name <your@email.com>"))
 }
 
 // Configure in-memory PGP signing for CI when SIGNING_KEY / SIGNING_PASSWORD are provided
