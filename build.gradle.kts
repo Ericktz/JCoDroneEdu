@@ -1330,7 +1330,6 @@ print(codrone_edu.__version__)
         
         report.appendLine("# API Comparison Report")
         report.appendLine()
-        report.appendLine("**Generated:** ${LocalDateTime.now()}")
         report.appendLine("**Java Version:** ${project.version}")
         report.appendLine("**Python API Version:** $pythonVersion")
         if (compareLatest) {
