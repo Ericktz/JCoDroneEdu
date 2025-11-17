@@ -12,7 +12,6 @@ import com.otabi.jcodroneedu.autonomous.AutonomousMethod;
 import com.otabi.jcodroneedu.autonomous.AutonomousMethodRegistry;
 import com.otabi.jcodroneedu.buzzer.BuzzerSequence;
 import com.otabi.jcodroneedu.buzzer.BuzzerSequenceRegistry;
-import com.otabi.jcodroneedu.display.DisplayService;
 import com.otabi.jcodroneedu.protocol.*;
 import com.otabi.jcodroneedu.protocol.linkmanager.Request;
 import com.otabi.jcodroneedu.protocol.buzzer.*;
@@ -6490,7 +6489,7 @@ public class Drone implements AutoCloseable {
      * @param font The font to use (LIBERATION_MONO_5X8 or LIBERATION_MONO_10X16)
      * @param pixel The pixel type to draw
      * @educational
-      * @since 1.0.0
+     * @since 1.0.0
      */
     public void controllerDrawString(int x, int y, String message, DisplayFont font, DisplayPixel pixel) {
         DisplayDrawString drawCommand = new DisplayDrawString(x, y, font, pixel, message);
@@ -6650,18 +6649,10 @@ public class Drone implements AutoCloseable {
      * @param width Width of area to invert
      * @param height Height of area to invert
      * @educational
-      * @since 1.0.0
+     * @since 1.0.0
      */
     public void controllerInvertArea(int x, int y, int width, int height) {
-        DisplayInvert invertCommand = new DisplayInvert(x, y, width, height);
-        
-        Header header = new Header();
-        header.setDataType(DataType.DisplayInvert);
-        header.setLength(invertCommand.getSize());
-        header.setFrom(DeviceType.Base);
-        header.setTo(DeviceType.Controller);
-
-        transfer(header, invertCommand);
+        displayService.invertArea(x, y, width, height);
     }
 
     /**
@@ -6684,18 +6675,10 @@ public class Drone implements AutoCloseable {
      * @param imageData Byte array containing pixel data in bit-packed format
      * @see #controllerCreateCanvas()
      * @see #controllerDrawCanvas(DisplayController)
-      * @since 1.0.0
+     * @since 1.0.0
      */
     public void controllerDrawImage(int x, int y, int width, int height, byte[] imageData) {
-        DisplayDrawImage imageCommand = new DisplayDrawImage(x, y, width, height, imageData);
-        
-        Header header = new Header();
-        header.setDataType(DataType.DisplayDrawImage);
-        header.setLength(imageCommand.getSize());
-        header.setFrom(DeviceType.Base);
-        header.setTo(DeviceType.Controller);
-
-        transfer(header, imageCommand);
+        displayService.drawImage(x, y, width, height, imageData);
     }
 
 

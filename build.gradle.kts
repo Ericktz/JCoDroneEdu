@@ -24,7 +24,7 @@ java {
 tasks.register<JavaExec>("runIntegrationTestMenu") {
     group = "verification"
     description = "Runs the Integration Test Menu - interactive interface for all hardware integration tests."
-    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.integrationtests.IntegrationTestMenu")
     standardInput = System.`in`
 }
@@ -35,7 +35,7 @@ tasks.register<JavaExec>("runIntegrationTestMenu") {
 tasks.register<JavaExec>("runSmokeTest") {
     group = "verification"
     description = "Runs the SmokeTest example to verify controller connection (no flight commands)."
-    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.integrationtests.SmokeTest")
     // Pass args using: ./gradlew runSmokeTest --args='/dev/cu.usbserial-XXXX'
 }
@@ -46,7 +46,7 @@ tasks.register<JavaExec>("runSmokeTest") {
 tasks.register<JavaExec>("runFlightSmokeTest") {
     group = "verification"
     description = "Runs the guarded FlightSmokeTest (requires --allow-flight and --confirm=YES to actually fly)."
-    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.integrationtests.FlightSmokeTest")
     // Pass args using: ./gradlew runFlightSmokeTest --args='--allow-flight --confirm=YES'
     standardInput = System.`in`
@@ -58,7 +58,7 @@ tasks.register<JavaExec>("runFlightSmokeTest") {
 tasks.register<JavaExec>("runConservativeFlight") {
     group = "verification"
     description = "Runs the ConservativeFlight example (requires --allow-flight to actually fly)."
-    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.integrationtests.ConservativeFlight")
     // Usage: ./gradlew runConservativeFlight --args='--allow-flight'
 }
@@ -69,7 +69,7 @@ tasks.register<JavaExec>("runConservativeFlight") {
 tasks.register<JavaExec>("runQuickLEDTest") {
     group = "verification"
     description = "Runs the QuickLEDTest example to verify drone and controller LED functionality."
-    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.integrationtests.QuickLEDTest")
 }
 
@@ -80,7 +80,7 @@ tasks.register<JavaExec>("runQuickLEDTest") {
 tasks.register<JavaExec>("runTestHarness") {
     group = "verification"
     description = "Runs the interactive TestHarness example for manual testing."
-    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.integrationtests.TestHarness")
     // Forward stdin so Scanner(System.in) in the harness can read user input when run via Gradle
     standardInput = System.`in`
@@ -92,7 +92,7 @@ tasks.register<JavaExec>("runTestHarness") {
 tasks.register<JavaExec>("runSensorDisplayGui") {
     group = "verification"
     description = "Runs the Swing-based SensorDisplay GUI (non-flying telemetry monitor). Requires drone connection."
-    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.tools.SensorDisplayGui")
     standardInput = System.`in`
 }
@@ -103,7 +103,7 @@ tasks.register<JavaExec>("runSensorDisplayGui") {
 tasks.register<JavaExec>("runBuzzerTest") {
     group = "verification"
     description = "Tests drone and controller buzzers with notes and frequencies."
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.BuzzerTest")
 }
 
@@ -113,7 +113,7 @@ tasks.register<JavaExec>("runBuzzerTest") {
 tasks.register<JavaExec>("runAutonomousPingTest") {
     group = "verification"
     description = "Comprehensive test for autonomous flight (avoidWall, keepDistance) and ping feature."
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.AutonomousPingTest")
     standardInput = System.`in`  // Forward stdin for manual confirmations
 }
@@ -124,7 +124,7 @@ tasks.register<JavaExec>("runAutonomousPingTest") {
 tasks.register<JavaExec>("runSingleNoteTest") {
     group = "verification"
     description = "Plays a single note (G4) repeatedly to test buzzer audio."
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.SingleNoteTest")
 }
 
@@ -134,7 +134,7 @@ tasks.register<JavaExec>("runSingleNoteTest") {
 tasks.register<JavaExec>("runMelodyPlayer") {
     group = "verification"
     description = "Plays musical melodies using the drone buzzer."
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.MelodyPlayer")
 }
 
@@ -144,7 +144,7 @@ tasks.register<JavaExec>("runMelodyPlayer") {
 tasks.register<JavaExec>("runControllerInputGui") {
     group = "verification"
     description = "Interactive GUI for testing controller joysticks and buttons. Requires controller connection."
-    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.tools.ControllerInputGui")
     standardInput = System.`in`
 }
@@ -167,7 +167,7 @@ tasks.register<JavaExec>("runBothMonitors") {
 tasks.register<JavaExec>("runControllerInputDebug") {
     group = "verification"
     description = "Debug tool to see raw controller input data."
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.ControllerInputDebug")
 }
 
@@ -177,7 +177,7 @@ tasks.register<JavaExec>("runControllerInputDebug") {
 tasks.register<JavaExec>("runAccelTest") {
     group = "verification"
     description = "Runs the command-line AccelTest (prints accelerometer and angle data)."
-    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.integrationtests.AccelTest")
     // Forward stdin so interactive prompts (press Enter) work when run via Gradle
     standardInput = System.`in`
@@ -186,7 +186,7 @@ tasks.register<JavaExec>("runAccelTest") {
 tasks.register<JavaExec>("runMotionDump") {
     group = "verification"
     description = "Dumps raw Motion short values and scaled accel/angle for 5s."
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.MotionDump")
 }
 
@@ -196,7 +196,7 @@ tasks.register<JavaExec>("runMotionDump") {
 tasks.register<JavaExec>("runAltitudePressureTest") {
     group = "verification"
     description = "Displays altitude, pressure, and height sensor data with calculations."
-    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.integrationtests.AltitudePressureTest")
 }
 
@@ -205,7 +205,7 @@ tasks.register<JavaExec>("runAltitudePressureTest") {
 tasks.register<JavaExec>("runElevationApiDemo") {
     group = "verification"
     description = "Demonstrates the elevation API (getUncorrectedElevation, getCorrectedElevation, getElevation)."
-    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.integrationtests.ElevationApiDemo")
 }
 
@@ -214,7 +214,7 @@ tasks.register<JavaExec>("runElevationApiDemo") {
 tasks.register<JavaExec>("runCalibratedElevationDemo") {
     group = "verification"
     description = "Demonstrates weather-calibrated elevation using real-time pressure data."
-    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.integrationtests.CalibratedElevationDemo")
 }
 
@@ -223,7 +223,7 @@ tasks.register<JavaExec>("runCalibratedElevationDemo") {
 tasks.register<JavaExec>("runWeatherServiceTest") {
     group = "verification"
     description = "Tests weather API connectivity and data retrieval (no drone required)."
-    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.integrationtests.WeatherServiceTest")
 }
 
@@ -232,7 +232,7 @@ tasks.register<JavaExec>("runWeatherServiceTest") {
 tasks.register<JavaExec>("runRelativeHeightDemo") {
     group = "verification"
     description = "Demonstrates relative height measurement using pressure reference (Python compatibility)."
-    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.integrationtests.RelativeHeightDemo")
 }
 
@@ -241,7 +241,7 @@ tasks.register<JavaExec>("runRelativeHeightDemo") {
 tasks.register<JavaExec>("runAutomaticElevationDemo") {
     group = "verification"
     description = "Demonstrates automatic location detection and pressure calibration with fallback strategy."
-    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.integrationtests.AutomaticElevationDemo")
 }
 
@@ -251,7 +251,7 @@ tasks.register<JavaExec>("runAutomaticElevationDemo") {
 tasks.register<JavaExec>("runMultiSensorTest") {
     group = "verification"
     description = "Runs the MultiSensorTest example to snapshot range, optical flow, temperature, and color sensors."
-    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.integrationtests.MultiSensorTest")
     // Forward stdin so interactive prompts (press Enter) work when run via Gradle
     standardInput = System.`in`
@@ -263,7 +263,7 @@ tasks.register<JavaExec>("runMultiSensorTest") {
 tasks.register<JavaExec>("runTemperatureCalibrationDemo") {
     group = "verification"
     description = "Demonstrates temperature sensor calibration and the difference between raw sensor and calibrated ambient temperature."
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.demos.TemperatureCalibrationDemo")
 }
 
@@ -273,7 +273,7 @@ tasks.register<JavaExec>("runTemperatureCalibrationDemo") {
 tasks.register<JavaExec>("runTemperatureCalibrationExperiment") {
     group = "research"
     description = "Runs a systematic temperature calibration experiment collecting data about warm-up and flight effects. Outputs CSV data for analysis."
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.research.TemperatureCalibrationExperiment")
     standardInput = System.`in`
 }
@@ -284,7 +284,7 @@ tasks.register<JavaExec>("runTemperatureCalibrationExperiment") {
 tasks.register<JavaExec>("runColorSensorDebug") {
     group = "verification"
     description = "Runs the ColorSensorDebug tool to show detailed color sensor data including HSVL values."
-    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.integrationtests.ColorSensorDebug")
     // Forward stdin so interactive prompts work
     standardInput = System.`in`
@@ -296,7 +296,7 @@ tasks.register<JavaExec>("runColorSensorDebug") {
 tasks.register<JavaExec>("runControllerDisplayExample") {
     group = "verification"
     description = "Runs the ControllerDisplayExample to demonstrate controller display drawing capabilities."
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.ControllerDisplayExample")
 }
 
@@ -305,21 +305,21 @@ tasks.register<JavaExec>("runControllerDisplayExample") {
 tasks.register<JavaExec>("runControllerDisplayCanvasExample") {
     group = "verification"
     description = "Runs the ControllerDisplayCanvasExample to demonstrate canvas-based controller display with batching."
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.ControllerDisplayCanvasExample")
 }
 
 tasks.register<JavaExec>("runDisplayLineTest") {
     group = "verification"
     description = "Runs DisplayLineTest to diagnose display byte-packing format"
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.DisplayLineTest")
 }
 
 tasks.register<JavaExec>("runDisplayWhiteTest") {
     group = "verification"
     description = "Runs DisplayWhiteTest to test white/blank display"
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.DisplayWhiteTest")
     // Forward stdin for keyboard input
     standardInput = System.`in`
@@ -328,7 +328,7 @@ tasks.register<JavaExec>("runDisplayWhiteTest") {
 tasks.register<JavaExec>("runDisplayStagedTest") {
     group = "verification"
     description = "Runs DisplayStagedTest with clear visual progression"
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.DisplayStagedTest")
 }
 
@@ -338,7 +338,7 @@ tasks.register<JavaExec>("runDisplayStagedTest") {
 tasks.register<JavaExec>("runCheckerboardTest") {
     group = "verification"
     description = "Runs CheckerboardTest using individual controllerDrawPoint commands"
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.CheckerboardTest")
 }
 
@@ -348,7 +348,7 @@ tasks.register<JavaExec>("runCheckerboardTest") {
 tasks.register<JavaExec>("runSimpleLinesTest") {
     group = "verification"
     description = "Runs SimpleLinesTest - draws a few horizontal lines for quick diagnostics"
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.SimpleLinesTest")
 }
 
@@ -358,7 +358,7 @@ tasks.register<JavaExec>("runSimpleLinesTest") {
 tasks.register<JavaExec>("runSingleMessageTest") {
     group = "verification"
     description = "Runs SingleMessageTest - sends a single 0x88 DisplayDrawImage message"
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.SingleMessageTest")
     standardInput = System.`in`
 }
@@ -369,7 +369,7 @@ tasks.register<JavaExec>("runSingleMessageTest") {
 tasks.register<JavaExec>("runCanvasToProtocolTest") {
     group = "verification"
     description = "Runs CanvasToProtocolTest - sends canvas as chunked 0x88 messages"
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.CanvasToProtocolTest")
     standardInput = System.`in`
 }
@@ -380,7 +380,7 @@ tasks.register<JavaExec>("runCanvasToProtocolTest") {
 tasks.register<JavaExec>("runCleanCanvasTest") {
     group = "verification"
     description = "Runs CleanCanvasTest - sends canvas as 5 properly-sized 0x88 messages"
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.CleanCanvasTest")
     standardInput = System.`in`
 }
@@ -391,7 +391,7 @@ tasks.register<JavaExec>("runCleanCanvasTest") {
 tasks.register<JavaExec>("runDebugYCoordinateTest") {
     group = "verification"
     description = "Runs DebugYCoordinateTest - tests y-coordinate positioning with 0x88"
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.DebugYCoordinateTest")
     standardInput = System.`in`
 }
@@ -399,14 +399,14 @@ tasks.register<JavaExec>("runDebugYCoordinateTest") {
 tasks.register<JavaExec>("runCanvasColorDebugTest") {
     group = "verification"
     description = "Runs CanvasColorDebugTest - debug what colors are actually drawn on canvas"
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.CanvasColorDebugTest")
 }
 
 tasks.register<JavaExec>("runFormatComparisonTest") {
     group = "verification"
     description = "Runs FormatComparisonTest - compare different byte patterns with 0x88"
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.FormatComparisonTest")
     standardInput = System.`in`
 }
@@ -414,7 +414,7 @@ tasks.register<JavaExec>("runFormatComparisonTest") {
 tasks.register<JavaExec>("runBlockSizeTest") {
     group = "verification"
     description = "Runs BlockSizeTest - test different block sizes with 0x88"
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.BlockSizeTest")
     standardInput = System.`in`
 }
@@ -422,7 +422,7 @@ tasks.register<JavaExec>("runBlockSizeTest") {
 tasks.register<JavaExec>("runCanvasVsManualTest") {
     group = "verification"
     description = "Runs CanvasVsManualTest - compare canvas bytes vs manual 0xFF"
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.CanvasVsManualTest")
     standardInput = System.`in`
 }
@@ -430,7 +430,7 @@ tasks.register<JavaExec>("runCanvasVsManualTest") {
 tasks.register<JavaExec>("runPowerCycleTest") {
     group = "verification"
     description = "Runs PowerCycleTest - power cycles drone to clear display state"
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.PowerCycleTest")
     standardInput = System.`in`
 }
@@ -438,7 +438,7 @@ tasks.register<JavaExec>("runPowerCycleTest") {
 tasks.register<JavaExec>("runChunkPositioningDebugTest") {
     group = "verification"
     description = "Runs ChunkPositioningDebugTest - debug why chunked 0x88 doesn't work"
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.ChunkPositioningDebugTest")
     standardInput = System.`in`
 }
@@ -446,7 +446,7 @@ tasks.register<JavaExec>("runChunkPositioningDebugTest") {
 tasks.register<JavaExec>("runYZeroDebugTest") {
     group = "verification"
     description = "Runs YZeroDebugTest - debug y=0 positioning issue"
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.YZeroDebugTest")
     standardInput = System.`in`
 }
@@ -454,7 +454,7 @@ tasks.register<JavaExec>("runYZeroDebugTest") {
 tasks.register<JavaExec>("runY0AfterOtherCommandTest") {
     group = "verification"
     description = "Runs Y0AfterOtherCommandTest - test y=0 after other 0x88 commands"
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.Y0AfterOtherCommandTest")
     standardInput = System.`in`
 }
@@ -462,7 +462,7 @@ tasks.register<JavaExec>("runY0AfterOtherCommandTest") {
 tasks.register<JavaExec>("runFullCanvasTest") {
     group = "verification"
     description = "Runs FullCanvasTest - test sending full 1024-byte canvas at once"
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.FullCanvasTest")
     standardInput = System.`in`
 }
@@ -470,7 +470,7 @@ tasks.register<JavaExec>("runFullCanvasTest") {
 tasks.register<JavaExec>("runFullDataWithYOffsetTest") {
     group = "verification"
     description = "Runs FullDataWithYOffsetTest - test full data at different y positions"
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.FullDataWithYOffsetTest")
     standardInput = System.`in`
 }
@@ -478,7 +478,7 @@ tasks.register<JavaExec>("runFullDataWithYOffsetTest") {
 tasks.register<JavaExec>("runTwoLinesPersistenceTest") {
     group = "verification"
     description = "Runs TwoLinesPersistenceTest - verify two 0x88 commands accumulate"
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.TwoLinesPersistenceTest")
     standardInput = System.`in`
 }
@@ -486,63 +486,63 @@ tasks.register<JavaExec>("runTwoLinesPersistenceTest") {
 tasks.register<JavaExec>("runSimple0x88Test") {
     group = "verification"
     description = "Runs Simple0x88Test - basic 0x88 functionality test"
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.Simple0x88Test")
 }
 
 tasks.register<JavaExec>("runRobotImageTest") {
     group = "verification"
     description = "Runs RobotImageTest - displays robot face on controller"
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.RobotImageTest")
 }
 
 tasks.register<JavaExec>("runRobotEmojiTest") {
     group = "verification"
     description = "Runs RobotEmojiTest - displays robot emoji from PNG on controller"
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.RobotEmojiTest")
 }
 
 tasks.register<JavaExec>("runPacketRateTest") {
     group = "verification"
     description = "Runs PacketRateTest - monitors packet rate without sending display commands"
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.PacketRateTest")
 }
 
 tasks.register<JavaExec>("runDisplayCommandStructureTest") {
     group = "verification"
     description = "Runs DisplayCommandStructureTest - analyzes response packets for different display commands"
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.DisplayCommandStructureTest")
 }
 
 tasks.register<JavaExec>("runBuzzerResponseTest") {
     group = "verification"
     description = "Runs BuzzerResponseTest - checks if buzzer commands get echo responses"
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.BuzzerResponseTest")
 }
 
 tasks.register<JavaExec>("runDroneCommandResponseTest") {
     group = "verification"
     description = "Runs DroneCommandResponseTest - checks if drone commands get echo responses"
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.DroneCommandResponseTest")
 }
 
 tasks.register<JavaExec>("runCommandEchoComparisonTest") {
     group = "verification"
     description = "Runs CommandEchoComparisonTest - compares echo responses for controller vs drone commands"
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.CommandEchoComparisonTest")
 }
 
 tasks.register<JavaExec>("runEchoTimingTest") {
     group = "verification"
     description = "Runs EchoTimingTest - analyzes timing of echo responses to determine if from controller or drone"
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.EchoTimingTest")
 }
 
@@ -552,7 +552,7 @@ tasks.register<JavaExec>("runEchoTimingTest") {
 tasks.register<JavaExec>("runExampleMenu") {
     group = "verification"
     description = "Runs the Integration Test Menu - interactive interface for all hardware integration tests."
-    classpath = sourceSets.getByName("main").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath + sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.integrationtests.IntegrationTestMenu")
     // Forward stdin so the menu can read user input
     standardInput = System.`in`
@@ -564,7 +564,7 @@ tasks.register<JavaExec>("runExampleMenu") {
 tasks.register<JavaExec>("runL0103TurningNavigation") {
     group = "application"
     description = "Runs the L0103 Turning Navigation example to test position-based movement commands."
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.L0103TurningNavigation")
 }
 
@@ -574,7 +574,7 @@ tasks.register<JavaExec>("runL0103TurningNavigation") {
 tasks.register<JavaExec>("runErrorMonitoringDemo") {
     group = "verification"
     description = "Runs the ErrorMonitoringExample in demo mode (no hardware required)."
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.ErrorMonitoringExample")
     // No arguments = demo mode
 }
@@ -585,7 +585,7 @@ tasks.register<JavaExec>("runErrorMonitoringDemo") {
 tasks.register<JavaExec>("runErrorMonitoringConnect") {
     group = "verification"
     description = "Runs the ErrorMonitoringExample with drone connection (reads real error data, no flight)."
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.ErrorMonitoringExample")
     args = listOf("--connect")
 }
@@ -596,7 +596,7 @@ tasks.register<JavaExec>("runErrorMonitoringConnect") {
 tasks.register<JavaExec>("runErrorMonitoringFly") {
     group = "verification"
     description = "Runs the ErrorMonitoringExample with ACTUAL FLIGHT operations (CAUTION!)."
-    classpath = sourceSets.getByName("main").runtimeClasspath
+    classpath = sourceSets.getByName("test").runtimeClasspath
     mainClass.set("com.otabi.jcodroneedu.examples.ErrorMonitoringExample")
     args = listOf("--fly")
 }
