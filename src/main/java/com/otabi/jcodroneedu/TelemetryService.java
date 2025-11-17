@@ -421,21 +421,6 @@ public class TelemetryService {
     }
 
     /**
-     * Gets gyroscope data as an array.
-     * 
-     * <p>Returns rotational velocity data for all three axes in a convenient array format.
-     * This is useful for AP CSA students learning about arrays and rotational motion.</p>
-     * 
-     * @return int array containing [roll, pitch, yaw] gyroscope values in degrees/second
-     * @apiNote Equivalent to Python's various gyro methods, returns array for AP CSA compatibility
-     * @since 1.0.0
-     * @educational This demonstrates array usage and rotational concepts
-     */
-    public int[] getGyro() {
-        return getGyroRaw();
-    }
-
-    /**
      * Gets angle data as an array.
      * 
      * <p>Returns current orientation angles for all three axes in a convenient array format.
@@ -459,11 +444,9 @@ public class TelemetryService {
      * 
      * @return X-axis angular velocity in degrees per second
      * @since 1.4.0
-     * @pythonEquivalent get_angular_speed_x
-     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#get_angular_speed_x
      */
     public int getAngularSpeedX() {
-        int[] gyro = getGyro();
+        int[] gyro = getGyroRaw();
         return gyro[0];
     }
 
@@ -475,11 +458,9 @@ public class TelemetryService {
      * 
      * @return Y-axis angular velocity in degrees per second
      * @since 1.4.0
-     * @pythonEquivalent get_angular_speed_y
-     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#get_angular_speed_y
      */
     public int getAngularSpeedY() {
-        int[] gyro = getGyro();
+        int[] gyro = getGyroRaw();
         return gyro[1];
     }
 
@@ -491,69 +472,9 @@ public class TelemetryService {
      * 
      * @return Z-axis angular velocity in degrees per second
      * @since 1.4.0
-     * @pythonEquivalent get_angular_speed_z
-     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#get_angular_speed_z
      */
     public int getAngularSpeedZ() {
-        int[] gyro = getGyro();
-        return gyro[2];
-    }
-
-    /**
-     * Gets the gyroscope data for the X axis.
-     * 
-     * <p>Returns the rotational velocity around the X axis in degrees per second.
-     * This method provides compatibility with older Python API. Equivalent to
-     * {@code getGyro()[0]}.</p>
-     * 
-     * <p><strong>Note:</strong> This method is deprecated in Python in favor of
-     * {@link #getAngularSpeedX()}.</p>
-     * 
-     * @return X-axis angular velocity in degrees per second
-     * @since 1.4.0
-     * @pythonEquivalent get_x_gyro
-     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#get_x_gyro
-     */
-    public int getGyroX() {
-        int[] gyro = getGyro();
-        return gyro[0];
-    }
-
-    /**
-     * Gets the gyroscope data for the Y axis.
-     * 
-     * <p>Returns the rotational velocity around the Y axis in degrees per second.
-     * Equivalent to {@code getGyro()[1]}.</p>
-     * 
-     * <p><strong>Note:</strong> This method is deprecated in Python in favor of
-     * {@link #getAngularSpeedY()}.</p>
-     * 
-     * @return Y-axis angular velocity in degrees per second
-     * @since 1.4.0
-     * @pythonEquivalent get_y_gyro
-     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#get_y_gyro
-     */
-    public int getGyroY() {
-        int[] gyro = getGyro();
-        return gyro[1];
-    }
-
-    /**
-     * Gets the gyroscope data for the Z axis.
-     * 
-     * <p>Returns the rotational velocity around the Z axis in degrees per second.
-     * Equivalent to {@code getGyro()[2]}.</p>
-     * 
-     * <p><strong>Note:</strong> This method is deprecated in Python in favor of
-     * {@link #getAngularSpeedZ()}.</p>
-     * 
-     * @return Z-axis angular velocity in degrees per second
-     * @since 1.4.0
-     * @pythonEquivalent get_z_gyro
-     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#get_z_gyro
-     */
-    public int getGyroZ() {
-        int[] gyro = getGyro();
+        int[] gyro = getGyroRaw();
         return gyro[2];
     }
 

@@ -3057,61 +3057,6 @@ public class Drone implements AutoCloseable {
         return telemetryService.getAngularSpeedZ();
     }
 
-    /**
-     * Gets the gyroscope data for the X axis.
-     * 
-     * <p>Returns the rotational velocity around the X axis in degrees per second.
-     * This method provides compatibility with older Python API. Equivalent to
-     * {@code getGyro()[0]}.</p>
-     * 
-     * <p><strong>Note:</strong> This method is deprecated in Python in favor of
-     * {@link #getAngularSpeedX()}.</p>
-     * 
-     * @return X-axis angular velocity in degrees per second
-     * @since 1.4.0
-     * @pythonEquivalent get_x_gyro
-     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#get_x_gyro
-     */
-    public int getGyroX() {
-        return telemetryService.getGyroX();
-    }
-
-    /**
-     * Gets the gyroscope data for the Y axis.
-     * 
-     * <p>Returns the rotational velocity around the Y axis in degrees per second.
-     * Equivalent to {@code getGyro()[1]}.</p>
-     * 
-     * <p><strong>Note:</strong> This method is deprecated in Python in favor of
-     * {@link #getAngularSpeedY()}.</p>
-     * 
-     * @return Y-axis angular velocity in degrees per second
-     * @since 1.4.0
-     * @pythonEquivalent get_y_gyro
-     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#get_y_gyro
-     */
-    public int getGyroY() {
-        return telemetryService.getGyroY();
-    }
-
-    /**
-     * Gets the gyroscope data for the Z axis.
-     * 
-     * <p>Returns the rotational velocity around the Z axis in degrees per second.
-     * Equivalent to {@code getGyro()[2]}.</p>
-     * 
-     * <p><strong>Note:</strong> This method is deprecated in Python in favor of
-     * {@link #getAngularSpeedZ()}.</p>
-     * 
-     * @return Z-axis angular velocity in degrees per second
-     * @since 1.4.0
-     * @pythonEquivalent get_z_gyro
-     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#get_z_gyro
-     */
-    public int getGyroZ() {
-        return telemetryService.getGyroZ();
-    }
-
     // Array-based sensor methods for Python compatibility
     
     /**
@@ -3164,16 +3109,8 @@ public class Drone implements AutoCloseable {
      * @since 1.0.0
      * @educational
      */
-    /**
-     * Gets gyroscope data as an array [x, y, z].
-     *
-     * @return Array containing [x, y, z] angular velocity values in degrees/second
-     * @apiNote Equivalent to Python's {@code drone.get_gyro()}
-     * @since 1.0.0
-     * @educational
-     */
     public int[] getGyro() {
-        return telemetryService.getGyro();
+        return telemetryService.getGyroRaw();
     }
 
     /**
