@@ -3057,6 +3057,112 @@ public class Drone implements AutoCloseable {
         return telemetryService.getAngularSpeedZ();
     }
 
+    // Deprecated accessor methods (maintained for backward compatibility)
+    
+    /**
+     * Gets the X-axis acceleration in G-force units.
+     * 
+     * <p>Deprecated: Use {@link #getAccelX()} instead.</p>
+     * 
+     * @return X acceleration in G-force
+     * @deprecated Use {@link #getAccelX()} instead. Previously named {@code get_x_accel()} in Python.
+     * @since 1.0.0
+     * @pythonEquivalent get_x_accel
+     */
+    @Deprecated(since = "1.4.0", forRemoval = false)
+    public double getXAccel() {
+        return getAccelX();
+    }
+
+    /**
+     * Gets the Y-axis acceleration in G-force units.
+     * 
+     * <p>Deprecated: Use {@link #getAccelY()} instead.</p>
+     * 
+     * @return Y acceleration in G-force
+     * @deprecated Use {@link #getAccelY()} instead. Previously named {@code get_y_accel()} in Python.
+     * @since 1.0.0
+     * @pythonEquivalent get_y_accel
+     */
+    @Deprecated(since = "1.4.0", forRemoval = false)
+    public double getYAccel() {
+        return getAccelY();
+    }
+
+    /**
+     * Gets the Z-axis acceleration in G-force units.
+     * 
+     * <p>Deprecated: Use {@link #getAccelZ()} instead.</p>
+     * 
+     * @return Z acceleration in G-force
+     * @deprecated Use {@link #getAccelZ()} instead. Previously named {@code get_z_accel()} in Python.
+     * @since 1.0.0
+     * @pythonEquivalent get_z_accel
+     */
+    @Deprecated(since = "1.4.0", forRemoval = false)
+    public double getZAccel() {
+        return getAccelZ();
+    }
+
+    /**
+     * Gets the X-axis angle (roll) in degrees.
+     * 
+     * <p>Deprecated: Use {@link #getAngleX()} instead.</p>
+     * 
+     * @return X angle in degrees
+     * @deprecated Use {@link #getAngleX()} instead. Previously named {@code get_x_angle()} in Python.
+     * @since 1.0.0
+     * @pythonEquivalent get_x_angle
+     */
+    @Deprecated(since = "1.4.0", forRemoval = false)
+    public double getXAngle() {
+        return getAngleX();
+    }
+
+    /**
+     * Gets the Y-axis angle (pitch) in degrees.
+     * 
+     * <p>Deprecated: Use {@link #getAngleY()} instead.</p>
+     * 
+     * @return Y angle in degrees
+     * @deprecated Use {@link #getAngleY()} instead. Previously named {@code get_y_angle()} in Python.
+     * @since 1.0.0
+     * @pythonEquivalent get_y_angle
+     */
+    @Deprecated(since = "1.4.0", forRemoval = false)
+    public double getYAngle() {
+        return getAngleY();
+    }
+
+    /**
+     * Gets the Z-axis angle (yaw) in degrees.
+     * 
+     * <p>Deprecated: Use {@link #getAngleZ()} instead.</p>
+     * 
+     * @return Z angle in degrees
+     * @deprecated Use {@link #getAngleZ()} instead. Previously named {@code get_z_angle()} in Python.
+     * @since 1.0.0
+     * @pythonEquivalent get_z_angle
+     */
+    @Deprecated(since = "1.4.0", forRemoval = false)
+    public double getZAngle() {
+        return getAngleZ();
+    }
+
+    /**
+     * Resets the sensor angles back to zero.
+     * 
+     * <p>Deprecated: Use {@link #resetGyro()} instead.</p>
+     * 
+     * @deprecated Use {@link #resetGyro()} instead. Previously named {@code reset_sensor()} in Python.
+     * @since 1.0.0
+     * @pythonEquivalent reset_sensor
+     */
+    @Deprecated(since = "1.4.0", forRemoval = false)
+    public void resetSensor() {
+        resetGyro();
+    }
+
     // Array-based sensor methods for Python compatibility
     
     /**
