@@ -333,6 +333,151 @@ public class TelemetryService {
         return m.getAngleYaw() * DroneSystem.SensorScales.ANGLE_RAW_TO_DEG;
     }
 
+    // =============================================================================
+    // Public API Methods for Sensor Data Access
+    // =============================================================================
+
+    /**
+     * Gets the X-axis acceleration in G-force units.
+     * 
+     * @return X acceleration in G-force
+     * @apiNote Equivalent to Python's get_accel_x() method
+     * @since 1.0.0
+     */
+    public double getAccelX() {
+        return getAccelX_G();
+    }
+
+    /**
+     * Gets the Y-axis acceleration in G-force units.
+     * 
+     * @return Y acceleration in G-force
+     * @apiNote Equivalent to Python's get_accel_y() method
+     * @since 1.0.0
+     */
+    public double getAccelY() {
+        return getAccelY_G();
+    }
+
+    /**
+     * Gets the Z-axis acceleration in G-force units.
+     * 
+     * @return Z acceleration in G-force
+     * @apiNote Equivalent to Python's get_accel_z() method
+     * @since 1.0.0
+     */
+    public double getAccelZ() {
+        return getAccelZ_G();
+    }
+
+    /**
+     * Gets the X-axis angle (roll) in degrees.
+     * 
+     * @return X angle in degrees
+     * @apiNote Equivalent to Python's get_angle_x() method
+     * @since 1.0.0
+     */
+    public double getAngleX() {
+        return getAngleX_Deg();
+    }
+
+    /**
+     * Gets the Y-axis angle (pitch) in degrees.
+     * 
+     * @return Y angle in degrees
+     * @apiNote Equivalent to Python's get_angle_y() method
+     * @since 1.0.0
+     */
+    public double getAngleY() {
+        return getAngleY_Deg();
+    }
+
+    /**
+     * Gets the Z-axis angle (yaw) in degrees.
+     * 
+     * @return Z angle in degrees
+     * @apiNote Equivalent to Python's get_angle_z() method
+     * @since 1.0.0
+     */
+    public double getAngleZ() {
+        return getAngleZ_Deg();
+    }
+
+    /**
+     * Gets accelerometer data as an array.
+     * 
+     * <p>Returns the raw accelerometer values from the protocol for all three axes.
+     * The protocol encodes accelerometer samples as signed 16-bit integers where the
+     * raw unit equals m/s^2 * 10. This method is provided for AP CSA compatibility
+     * and educational examples that expect integer arrays.</p>
+     * 
+     * @return int array containing [x, y, z] accelerometer values
+     * @apiNote Equivalent to Python's get_accel() method, returns array for AP CSA compatibility
+     * @since 1.0.0
+     * @educational This demonstrates array usage and acceleration concepts
+     */
+    public int[] getAccel() {
+        return getAccelRaw();
+    }
+
+    /**
+     * Gets angle data as an array.
+     * 
+     * <p>Returns current orientation angles for all three axes in a convenient array format.
+     * This is useful for AP CSA students learning about arrays and spatial orientation.</p>
+     * 
+     * @return int array containing [roll, pitch, yaw] angle values in degrees
+     * @apiNote Equivalent to Python's various angle methods, returns array for AP CSA compatibility
+     * @since 1.0.0
+     * @educational This demonstrates array usage and spatial orientation concepts
+     */
+    public int[] getAngle() {
+        return getAngleRaw();
+    }
+
+    /**
+     * Gets the angular speed (gyroscope) data for the X axis.
+     * 
+     * <p>Returns the rotational velocity around the X axis in degrees per second.
+     * This method provides Python API compatibility for accessing individual axis
+     * gyro data. Equivalent to {@code getGyro()[0]}.</p>
+     * 
+     * @return X-axis angular velocity in degrees per second
+     * @since 1.4.0
+     */
+    public int getAngularSpeedX() {
+        int[] gyro = getGyroRaw();
+        return gyro[0];
+    }
+
+    /**
+     * Gets the angular speed (gyroscope) data for the Y axis.
+     * 
+     * <p>Returns the rotational velocity around the Y axis in degrees per second.
+     * Equivalent to {@code getGyro()[1]}.</p>
+     * 
+     * @return Y-axis angular velocity in degrees per second
+     * @since 1.4.0
+     */
+    public int getAngularSpeedY() {
+        int[] gyro = getGyroRaw();
+        return gyro[1];
+    }
+
+    /**
+     * Gets the angular speed (gyroscope) data for the Z axis.
+     * 
+     * <p>Returns the rotational velocity around the Z axis in degrees per second.
+     * Equivalent to {@code getGyro()[2]}.</p>
+     * 
+     * @return Z-axis angular velocity in degrees per second
+     * @since 1.4.0
+     */
+    public int getAngularSpeedZ() {
+        int[] gyro = getGyroRaw();
+        return gyro[2];
+    }
+
     // ---------------- Other snapshots (for future expansion) ----------------
 
     /**

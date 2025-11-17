@@ -2970,7 +2970,7 @@ public class Drone implements AutoCloseable {
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_accel_x
      */
     public double getAccelX() {
-        return flightController.getAccelX();
+        return telemetryService.getAccelX();
     }
 
     /**
@@ -2985,7 +2985,7 @@ public class Drone implements AutoCloseable {
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_accel_y
      */
     public double getAccelY() {
-        return flightController.getAccelY();
+        return telemetryService.getAccelY();
     }
 
     /**
@@ -3000,7 +3000,7 @@ public class Drone implements AutoCloseable {
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_accel_z
      */
     public double getAccelZ() {
-        return flightController.getAccelZ();
+        return telemetryService.getAccelZ();
     }
 
     /**
@@ -3023,7 +3023,7 @@ public class Drone implements AutoCloseable {
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_angle_x
      */
     public double getAngleX() {
-        return flightController.getAngleX();
+        return telemetryService.getAngleX();
     }
 
     /**
@@ -3039,7 +3039,7 @@ public class Drone implements AutoCloseable {
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_angle_y
      */
     public double getAngleY() {
-        return flightController.getAngleY();
+        return telemetryService.getAngleY();
     }
 
     /**
@@ -3055,7 +3055,159 @@ public class Drone implements AutoCloseable {
      * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#get_angle_z
      */
     public double getAngleZ() {
-        return flightController.getAngleZ();
+        return telemetryService.getAngleZ();
+    }
+
+    /**
+     * Gets the angular speed (gyroscope) data for the X axis.
+     * 
+     * <p>Returns the rotational velocity around the X axis in degrees per second.
+     * This method provides Python API compatibility for accessing individual axis
+     * gyro data. Equivalent to {@code getGyro()[0]}.</p>
+     * 
+     * @return X-axis angular velocity in degrees per second
+     * @since 1.4.0
+     * @pythonEquivalent get_angular_speed_x
+     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#get_angular_speed_x
+     */
+    public int getAngularSpeedX() {
+        return telemetryService.getAngularSpeedX();
+    }
+
+    /**
+     * Gets the angular speed (gyroscope) data for the Y axis.
+     * 
+     * <p>Returns the rotational velocity around the Y axis in degrees per second.
+     * Equivalent to {@code getGyro()[1]}.</p>
+     * 
+     * @return Y-axis angular velocity in degrees per second
+     * @since 1.4.0
+     * @pythonEquivalent get_angular_speed_y
+     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#get_angular_speed_y
+     */
+    public int getAngularSpeedY() {
+        return telemetryService.getAngularSpeedY();
+    }
+
+    /**
+     * Gets the angular speed (gyroscope) data for the Z axis.
+     * 
+     * <p>Returns the rotational velocity around the Z axis in degrees per second.
+     * Equivalent to {@code getGyro()[2]}.</p>
+     * 
+     * @return Z-axis angular velocity in degrees per second
+     * @since 1.4.0
+     * @pythonEquivalent get_angular_speed_z
+     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Function-Documentation#get_angular_speed_z
+     */
+    public int getAngularSpeedZ() {
+        return telemetryService.getAngularSpeedZ();
+    }
+
+    // Deprecated accessor methods (maintained for backward compatibility)
+    
+    /**
+     * Gets the X-axis acceleration in G-force units.
+     * 
+     * <p>Deprecated: Use {@link #getAccelX()} instead.</p>
+     * 
+     * @return X acceleration in G-force
+     * @deprecated Use {@link #getAccelX()} instead. Previously named {@code get_x_accel()} in Python.
+     * @since 1.0.0
+     * @pythonEquivalent get_x_accel
+     */
+    @Deprecated(since = "1.4.0", forRemoval = false)
+    public double getXAccel() {
+        return getAccelX();
+    }
+
+    /**
+     * Gets the Y-axis acceleration in G-force units.
+     * 
+     * <p>Deprecated: Use {@link #getAccelY()} instead.</p>
+     * 
+     * @return Y acceleration in G-force
+     * @deprecated Use {@link #getAccelY()} instead. Previously named {@code get_y_accel()} in Python.
+     * @since 1.0.0
+     * @pythonEquivalent get_y_accel
+     */
+    @Deprecated(since = "1.4.0", forRemoval = false)
+    public double getYAccel() {
+        return getAccelY();
+    }
+
+    /**
+     * Gets the Z-axis acceleration in G-force units.
+     * 
+     * <p>Deprecated: Use {@link #getAccelZ()} instead.</p>
+     * 
+     * @return Z acceleration in G-force
+     * @deprecated Use {@link #getAccelZ()} instead. Previously named {@code get_z_accel()} in Python.
+     * @since 1.0.0
+     * @pythonEquivalent get_z_accel
+     */
+    @Deprecated(since = "1.4.0", forRemoval = false)
+    public double getZAccel() {
+        return getAccelZ();
+    }
+
+    /**
+     * Gets the X-axis angle (roll) in degrees.
+     * 
+     * <p>Deprecated: Use {@link #getAngleX()} instead.</p>
+     * 
+     * @return X angle in degrees
+     * @deprecated Use {@link #getAngleX()} instead. Previously named {@code get_x_angle()} in Python.
+     * @since 1.0.0
+     * @pythonEquivalent get_x_angle
+     */
+    @Deprecated(since = "1.4.0", forRemoval = false)
+    public double getXAngle() {
+        return getAngleX();
+    }
+
+    /**
+     * Gets the Y-axis angle (pitch) in degrees.
+     * 
+     * <p>Deprecated: Use {@link #getAngleY()} instead.</p>
+     * 
+     * @return Y angle in degrees
+     * @deprecated Use {@link #getAngleY()} instead. Previously named {@code get_y_angle()} in Python.
+     * @since 1.0.0
+     * @pythonEquivalent get_y_angle
+     */
+    @Deprecated(since = "1.4.0", forRemoval = false)
+    public double getYAngle() {
+        return getAngleY();
+    }
+
+    /**
+     * Gets the Z-axis angle (yaw) in degrees.
+     * 
+     * <p>Deprecated: Use {@link #getAngleZ()} instead.</p>
+     * 
+     * @return Z angle in degrees
+     * @deprecated Use {@link #getAngleZ()} instead. Previously named {@code get_z_angle()} in Python.
+     * @since 1.0.0
+     * @pythonEquivalent get_z_angle
+     */
+    @Deprecated(since = "1.4.0", forRemoval = false)
+    public double getZAngle() {
+        return getAngleZ();
+    }
+
+    /**
+     * Resets the sensor angles back to zero.
+     * 
+     * <p>Deprecated: Use {@link #resetGyro()} instead.</p>
+     * 
+     * @deprecated Use {@link #resetGyro()} instead. Previously named {@code reset_sensor()} in Python.
+     * @since 1.0.0
+     * @pythonEquivalent reset_sensor
+     */
+    @Deprecated(since = "1.4.0", forRemoval = false)
+    public void resetSensor() {
+        resetGyro();
     }
 
     // Array-based sensor methods for Python compatibility
@@ -3088,7 +3240,7 @@ public class Drone implements AutoCloseable {
      * @educational
      */
     public int[] getAccel() {
-        return flightController.getAccel();
+        return telemetryService.getAccel();
     }
 
     /**
@@ -3110,16 +3262,8 @@ public class Drone implements AutoCloseable {
      * @since 1.0.0
      * @educational
      */
-    /**
-     * Gets gyroscope data as an array [x, y, z].
-     *
-     * @return Array containing [x, y, z] angular velocity values in degrees/second
-     * @apiNote Equivalent to Python's {@code drone.get_gyro()}
-     * @since 1.0.0
-     * @educational
-     */
     public int[] getGyro() {
-        return flightController.getGyro();
+        return telemetryService.getGyroRaw();
     }
 
     /**
@@ -3150,7 +3294,7 @@ public class Drone implements AutoCloseable {
      * @educational
      */
     public int[] getAngle() {
-        return flightController.getAngle();
+        return telemetryService.getAngle();
     }
 
     /**

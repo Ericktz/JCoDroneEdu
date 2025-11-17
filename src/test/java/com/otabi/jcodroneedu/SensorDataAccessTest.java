@@ -33,6 +33,7 @@ import static org.mockito.Mockito.*;
 @DisplayName("Sensor Data Access Tests")
 public class SensorDataAccessTest {
 
+    private TelemetryService telemetryService;
     private FlightController flightController;
     private Drone mockDrone;
     private DroneStatus mockStatus;
@@ -54,7 +55,8 @@ public class SensorDataAccessTest {
         // Configure mocks
         when(mockDrone.getDroneStatus()).thenReturn(mockStatus);
         
-        // Create real FlightController with mocked drone
+        // Create real services with mocked drone
+        telemetryService = new TelemetryService(mockDrone);
         flightController = new FlightController(mockDrone);
     }
 
@@ -292,7 +294,7 @@ public class SensorDataAccessTest {
             when(mockMotion.getAccelX()).thenReturn((short) 147); // Raw value corresponding to 1.5 G
 
             // Act
-            double accelX = flightController.getAccelX();
+            double accelX = telemetryService.getAccelX();
 
             // Assert
             assertEquals(1.5, accelX, 0.02, "Acceleration should be scaled to G-force");
@@ -308,7 +310,7 @@ public class SensorDataAccessTest {
             when(mockMotion.getAccelY()).thenReturn((short) -78); // Negative raw value
 
             // Act
-            double accelY = flightController.getAccelY();
+            double accelY = telemetryService.getAccelY();
 
             // Assert
             assertEquals(-0.8, accelY, 0.02, "Acceleration should handle negative values");
@@ -323,7 +325,7 @@ public class SensorDataAccessTest {
             when(mockMotion.getAccelZ()).thenReturn((short) 98); // Raw value corresponding to 1.0 G
 
             // Act
-            double accelZ = flightController.getAccelZ();
+            double accelZ = telemetryService.getAccelZ();
 
             // Assert
             assertEquals(1.0, accelZ, 0.02, "Z acceleration should represent gravity");
@@ -338,7 +340,7 @@ public class SensorDataAccessTest {
             when(mockMotion.getAngleRoll()).thenReturn((short) 15); // 15 degrees raw
 
             // Act
-            double angleX = flightController.getAngleX();
+            double angleX = telemetryService.getAngleX();
 
             // Assert
             assertEquals(15.0, angleX, 0.01, "Angle should be in degrees");
@@ -352,7 +354,7 @@ public class SensorDataAccessTest {
             when(mockMotion.getAnglePitch()).thenReturn((short) -10); // -10 degrees raw
 
             // Act
-            double angleY = flightController.getAngleY();
+            double angleY = telemetryService.getAngleY();
 
             // Assert
             assertEquals(-10.0, angleY, 0.01, "Angle should handle negative values");
@@ -366,7 +368,7 @@ public class SensorDataAccessTest {
             when(mockMotion.getAngleYaw()).thenReturn((short) 90); // 90 degrees raw
 
             // Act
-            double angleZ = flightController.getAngleZ();
+            double angleZ = telemetryService.getAngleZ();
 
             // Assert
             assertEquals(90.0, angleZ, 0.01, "Yaw angle should be degrees");
@@ -379,12 +381,12 @@ public class SensorDataAccessTest {
             when(mockStatus.getMotion()).thenReturn(null);
 
             // Act & Assert
-            assertEquals(0.0, flightController.getAccelX(), "Should return 0 when motion is null");
-            assertEquals(0.0, flightController.getAccelY(), "Should return 0 when motion is null");
-            assertEquals(0.0, flightController.getAccelZ(), "Should return 0 when motion is null");
-            assertEquals(0.0, flightController.getAngleX(), "Should return 0 when motion is null");
-            assertEquals(0.0, flightController.getAngleY(), "Should return 0 when motion is null");
-            assertEquals(0.0, flightController.getAngleZ(), "Should return 0 when motion is null");
+            assertEquals(0.0, telemetryService.getAccelX(), "Should return 0 when motion is null");
+            assertEquals(0.0, telemetryService.getAccelY(), "Should return 0 when motion is null");
+            assertEquals(0.0, telemetryService.getAccelZ(), "Should return 0 when motion is null");
+            assertEquals(0.0, telemetryService.getAngleX(), "Should return 0 when motion is null");
+            assertEquals(0.0, telemetryService.getAngleY(), "Should return 0 when motion is null");
+            assertEquals(0.0, telemetryService.getAngleZ(), "Should return 0 when motion is null");
         }
     }
 
@@ -432,7 +434,7 @@ public class SensorDataAccessTest {
             int battery = flightController.getBattery();
             String flightState = flightController.getFlightState();
             double height = flightController.getHeight();
-            double accel = flightController.getAccelX();
+            double accel = telemetryService.getAccelX();
             
             assertTrue(battery >= 0 && battery <= 100, "Battery should be valid percentage");
             assertNotNull(flightState, "Flight state should not be null");
