@@ -7,6 +7,10 @@
 
 package com.otabi.jcodroneedu;
 
+import com.otabi.jcodroneedu.protocol.DeviceType;
+import com.otabi.jcodroneedu.protocol.lightcontroller.LightDefault;
+import com.otabi.jcodroneedu.protocol.lightcontroller.Color;
+
 /**
  * Service for rendering images on the controller display.
  * 
@@ -14,7 +18,7 @@ package com.otabi.jcodroneedu;
  * the 0x88 DisplayDrawImage batch protocol and the interleaved transmission
  * approach to ensure reliable, consistent rendering.</p>
  */
-public class DisplayService {
+public class ControllerService {
     
     private final Drone drone;
     
@@ -23,7 +27,7 @@ public class DisplayService {
      * 
      * @param drone the drone instance for sending display commands
      */
-    public DisplayService(Drone drone) {
+    public ControllerService(Drone drone) {
         this.drone = drone;
     }
     
@@ -306,5 +310,198 @@ public class DisplayService {
         header.setTo(com.otabi.jcodroneedu.protocol.DeviceType.Controller);
 
         drone.transfer(header, imageCommand);
+    }
+
+    /**
+     * Sets the controller LED to a solid color.
+     * 
+     * <p>Controls the LED on the controller (remote control) rather than the drone.
+     * This is useful for team identification or indicating controller status.</p>
+     * 
+     * <h3>🎯 Educational Usage:</h3>
+     * <ul>
+     *   <li><strong>Team Identification:</strong> Each student has a different controller color</li>
+     *   <li><strong>Status Indication:</strong> Green for ready, red for error, etc.</li>
+     *   <li><strong>Debugging:</strong> Controller LED for one state, drone LED for another</li>
+     * </ul>
+     * 
+     * @param red Red component (0-255)
+     * @param green Green component (0-255)
+     * @param blue Blue component (0-255)
+     * @param brightness Overall brightness (0-255)
+     * 
+     * @throws IllegalArgumentException if any color value is outside 0-255 range
+     * @apiNote Equivalent to Python's {@code drone.set_controller_LED(r, g, b, brightness)}
+     * @since 1.0.0
+     * @educational
+     */
+    public void setControllerLED(int red, int green, int blue, int brightness) {
+        // Validate input parameters
+        if (red < DroneSystem.ColorConstants.RGB_MIN || red > DroneSystem.ColorConstants.RGB_MAX) {
+            throw new IllegalArgumentException("Red must be between " + DroneSystem.ColorConstants.RGB_MIN + 
+                " and " + DroneSystem.ColorConstants.RGB_MAX + ", got: " + red);
+        }
+        if (green < DroneSystem.ColorConstants.RGB_MIN || green > DroneSystem.ColorConstants.RGB_MAX) {
+            throw new IllegalArgumentException("Green must be between " + DroneSystem.ColorConstants.RGB_MIN + 
+                " and " + DroneSystem.ColorConstants.RGB_MAX + ", got: " + green);
+        }
+        if (blue < DroneSystem.ColorConstants.RGB_MIN || blue > DroneSystem.ColorConstants.RGB_MAX) {
+            throw new IllegalArgumentException("Blue must be between " + DroneSystem.ColorConstants.RGB_MIN + 
+                " and " + DroneSystem.ColorConstants.RGB_MAX + ", got: " + blue);
+        }
+        if (brightness < DroneSystem.ColorConstants.RGB_MIN || brightness > DroneSystem.ColorConstants.RGB_MAX) {
+            throw new IllegalArgumentException("Brightness must be between " + DroneSystem.ColorConstants.RGB_MIN + 
+                " and " + DroneSystem.ColorConstants.RGB_MAX + ", got: " + brightness);
+        }
+
+        // Create color and send to controller
+        Color color = Color.fromRGB(red, green, blue);
+        LightDefault lightDefault = new LightDefault(
+            com.otabi.jcodroneedu.protocol.lightcontroller.LightModesController.BodyHold, 
+            color, 
+            (short) brightness
+        );
+        drone.sendMessage(lightDefault, DeviceType.Base, DeviceType.Controller);
+        
+        // Small delay for command processing
+        try {
+            Thread.sleep(DroneSystem.CommunicationConstants.LED_COMMAND_DELAY_MS);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    /**
+     * Turns off the controller LED.
+     * 
+     * <p>Turns off all LED lights on the controller, returning it to its default state.</p>
+     * 
+     * @apiNote Equivalent to Python's {@code drone.controller_LED_off()}
+     * @since 1.0.0
+     * @educational
+     */
+    public void controllerLEDOff() {
+        Color color = Color.fromRGB(0, 0, 0);
+        LightDefault lightDefault = new LightDefault(
+            com.otabi.jcodroneedu.protocol.lightcontroller.LightModesController.BodyHold, 
+            color, 
+            (short) 0
+        );
+        drone.sendMessage(lightDefault, DeviceType.Base, DeviceType.Controller);
+        
+        // Small delay for command processing
+        try {
+            Thread.sleep(5);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
+    }
+
+    /**
+     * Sets the controller LED to a specific color with animation mode.
+     * 
+     * <p>This method adds animation effects to the controller LED, enabling 
+     * differentiated visual feedback between drone and controller states.
+     * Perfect for team identification and multi-device programs.</p>
+     * 
+     * <h3>🎯 Educational Usage:</h3>
+     * <ul>
+     *   <li><strong>Team Coordination:</strong> Different controller animations for different teams</li>
+     *   <li><strong>Status Indication:</strong> Controller shows ready/busy/error states</li>
+     *   <li><strong>Debugging:</strong> Controller LED for program state, drone LED for flight state</li>
+     *   <li><strong>User Interface:</strong> Visual feedback for user interactions</li>
+     * </ul>
+     * 
+     * <h3>💡 Animation Modes:</h3>
+     * <ul>
+     *   <li>{@code "solid"} - Steady color (same as setControllerLED)</li>
+     *   <li>{@code "dimming"} - Slowly brightens and dims</li>
+     *   <li>{@code "fade_in"} - Gradually brightens from off</li>
+     *   <li>{@code "fade_out"} - Gradually dims to off</li>
+     *   <li>{@code "blink"} - Regular on/off blinking</li>
+     *   <li>{@code "double_blink"} - Two quick blinks then pause</li>
+     *   <li>{@code "rainbow"} - Cycles through colors (ignores RGB values)</li>
+     * </ul>
+     * 
+     * @param red Red component (0-255)
+     * @param green Green component (0-255)
+     * @param blue Blue component (0-255)
+     * @param mode Animation mode (use LEDMode constants or strings above)
+     * @param speed Animation speed (1-10, where 10 is fastest)
+     * 
+     * @throws IllegalArgumentException if any parameter is out of range
+     * @apiNote Equivalent to Python's {@code drone.set_controller_LED_mode(r, g, b, mode, speed)}
+     * @since 1.0.0
+     * @educational
+     * @pythonEquivalent set_controller_LED_mode
+     * @pythonReference https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation#set_controller_led_mode
+     */
+    public void setControllerLEDMode(int red, int green, int blue, String mode, int speed) {
+        // Validate input parameters
+        if (red < 0 || red > 255) {
+            throw new IllegalArgumentException("Red must be between 0 and 255, got: " + red);
+        }
+        if (green < 0 || green > 255) {
+            throw new IllegalArgumentException("Green must be between 0 and 255, got: " + green);
+        }
+        if (blue < 0 || blue > 255) {
+            throw new IllegalArgumentException("Blue must be between 0 and 255, got: " + blue);
+        }
+        if (speed < 1 || speed > 10) {
+            throw new IllegalArgumentException("Speed must be between 1 and 10, got: " + speed);
+        }
+        if (mode == null) {
+            throw new IllegalArgumentException("Mode cannot be null");
+        }
+
+        // Convert speed to interval (Python-compatible calculation)
+        short interval;
+        com.otabi.jcodroneedu.protocol.lightcontroller.LightModesController lightMode;
+        
+        switch (mode.toLowerCase()) {
+            case "solid":
+                lightMode = com.otabi.jcodroneedu.protocol.lightcontroller.LightModesController.BodyHold;
+                interval = (short) 255; // Full brightness for solid
+                break;
+            case "dimming":
+                lightMode = com.otabi.jcodroneedu.protocol.lightcontroller.LightModesController.BodyDimming;
+                interval = (short) ((11 - speed) * 5); // interval ranges [5,50]
+                break;
+            case "fade_in":
+                lightMode = com.otabi.jcodroneedu.protocol.lightcontroller.LightModesController.BodySunrise;
+                interval = (short) ((11 - speed) * 12); // interval ranges [12,120]
+                break;
+            case "fade_out":
+                lightMode = com.otabi.jcodroneedu.protocol.lightcontroller.LightModesController.BodySunset;
+                interval = (short) ((11 - speed) * 12); // interval ranges [12,120]
+                break;
+            case "blink":
+                lightMode = com.otabi.jcodroneedu.protocol.lightcontroller.LightModesController.BodyFlicker;
+                interval = (short) ((11 - speed) * 100); // interval ranges [100,1000]
+                break;
+            case "double_blink":
+                lightMode = com.otabi.jcodroneedu.protocol.lightcontroller.LightModesController.BodyFlickerDouble;
+                interval = (short) ((11 - speed) * 60); // interval ranges [60,600]
+                break;
+            case "rainbow":
+                lightMode = com.otabi.jcodroneedu.protocol.lightcontroller.LightModesController.BodyRainbow;
+                interval = (short) ((11 - speed) * 7); // interval ranges [7,70]
+                break;
+            default:
+                throw new IllegalArgumentException("Invalid LED mode: " + mode + 
+                    ". Valid modes are: solid, dimming, fade_in, fade_out, blink, double_blink, rainbow");
+        }
+
+        // Create color and send to controller
+        Color color = Color.fromRGB(red, green, blue);
+        LightDefault lightDefault = new LightDefault(lightMode, color, interval);
+        drone.sendMessage(lightDefault, DeviceType.Base, DeviceType.Controller);
+        
+        // Small delay for command processing
+        try {
+            Thread.sleep(5);
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 }
