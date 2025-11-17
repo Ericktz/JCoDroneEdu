@@ -1,4 +1,4 @@
-name: Publish Only (manual)
+name: Publish to Central Portal (manual)
 
 on:
   workflow_dispatch:
@@ -52,7 +52,7 @@ jobs:
       - name: Build artifacts
         run: |
           echo "Building artifacts for version: ${{ inputs.version }}"
-          ./gradlew -Pversion=${{ inputs.version }} studentJar javadocJar sourcesJar teacherJar
+          ./gradlew -Pversion=${{ inputs.version }} studentJar javadocJar sourcesJar teacherJar --no-daemon
 
       - name: Debug signing key (safe metadata)
         if: ${{ inputs.debug_signing == 'true' }}
