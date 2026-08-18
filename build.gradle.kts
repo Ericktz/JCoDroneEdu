@@ -667,16 +667,6 @@ tasks.test {
     jvmArgs("-Dnet.bytebuddy.experimental=true")
 }
 
-// Make Javadoc generation tolerant of custom tags used for documentation (educational notes)
-tasks.named<org.gradle.api.tasks.javadoc.Javadoc>("javadoc") {
-    // Do not fail the build on Javadoc errors in CI
-    // Use setter to avoid accessing a private property from Kotlin
-    this.setFailOnError(false)
-    // Disable strict doclint introduced in newer JDKs by passing Xdoclint:none (no leading dash)
-    val stdOptions = options as org.gradle.external.javadoc.StandardJavadocDocletOptions
-    stdOptions.addStringOption("Xdoclint:none", "")
-}
-
 // --------------------------
 // Release artifact tasks
 // --------------------------
@@ -699,37 +689,22 @@ val javadocJar by tasks.registering(Jar::class) {
     dependsOn("javadoc")
 }
 
-// Configure the javadoc task to tolerate project custom tags/HTML and not fail the build
+// Configure JavaDoc for the educational tags used throughout the public API.
 tasks.named<org.gradle.api.tasks.javadoc.Javadoc>("javadoc") {
-    // Do not fail the build on Javadoc errors in CI
-    this.setFailOnError(false)
+    // A successful release must contain usable JavaDoc; do not hide tool failures.
+    this.setFailOnError(true)
 
-    // Try to configure StandardJavadocDocletOptions when available
-    try {
-        val stdOptions = options as? org.gradle.external.javadoc.StandardJavadocDocletOptions
-        if (stdOptions != null) {
-            stdOptions.addStringOption("tag", "educational:a:")
-            stdOptions.addStringOption("tag", "pythonEquivalent:a:")
-            stdOptions.addStringOption("tag", "apiNote:a:")
-            stdOptions.addStringOption("tag", "example:a:")
-
-            // Disable doclint (suppress strict HTML/structure checks)
-            // StandardJavadocDocletOptions expects option names without a leading dash.
-            // To disable doclint use the Xdoclint option without passing an extra colon/flag value.
-            // Some JDKs don't accept the form with a leading `--` so avoid that.
-            try {
-                stdOptions.addStringOption("Xdoclint", "none")
-            } catch (e: Exception) {
-                // Fall back to leaving doclint as-is; javadoc task is non-fatal so build will continue.
-                logger.warn("Could not set Xdoclint option on this JDK: ${e.message}")
-            }
-
-            // Prefer HTML5 output when supported
-            stdOptions.addBooleanOption("html5", true)
-        }
-    } catch (e: Exception) {
-        logger.warn("Could not configure advanced javadoc options: ${e.message}")
-    }
+    val stdOptions = options as org.gradle.external.javadoc.StandardJavadocDocletOptions
+    stdOptions.encoding = "UTF-8"
+    stdOptions.charSet = "UTF-8"
+    stdOptions.docEncoding = "UTF-8"
+    stdOptions.addBooleanOption("Xdoclint:none", true)
+    stdOptions.tags(
+        "educational:a:Educational note:",
+        "pythonEquivalent:a:Python equivalent:",
+        "apiNote:a:API note:",
+        "example:a:Example:"
+    )
 }
 
 

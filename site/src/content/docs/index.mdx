@@ -1,0 +1,58 @@
+---
+title: CoDrone EDU EIT
+description: Plataforma docente universitaria en español para aprender programación, sistemas, redes, datos e inteligencia artificial con drones.
+template: splash
+hero:
+  tagline: Ocho drones, una plataforma abierta y laboratorios universitarios reproducibles.
+  actions:
+    - text: Preparar el entorno
+      link: /JCoDroneEdu/inicio/instalacion/
+      icon: right-arrow
+    - text: Explorar asignaturas
+      link: /JCoDroneEdu/docencia/asignaturas/
+      variant: minimal
+      icon: open-book
+---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+## Aprender construyendo sistemas reales
+
+CoDrone EDU EIT conecta fundamentos de programación con problemas de sensores,
+señales, comunicaciones, datos, inteligencia artificial y trabajo en equipo. El
+portal está pensado para estudiantes, docentes y ayudantes universitarios.
+
+<CardGrid>
+  <Card title="Programación con propósito" icon="seti:java">
+    Java y Python aplicados a misiones observables, seguras y evaluables.
+  </Card>
+  <Card title="Datos del mundo físico" icon="chart">
+    Telemetría, incertidumbre, filtrado, visualización y modelos reproducibles.
+  </Card>
+  <Card title="Sistemas conectados" icon="setting">
+    Puertos seriales, concurrencia, redes, seguridad y coordinación distribuida.
+  </Card>
+  <Card title="Docencia reutilizable" icon="open-book">
+    Guías versionadas, rúbricas, código inicial y criterios de validación.
+  </Card>
+</CardGrid>
+
+## Estado del proyecto
+
+Este es el primer portal del fork universitario. La biblioteca Java heredada se
+mantiene separada del contenido docente y su referencia se genera desde el código.
+La integración Python usa como referencia primaria el paquete oficial
+`codrone-edu` y la documentación de Robolink.
+
+:::caution[Hardware real]
+Ninguna actividad de vuelo se considera validada hasta probarla con el modelo,
+firmware, batería y entorno indicados. Comienza siempre por
+[seguridad](/JCoDroneEdu/inicio/seguridad/).
+:::
+
+## Rutas iniciales
+
+- [Visión y alcance](/JCoDroneEdu/inicio/vision-general/)
+- [Preparación para Python y Java](/JCoDroneEdu/inicio/instalacion/)
+- [Mapa de asignaturas](/JCoDroneEdu/docencia/asignaturas/)
+- [Fuentes oficiales y política de versiones](/JCoDroneEdu/proyecto/fuentes/)

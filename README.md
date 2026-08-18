@@ -1,5 +1,9 @@
 # CoDrone EDU Java API
 
+> **CoDrone EDU EIT:** consulta el
+> [portal docente universitario en español](https://ericktz.github.io/JCoDroneEdu/)
+> para guías, seguridad, trayectos Java/Python y material por asignatura.
+
 A concise, classroom-focused Java library for programming the CoDrone EDU hardware. This repository contains the Java API (package `com.otabi.jcodroneedu`), example programs, documentation, and build tooling.
 
 ## Summary
