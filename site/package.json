@@ -4,6 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "catalog:java": "node scripts/generate-java-docs-catalog.mjs",
+    "catalog:java:check": "node scripts/generate-java-docs-catalog.mjs --check",
+    "prebuild": "npm run catalog:java:check",
+    "precheck": "npm run catalog:java:check",
     "dev": "astro dev",
     "build": "astro check && astro build",
     "preview": "astro preview",
