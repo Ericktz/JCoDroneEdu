@@ -1,0 +1,2 @@
+# Dependencia de ejecución verificada para Fase 0 y Fase 1.
+codrone-edu==2.8

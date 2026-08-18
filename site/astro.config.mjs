@@ -47,6 +47,16 @@ export default defineConfig({
           ],
         },
         {
+          label: 'Ejemplos',
+          items: [
+            { label: 'Catálogo', slug: 'ejemplos' },
+            {
+              label: 'Python: conexión sin vuelo',
+              slug: 'ejemplos/python/conexion-sin-vuelo',
+            },
+          ],
+        },
+        {
           label: 'Docencia',
           items: [
             { label: 'Asignaturas', slug: 'docencia/asignaturas' },
@@ -60,7 +70,7 @@ export default defineConfig({
             { label: 'Fuentes y versiones', slug: 'proyecto/fuentes' },
             {
               label: 'API Java generada',
-              link: '/JCoDroneEdu/api/java/latest/',
+              link: '/api/java/latest/',
               attrs: { target: '_blank' },
             },
           ],

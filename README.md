@@ -4,6 +4,11 @@
 > [portal docente universitario en español](https://ericktz.github.io/JCoDroneEdu/)
 > para guías, seguridad, trayectos Java/Python y material por asignatura.
 
+La iniciativa Python incremental vive en [`python/`](python/README.md). Su primer
+ejemplo detecta el controlador, consulta estado y batería, y cierra la conexión
+sin ejecutar comandos de vuelo. La evolución conceptual hacia PX4/MAVLink está
+documentada, pero todavía no implementada.
+
 A concise, classroom-focused Java library for programming the CoDrone EDU hardware. This repository contains the Java API (package `com.otabi.jcodroneedu`), example programs, documentation, and build tooling.
 
 ## Summary

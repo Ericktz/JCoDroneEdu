@@ -9,7 +9,8 @@ description: Integración del paquete oficial codrone-edu y estado de compatibil
 
 - **Paquete oficial:** `codrone-edu` 2.8
 - **Import verificado:** sí, sin hardware
-- **Pruebas de conexión y vuelo:** pendientes
+- **Flujo de conexión:** probado con dobles; hardware real pendiente
+- **Pruebas de vuelo:** no iniciadas
 - **Paridad declarada por la biblioteca Java:** Python 2.6
 
 </div>
@@ -20,26 +21,25 @@ serán las fuentes para construir una matriz método por método.
 
 ## Primer programa seguro
 
-Este ejemplo solo crea el objeto. No empareja ni activa motores:
+El repositorio ya contiene un diagnóstico de entorno y una prueba de conexión
+segura. Ninguno activa motores:
 
-```python
-from codrone_edu.drone import Drone
+- [`environment_report.py`](https://github.com/Ericktz/JCoDroneEdu/blob/main/python/tools/environment_report.py)
+- [`00_connect.py`](https://github.com/Ericktz/JCoDroneEdu/blob/main/python/examples/00_connect.py)
+- [Guía ejecutable en el portal](/JCoDroneEdu/ejemplos/python/conexion-sin-vuelo/)
 
+El primer vuelo se publicará después de validar conexión, telemetría, firmware y
+procedimientos de seguridad con los equipos de la universidad.
 
-def main() -> None:
-    drone = Drone()
-    try:
-        print("Objeto CoDrone EDU creado; hardware aún no conectado")
-    finally:
-        drone.close()
+## Iniciativa PX4/MAVLink
 
+Se aprobó una evolución gradual hacia una API educativa con backends CoDrone y,
+en fases posteriores, PX4. CoDrone EDU no ejecuta PX4. En el estado actual no se
+han instalado MAVSDK, MAVLink, PX4, ROS 2 ni QGroundControl.
 
-if __name__ == "__main__":
-    main()
-```
-
-El primer vuelo se publicará después de validar puertos, firmware y parada de
-emergencia con los equipos de la universidad.
+La [propuesta integrada](https://github.com/Ericktz/JCoDroneEdu/blob/main/docs/plans/PX4_CODRONE_PROPOSAL.md)
+obliga a validar cada fase antes de avanzar. La Fase 1 sigue abierta hasta probar
+controlador, estado `Ready`, batería y desconexión sobre hardware real.
 
 ## Enjambres
 
