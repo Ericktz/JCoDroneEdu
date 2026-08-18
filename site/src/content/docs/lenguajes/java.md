@@ -26,6 +26,17 @@ que esa brecha está registrada como trabajo pendiente.
 La [API Java generada](/JCoDroneEdu/api/java/latest/) se construye desde los
 comentarios JavaDoc del código en cada despliegue del portal.
 
+## Archivo documental heredado
+
+El fork conserva decenas de Markdown sobre arquitectura, compatibilidad Python,
+sensores, protocolos, pruebas, publicación y docencia. Ahora están disponibles en
+el [Archivo documental Java](/JCoDroneEdu/lenguajes/java-documentacion-heredada/).
+
+El catálogo enlaza cada archivo original y distingue guías, auditorías, reportes
+de implementación e instrucciones históricas. Su contenido se utiliza como
+conocimiento del proyecto, pero se valida contra código y fuentes actuales antes
+de convertirse en una decisión nueva.
+
 :::tip[Idioma y código]
 Las explicaciones docentes se escriben en español, pero nombres como `Drone`,
 `takeoff()` o `getHeight()` no se traducen. Así los ejemplos siguen siendo válidos

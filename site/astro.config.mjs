@@ -44,6 +44,10 @@ export default defineConfig({
           items: [
             { label: 'Python', slug: 'lenguajes/python' },
             { label: 'Java', slug: 'lenguajes/java' },
+            {
+              label: 'Archivo documental Java',
+              slug: 'lenguajes/java-documentacion-heredada',
+            },
           ],
         },
         {
