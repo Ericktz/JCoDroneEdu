@@ -23,6 +23,19 @@ description: Fases de construcción del proyecto CoDrone EDU EIT.
 - Plantilla común, pruebas y rúbricas.
 - Niveles guiado, desafío y extensión.
 
+## Iniciativa Python → PX4/MAVLink
+
+Esta línea mantiene su propia puerta de fases:
+
+1. **Fase 0 — completada:** entorno reproducible y diagnóstico.
+2. **Fase 1 — implementada, pendiente de hardware:** conexión, estado, batería y
+   cierre sin vuelo.
+3. **Fases 2+ — bloqueadas por validación:** telemetría, logger, vuelo mínimo,
+   abstracción y, mucho después, PX4/MAVLink.
+
+Consulta el [catálogo de ejemplos](/JCoDroneEdu/ejemplos/) para ver únicamente las
+capacidades ya implementadas.
+
 ## 3. Datos, IA, sistemas y redes
 
 - Telemetría y conjuntos de datos anonimizados.

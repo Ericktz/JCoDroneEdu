@@ -1,0 +1,84 @@
+---
+title: Python 00 — conexión sin vuelo
+description: Detectar el controlador, confirmar estado y batería, y cerrar limpiamente.
+---
+
+import { Code } from '@astrojs/starlight/components';
+import environmentReport from '../../../../../../python/tools/environment_report.py?raw';
+import connectionExample from '../../../../../../python/examples/00_connect.py?raw';
+
+## Objetivo
+
+Completar Fase 0 y preparar Fase 1 sin activar motores. La API utilizada está
+limitada a `pair(portname=None)`, `get_flight_state()`, `get_battery()` y
+`close()`, verificadas contra la documentación oficial de Robolink 2.8.
+
+:::note[Estado real]
+El código y sus pruebas con dobles están verificados. La estación inspeccionada no
+tenía conectado el controlador, por lo que emparejamiento y batería reales siguen
+pendientes.
+:::
+
+## 1. Diagnóstico del entorno
+
+Este script no abre puertos:
+
+<Code code={environmentReport} lang="python" title="python/tools/environment_report.py" />
+
+Ejecución:
+
+```bash
+python python/tools/environment_report.py
+python python/examples/00_connect.py --list-ports
+```
+
+## 2. Prueba de conexión
+
+<Code code={connectionExample} lang="python" title="python/examples/00_connect.py" />
+
+Con el controlador USB y el dron encendido:
+
+```bash
+python python/examples/00_connect.py
+```
+
+## Resultado esperado
+
+```text
+[OK] Controller detected: /dev/cu...
+[INFO] codrone-edu library: 2.8
+[INFO] Connecting through /dev/cu...
+[OK] Drone paired; state: Ready
+[INFO] Battery: 73%
+[INFO] Firmware: unavailable through the public Drone 2.8 API
+[INFO] Closing connection
+[OK] Clean disconnect
+[OK] Test completed without flight
+```
+
+El porcentaje y el puerto variarán. No se muestra un firmware ficticio: la clase
+pública `Drone` 2.8 no ofrece un getter documentado para ese dato.
+
+## Qué observar
+
+- El controlador debe aparecer con VID decimal `1155`.
+- El estado debe ser `Ready`; cualquier otro estado detiene la prueba.
+- La batería debe ser un entero entre 0 y 100.
+- `close()` se intenta incluso si falla el emparejamiento o la telemetría.
+
+## Posibles errores
+
+- **No se detectó el controlador:** comprobar que el cable USB transmite datos.
+- **Varios controladores:** ejecutar con `--port` y el puerto correcto.
+- **Estado diferente de `Ready`:** revisar batería y emparejamiento físico.
+- **Interrupción:** el bloque `finally` conserva el intento de cierre.
+
+## Cómo validar
+
+Registrar puerto, identificador del equipo, versión de firmware observada por el
+procedimiento oficial, batería, operador y salida completa. Después de esa
+evidencia se decidirá si comienza Fase 2.
+
+Fuentes: [API oficial Python 2.8](https://docs.robolink.com/docs/CoDroneEDU/Python/Drone-Function-Documentation/),
+[paquete `codrone-edu`](https://pypi.org/project/codrone-edu/) y
+[manual CoDrone EDU v3.2](https://docs.robolink.com/files/co-drone-edu-manual-v-3-2.pdf).

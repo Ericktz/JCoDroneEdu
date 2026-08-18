@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools==80.9.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "codrone-edu-eit"
+version = "0.1.0"
+description = "Ejemplos universitarios seguros para CoDrone EDU EIT"
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = [
+  "codrone-edu==2.8",
+]
+
+[project.optional-dependencies]
+dev = [
+  "pytest==9.1.1",
+]
+
+[tool.pytest.ini_options]
+addopts = "-ra --strict-markers"
+testpaths = ["tests"]
+markers = [
+  "hardware: requiere un controlador o dron físico y nunca se ejecuta en CI",
+  "flight: puede activar motores; requiere autorización explícita y nunca se ejecuta en CI",
+]
+
+[tool.setuptools.packages.find]
+where = ["src"]
